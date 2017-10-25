@@ -14,6 +14,7 @@ Projekt geo-pop
 - Używamy widoków opartych na klasach - https://docs.djangoproject.com/en/1.11/topics/class-based-views/
 - API dla aplikacji mobilnej będzie napisane przy pomocy django-rest-framework
 - Pracujemy na branchach
+- Po zmianach w modelu uruchamiamy polecenie `python manage.py makemigrations` i dodajemy pliki, które zosatły wygenerowane do gita
 - W razie wątpliwości, lepiej zapytać
 
 **Aplikacje odpowiadają tym z diagramu modułów:**
@@ -22,3 +23,10 @@ Projekt geo-pop
 - regions - zarządzanie obszarami
 - updates - zarządzanie aktualizacjami (kiepska nazwa, wiem)
 - users - zarządzanie użytkownikami
+
+**Pierwsze uruchomienie:**
+- stawiamy virtualenva dla pythona 3 (jest wiele metod, więc nie piszę komend)
+- w virtualenv-ie instalujemy zależności `pip install -r requirements.txt`
+- Tworzymy migracje `python manage.py makemigrations`
+- Tworzymy bazę i instalujemy migracje `python manage.py migrate`
+- Uruchamiamy serwer django `python manage.py runserver`
