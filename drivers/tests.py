@@ -1,12 +1,10 @@
 from django.test import TestCase
 from .models import Driver
-from django.utils import timezone
-from django.core.urlresolvers import reverse
 from django.core.exceptions import ObjectDoesNotExist
 # models test
 class DriverTest(TestCase):
     
-    def create_driver(self, full_name="Test", gender="yes",pesel=", this is only a test", permissions_level=1, phone_number=2):
+    def create_driver(self, full_name="Test", gender="yes",pesel="132456789", permissions_level=1, phone_number=2):
         return Driver.objects.create(
         full_name = full_name,
         gender=gender,
@@ -30,30 +28,26 @@ class DriverTest(TestCase):
         self.assertEqual(w.permissions_level, 1)
 
     def test_driver_update(self):
-        self.d1 = self.create_driver()
+        d1 = self.create_driver()
 
         fields = ['full_name', 'gender', 'pesel', 'permissions_level' , 'phone_number']
-        tmp_param = {}
+
+        d1.phone_number = 33
+        d1.gender = 'Apache'
+        d1.pesel = '6546546'
+        d1.full_name = "grzesiek jestem"
+        d1.permissions_level = 2
+
+        d2 = Driver.objects.get(id=d1.id)
 
         for i in fields:
-            tmp_param[i] = self.d1.__getattribute__(i)
+            self.assertNotEqual(str(d1.__getattribute__(i)),str( d2.__getattribute__(i)))
 
-        self.d1.phone_number = 33
-        self.d1.gender = 'Apache'
-        self.d1.pesel = 123
-        self.d1.full_name = "grzesiek jestem"
-        self.d1.permissions_level = 2
-
-        d2 = Driver.objects.get(id=self.d1.id)
+        d1.save()
+        d3 = Driver.objects.get(id=d1.id)
 
         for i in fields:
-            self.assertNotEqual(self.d1.__getattribute__(i), d2.__getattribute__(i))
-
-        self.d1.save()
-        d3 = Driver.objects.get(id=self.d1.id)
-
-        for i in fields:
-            self.assertEqual(str(self.d1.__getattribute__(i)), str(d3.__getattribute__(i)))
+            self.assertEqual(str(d1.__getattribute__(i)), str(d3.__getattribute__(i)))
 
     def test_delete(self):
         d1 = self.create_driver()

@@ -23,9 +23,11 @@ def login(request):
                 if user.is_active:
                     auth_login(request, user)
                     return HttpResponseRedirect("/admin")
+            else:
+                error = 'Niepoprawne dane użytkownika'
     return render(request,"users/login.html", {"error": error})
 
 
 def logout(request):
     auth_logut(request)
-    return HttpResponseRedirect('/')
+    return HttpResponseRedirect('/login')
