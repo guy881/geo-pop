@@ -7,7 +7,7 @@ class Driver(models.Model):
     # TODO: harmonogram
     pesel = models.TextField(max_length=11)
     # TODO: PHOTO
-    permissions_level = models.IntegerField() # TODO: do przegadania
+    permissions_level = models.IntegerField()  # TODO: do przegadania
     phone_number = models.TextField(max_length=15)
 
     def __str__(self):

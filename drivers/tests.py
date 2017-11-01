@@ -1,23 +1,23 @@
 from django.test import TestCase
 from .models import Driver
 from django.core.exceptions import ObjectDoesNotExist
-# models test
+
+
 class DriverTest(TestCase):
-    
-    def create_driver(self, full_name="Test", gender="yes",pesel="132456789", permissions_level=1, phone_number=2):
+
+    def create_driver(self, full_name="Test", gender="yes", pesel="132456789", permissions_level=1, phone_number=2):
         return Driver.objects.create(
-        full_name = full_name,
-        gender=gender,
-        pesel=pesel,
-        permissions_level=permissions_level,
-        phone_number=phone_number
+            full_name=full_name,
+            gender=gender,
+            pesel=pesel,
+            permissions_level=permissions_level,
+            phone_number=phone_number
         )
 
     def test_read(self):
         w = self.create_driver()
         d = Driver.objects.get(id=w.id)
         self.assertEqual(d, w)
-
 
     def test_driver_creation(self):
         w = self.create_driver()
@@ -30,7 +30,7 @@ class DriverTest(TestCase):
     def test_driver_update(self):
         d1 = self.create_driver()
 
-        fields = ['full_name', 'gender', 'pesel', 'permissions_level' , 'phone_number']
+        fields = ['full_name', 'gender', 'pesel', 'permissions_level', 'phone_number']
 
         d1.phone_number = 33
         d1.gender = 'Apache'
@@ -41,7 +41,7 @@ class DriverTest(TestCase):
         d2 = Driver.objects.get(id=d1.id)
 
         for i in fields:
-            self.assertNotEqual(str(d1.__getattribute__(i)),str( d2.__getattribute__(i)))
+            self.assertNotEqual(str(d1.__getattribute__(i)), str(d2.__getattribute__(i)))
 
         d1.save()
         d3 = Driver.objects.get(id=d1.id)
@@ -51,7 +51,7 @@ class DriverTest(TestCase):
 
     def test_delete(self):
         d1 = self.create_driver()
-        id =d1.id
+        id = d1.id
         d1.delete()
 
         error_occured = False
@@ -61,4 +61,3 @@ class DriverTest(TestCase):
             error_occured = True
 
         self.assertTrue(error_occured)
-

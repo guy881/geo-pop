@@ -17,9 +17,11 @@ Including another URLconf
 from django.conf.urls import url
 from django.contrib import admin
 from users.views import *
+from drivers.views import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^drivers/$', drivers, name='drivers'),
     url(r'^login/$', login, name='login'),
     url(r'^logout/$', logout, name='logout'),
 ]

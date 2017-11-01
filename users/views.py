@@ -1,4 +1,4 @@
-from django.template import  RequestContext
+from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate
@@ -16,7 +16,7 @@ def login(request):
         elif request.POST.get('username', False):
             username = request.POST.get('username')
             password = request.POST.get('pwd')
-            print(username,password)
+            print(username, password)
             user = authenticate(username=username, password=password)
             print(user)
             if user is not None:
@@ -25,7 +25,7 @@ def login(request):
                     return HttpResponseRedirect("/admin")
             else:
                 error = 'Niepoprawne dane użytkownika'
-    return render(request,"users/login.html", {"error": error})
+    return render(request, "users/login.html", {"error": error})
 
 
 def logout(request):
