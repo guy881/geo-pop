@@ -14,11 +14,9 @@ def drivers(request):
 
 
 def add(request):
-    return render(request, "drivers/add.html")
 
-
-def create():
-
-    # TODO: create driver from form data
-
-    return HttpResponseRedirect('/drivers')
+    if request.method == 'POST':
+        # TODO: create driver from form data
+        return HttpResponseRedirect('/drivers')
+    else:
+        return render(request, "drivers/add.html")
