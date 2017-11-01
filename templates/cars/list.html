@@ -1,27 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>GEO - Samochody</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-</head>
-<body>
+{% include 'header.html' %}
 
-    <div class="container" style="margin-top: 5vh">
-        <div class="col-md-10 col-md-offset-1">
-            <h2 style="text-align: center">Lista Samochodów:</h2>
+<div class="container" style="margin-top: 5vh">
+    <div class="col-md-10 col-md-offset-1">
+        <h2 style="text-align: center">Lista Samochodów:</h2>
 
-            <ul>
-                {% for car in all_cars %}
-                    <li>{{ car.car_id }}</li>
-                {% endfor %}
-            </ul>
+        <ul>
+            {% for car in all_cars %}
+                <li>{{ car.car_id }}</li>
+            {% endfor %}
+        </ul>
 
-        </div>
     </div>
+</div>
 
-</body>
-</html>
+{% include 'footer.html' %}
+
