@@ -22,6 +22,7 @@ from drivers.views import *
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^drivers/$', drivers, name='drivers'),
+    url(r'^drivers/add$', add, name='add driver'),
     url(r'^login/$', login, name='login'),
     url(r'^logout/$', logout, name='logout'),
 ]
