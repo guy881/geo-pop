@@ -22,17 +22,17 @@
 
             {% for car in all_cars %}
                 <div class="panel panel-primary">
-                    <div class="panel-heading">{{ car.car_id }}</div>
+                    <div class="panel-heading">{{ car.brand }} {{ car.model }}</div>
                     <div class="panel-body">
-                        <p><b>Marka:</b> {{ car.car_id }}</p>
-                        <p><b>Model:</b> {{ car.car_id }}</p>
-                        <p><b>Rocznik:</b> {{ car.car_id }}</p>
-                        <p><b>Pojemność silnika:</b> {{ car.car_id }}</p>
-                        <p><b>Typ nadwozia:</b> {{ car.car_id }}</p>
-                        <p><b>Numer ubezpieczenia:</b> {{ car.car_id }}</p>
-                        <p><b>Dostępność:</b> {{ car.car_id }}</p>
-                        <p><b>Stan:</b> {{ car.car_id }}</p>
-                        <p><b>Ostatnio przesłane współrzędne:</b> {{ car.car_id }}</p>
+                        <p><b>Marka:</b> {{ car.brand }}</p>
+                        <p><b>Model:</b> {{ car.model }}</p>
+                        <p><b>Rocznik:</b> {{ car.production_year }}</p>
+                        <p><b>Pojemność silnika:</b> {{ car.displacement }}</p>
+                        <p><b>Typ nadwozia:</b> {{ car.carbody }}</p>
+                        <p><b>Numer ubezpieczenia:</b> {{ car.insurance_number }}</p>
+                        <p><b>Dostępność:</b> {{ car.is_available }}</p>
+                        <p><b>Stan:</b> {{ car.state }}</p>
+                        <p><b>Ostatnio przesłane współrzędne:</b> {{ car.last_location }}</p>
                     </div>
                 </div>
             {% endfor %}
