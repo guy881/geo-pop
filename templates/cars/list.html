@@ -4,11 +4,22 @@
     <div class="col-md-10 col-md-offset-1">
         <h2 style="text-align: center">Lista Samochodów:</h2>
 
-        <ul>
-            {% for car in all_cars %}
-                <li>{{ car.car_id }}</li>
-            {% endfor %}
-        </ul>
+        {% for car in all_cars %}
+            <div class="panel panel-primary">
+                <div class="panel-heading">{{ car.car_id }}</div>
+                <div class="panel-body">
+                    <p><b>Marka:</b> {{ car.car_id }}</p>
+                    <p><b>Model:</b> {{ car.car_id }}</p>
+                    <p><b>Rocznik:</b> {{ car.car_id }}</p>
+                    <p><b>Pojemność silnika:</b> {{ car.car_id }}</p>
+                    <p><b>Typ nadwozia:</b> {{ car.car_id }}</p>
+                    <p><b>Numer ubezpieczenia:</b> {{ car.car_id }}</p>
+                    <p><b>Dostępność:</b> {{ car.car_id }}</p>
+                    <p><b>Stan:</b> {{ car.car_id }}</p>
+                    <p><b>Ostatnio przesłane współrzędne:</b> {{ car.car_id }}</p>
+                </div>
+            </div>
+        {% endfor %}
 
     </div>
 </div>
