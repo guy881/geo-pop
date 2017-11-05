@@ -16,9 +16,7 @@ def login(request):
         elif request.POST.get('username', False):
             username = request.POST.get('username')
             password = request.POST.get('pwd')
-            print(username, password)
             user = authenticate(username=username, password=password)
-            print(user)
             if user is not None:
                 if user.is_active:
                     auth_login(request, user)

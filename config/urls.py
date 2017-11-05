@@ -21,7 +21,6 @@ from drivers.views import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^drivers/$', drivers, name='drivers'),
 
     url(r'^driver_list/', DriverList.as_view(), name='driver_list'),
     url(r'^driver_create/', DriverCreateView.as_view(), name='driver_create'),
@@ -29,7 +28,6 @@ urlpatterns = [
     url(r'edit/(?P<pk>[0-9]+)/basic', DriverEditBasic.as_view(), name='driver_edit_basic'),
 
     url(r'edit/(?P<pk>[0-9]+)/cars', DriverEditCars.as_view(), name='driver_edit_cars'),
-    url(r'^drivers/add$', add, name='add driver'),
     url(r'^login/$', login, name='login'),
     url(r'^logout/$', logout, name='logout'),
 ]

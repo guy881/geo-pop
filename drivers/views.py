@@ -1,27 +1,3 @@
-from django.shortcuts import render
-from django.http import HttpResponseRedirect
-from .models import Driver
-
-
-def drivers(request):
-
-    all_drivers = Driver.objects.all()
-
-    template_data = {
-        'driver_list': all_drivers
-    }
-    return render(request, "drivers/list.html", template_data)
-
-
-def add(request):
-
-    if request.method == 'POST':
-        # TODO: create driver from form data
-        return HttpResponseRedirect('/drivers')
-    else:
-        return render(request, "drivers/add.html")
-
-
 from django.utils.translation import ugettext_lazy as _
 from django.views import generic
 from django.http import HttpResponseRedirect
@@ -68,7 +44,6 @@ class DriverCreateView(LoginRequiredMixin, generic.CreateView):
 
     def post(self, request, *args, **kwargs):
         if self.request.user.is_staff:
-            print('asdasdad')
             return super().post(request, *args, **kwargs)
         else:
             print('oks')
@@ -103,7 +78,6 @@ class DriverEditBasic(LoginRequiredMixin, generic.UpdateView):
         form1 = forms.DriverBasicForm(request.POST)
 
         if form1.is_valid():
-            print('is calid')
             super(DriverEditBasic, self).post(self, request, *args, **kwargs)
             return HttpResponseRedirect(reverse('driver_image', kwargs={'pk': kwargs['pk']}))
         else:
