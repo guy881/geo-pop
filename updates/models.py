@@ -1,7 +1,7 @@
 from django.db import models
 
-# Create your models here.
 from regions.models import GeoLocalization
+from drivers.models import Driver
 
 
 class Obstacle(models.Model):
@@ -73,5 +73,4 @@ class Obstacle(models.Model):
         location = models.OneToOneField(GeoLocalization)
         created_date = models.DateTimeField()
         send_date = models.DateTimeField()
-        driver = models.OneToOneField()
-        region = models.OneToOneField()
+        driver = models.OneToOneField(Driver)

@@ -1,13 +1,12 @@
 from django.db import models
 
-# TODO from drivers.models import Driver
 from drivers.models import Driver
 from regions.models import GeoLocalization
 
 
 class Car(models.Model):
     car_id = models.IntegerField()
-    make = models.CharField()
+    brand = models.CharField()
     model = models.CharField()
     production_year = models.IntegerField()
     engine_volume = models.DecimalField()
