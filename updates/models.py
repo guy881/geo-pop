@@ -1,9 +1,12 @@
 from django.db import models
 
 # Create your models here.
+from regions.models import GeoLocalization
+
+
 class Obstacle(models.Model):
     date = models.DateField()
-    #TODO add field with GeoLocalization
+    localization = models.OneToOneField(GeoLocalization)
     Status = (
         ('1', 'Warunki jazdy bez utrudnień')
         ('3', 'Utrudnione warunki jazdy')
@@ -64,3 +67,11 @@ class Obstacle(models.Model):
         ('S08' 'Zablokowana część pasa ruchu')
         ('S09' 'Zablokowane pobocze')
     )
+
+    class Photo(models.Model):
+        image = models.ImageField()
+        location = models.OneToOneField(GeoLocalization)
+        created_date = models.DateTimeField()
+        send_date = models.DateTimeField()
+        driver = models.OneToOneField()
+        region = models.OneToOneField()
