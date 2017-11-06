@@ -1,25 +1,24 @@
 from django.db import models
 
-from drivers.models import Driver
 from regions.models import GeoLocalization
 
 
 class Car(models.Model):
     car_id = models.IntegerField()
-    brand = models.CharField()
-    model = models.CharField()
+    brand = models.CharField(max_length=50)
+    model = models.CharField(max_length=100)
     production_year = models.IntegerField()
-    engine_volume = models.DecimalField()
-    bodyType = (
-        (1, 'Sedan')
-        (2, 'Hatchback')
-        (3, 'Kombi')
-        (4, 'SUV')
-        (5, 'Truck')
+    engine_volume = models.DecimalField(decimal_places=3, max_digits=8)
+    BODY_TYPE_CHOICES = (
+        (1, 'Sedan'),
+        (2, 'Hatchback'),
+        (3, 'Kombi'),
+        (4, 'SUV'),
+        (5, 'Truck'),
         (6, 'Van')
     )
+    body_type = models.CharField(max_length=10, choices=BODY_TYPE_CHOICES, default='1')
     need_repair = models.TextField(max_length=50)
-    insurance_number = models.CharField()
+    insurance_number = models.CharField(max_length=50)
     is_available = models.BooleanField()
     last_location = models.OneToOneField(GeoLocalization)
-    driver = models.ManyToManyField(Driver)

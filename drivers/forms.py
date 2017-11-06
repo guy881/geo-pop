@@ -103,7 +103,7 @@ class DriverCarsForm(forms.ModelForm):
         return cleaned_data
 
 
-CarFormSet_no_extra = inlineformset_factory(models.Driver, models_c.Car, fields=('is_available', 'state', 'coordinates', 'velocity'), extra=0)
-CarFormSet = inlineformset_factory(models.Driver, models_c.Car, fields=('is_available', 'state', 'coordinates', 'velocity'), extra=1)
+# CarFormSet_no_extra = inlineformset_factory(models_c.Car, models.Driver, fields=('is_available', 'state', 'coordinates', 'velocity'), extra=0)
+# CarFormSet = inlineformset_factory(models_c.Car, models.Driver, fields=('is_available', 'state', 'coordinates', 'velocity'), extra=1)
 
 

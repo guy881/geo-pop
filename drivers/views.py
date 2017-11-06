@@ -3,19 +3,18 @@ from django.views import generic
 from django.http import HttpResponseRedirect
 
 from .models import Driver
-from cars.models import Car
 from django.contrib.auth.mixins import LoginRequiredMixin
 from . import forms
 from django.shortcuts import reverse, get_object_or_404
 
-
-
 from django.core.paginator import EmptyPage
+
 
 class DriverList(LoginRequiredMixin, generic.ListView):
     template_name = 'drivers/list.html'
     model = Driver
     paginate_by = 6
+
     def get(self, request, *args, **kwargs):
         ret = super().get(request, *args, **kwargs)
         page = request.GET.get('page', None)
@@ -68,7 +67,7 @@ class DriverEditBasic(LoginRequiredMixin, generic.UpdateView):
     template_name = 'drivers/edit_form.html'
 
     def get_queryset(self):
-        return  Driver.objects.all()
+        return Driver.objects.all()
 
     def get_success_url(self):
         return reverse('driver_image', kwargs={'pk': self.object.pk})
@@ -98,7 +97,6 @@ class DriverEditImage(LoginRequiredMixin, generic.UpdateView):
     model = Driver
     fields = ['image',]
     template_name = 'drivers/image_form.html'
-
 
     def get_form_class(self):
         form = modelform_factory(Driver, fields=self.fields)
@@ -176,7 +174,7 @@ class DriverEditCars(LoginRequiredMixin, generic.UpdateView):
     def post(self, request, *args, **kwargs):
         back_btn = request.POST.get('back', None)
         next_btn = request.POST.get('next', None)
-        #back without save
+        # back without save
         if back_btn:
             return HttpResponseRedirect(reverse('driver_edit_image', kwargs={'pk': kwargs['pk']}))
 
