@@ -90,8 +90,12 @@ WSGI_APPLICATION = 'config.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'geopop',
+        'USER': 'geopopuser',
+        'PASSWORD': 'password',
+        'HOST': '34.241.189.197',
+        'PORT': '5432',
     }
 }
 
@@ -144,3 +148,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'var', 'media')
+
+LOGIN_URL = 'login'
