@@ -1,0 +1,22 @@
+#map1 {
+    width: 500px;
+    height: 500px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.container {
+    margin-top: 5vh;
+}
+.buttons-panel {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+h2 {
+    text-align: center;
+}
+.btn {
+    margin: 10px 10px 10px 10px;
+}
