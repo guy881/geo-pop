@@ -16,15 +16,9 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-<<<<<<< HEAD
-from regions.views import *
-
-urlpatterns = [
-    url(r'^admin/', admin.site.urls), 
-    url(r'^regions/$', regions, name='regions'),
-=======
 from users.views import *
 from drivers.views import *
+from regions.views import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -37,5 +31,5 @@ urlpatterns = [
     url(r'edit/(?P<pk>[0-9]+)/cars', DriverEditCars.as_view(), name='driver_edit_cars'),
     url(r'^login/$', login, name='login'),
     url(r'^logout/$', logout, name='logout'),
->>>>>>> master
+    url(r'^regions/$', regions, name='regions'),
 ]
