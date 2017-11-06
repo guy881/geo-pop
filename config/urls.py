@@ -31,5 +31,9 @@ urlpatterns = [
     url(r'edit/(?P<pk>[0-9]+)/cars', DriverEditCars.as_view(), name='driver_edit_cars'),
     url(r'^login/$', login, name='login'),
     url(r'^logout/$', logout, name='logout'),
+	
     url(r'^regions/$', regions, name='regions'),
+	url(r'^manualActualization/$', manualActualization, name='manualActualization'),
+	url(r'^actualUpdates/$', actualUpdates, name='actualUpdates'),
+	url(r'^updatesHistory/$', updatesHistory, name='updatesHistory'),
 ]
