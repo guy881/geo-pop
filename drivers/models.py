@@ -1,15 +1,17 @@
 from django.db import models
 
+from cars.models import Car
+from users.models import CustomUser
+
 
 class Driver(models.Model):
+    driver_id = models.IntegerField()
     full_name = models.TextField(max_length=50)
     gender = models.TextField(max_length=50)
-    # TODO: harmonogram
+    schedule = models.TextField()
     pesel = models.TextField(max_length=11)
-    # TODO: PHOTO
-    image = models.ImageField(blank=True, null= True)
-    permissions_level = models.IntegerField(default=0)  # TODO: do przegadania
+    profile_photo = models.ImageField()
+    permissions_level = models.IntegerField()
     phone_number = models.TextField(max_length=15)
-
-    def __str__(self):
-        return self.full_name + ' ' + self.pesel
+    user = models.OneToOneField(CustomUser)
+    car = models.OneToOneField(Car)

@@ -12,7 +12,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=False, verbose_name="Aktywny")
     create_time = models.DateTimeField(auto_now_add=True, verbose_name="Data utworzenia")
     is_staff = models.BooleanField(default=False, verbose_name="Członek zespołu")
-
+    is_superuser = models.BooleanField(default=False, verbose_name="Administrator")
     objects = CustomUserManager()
 
     USERNAME_FIELD = 'email'
