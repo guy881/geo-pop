@@ -23,7 +23,7 @@ urlpatterns = [
     url(r'^$', TemplateView.as_view(template_name='home.html')),
     url(r'^admin/', admin.site.urls),
     url(r'^drivers/', include('drivers.urls', namespace='drivers'), ),
+    url(r'^regions/', include('regions.urls', namespace='regions'), ),
     url(r'^login/$', login, name='login'),
     url(r'^logout/$', logout, name='logout'),
-    url(r'^regions/', include('regions.urls', namespace='regions'), ),
 ]

@@ -3,10 +3,10 @@ from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.views.generic import TemplateView
 
-# Create your views here.
-def regions(request):
-	return render(request,"regions/regions.html")
+class RegionsView(TemplateView):
+    template_name = "regions/regions.html"
 		
 
 def manualActualization(request):

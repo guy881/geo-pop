@@ -1,7 +1,7 @@
 from django.conf.urls import url
+from regions.views import RegionsView
 
-from regions.views import regions
 
 urlpatterns = [
-    url(r'$', regions, name='regions'),
+    url(r'$', RegionsView.as_view(), name='regions'),
 ]
