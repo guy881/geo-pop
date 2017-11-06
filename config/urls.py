@@ -14,22 +14,14 @@ Including another URLconf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url
+from django.conf.urls import url, include
 from django.contrib import admin
 from users.views import *
-from drivers.views import *
-from regions.views import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-
-    url(r'^driver_list/', DriverList.as_view(), name='driver_list'),
-    url(r'^driver_create/', DriverCreateView.as_view(), name='driver_create'),
-    url(r'edit/(?P<pk>[0-9]+)/image', DriverEditImage.as_view(), name='driver_image'),
-    url(r'edit/(?P<pk>[0-9]+)/basic', DriverEditBasic.as_view(), name='driver_edit_basic'),
-
-    url(r'edit/(?P<pk>[0-9]+)/cars', DriverEditCars.as_view(), name='driver_edit_cars'),
+    url(r'^drivers/', include('drivers.urls', namespace='drivers'), ),
+    url(r'^regions/', include('regions.urls', namespace='regions'), ),
     url(r'^login/$', login, name='login'),
     url(r'^logout/$', logout, name='logout'),
-    url(r'^regions/$', regions, name='regions'),
 ]
