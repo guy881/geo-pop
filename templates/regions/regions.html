@@ -1,28 +1,13 @@
-{% extends 'index.html' %}
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <title>GEO - {% block title %}Regions{% endblock %}</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-</head>
-
-<body>
-    {% block pagecontent %}
-    <div class="container" style="margin-top: 5vh">
+{% include 'header.html' %}
+   {% block pagecontent %}
+    <div class="container">
         <div class="col-lg-12 col-md-12 col-sm-12">
-            <h2 style="text-align: center">Regions</h2>
-			<div>
-				<button type="button" name="actualUpdates" onclick="location.href='/actualUpdates'">Wyświetl aktualnie przeprowadzane aktualizacje</button>
-				<button type="button" name="manualActualization" onclick="location.href='/manualActualization'" name="manualActualization" >Ręczna aktualizacja stanu dróg</button>
-				<button type="button" name="updatesHistory" onclick="location.href='/updatesHistory'">Historia aktualizacji</button>
-			<div>
-			<h2></h2>
+            <h2>Regions</h2>
+			<div class="buttons-panel">
+				<button type="button" class="btn btn-default" name="actualUpdates" onclick="location.href='/actualUpdates'">Wyświetl aktualnie przeprowadzane aktualizacje</button>
+				<button type="button" class="btn btn-default" name="manualActualization" onclick="location.href='/manualActualization'" name="manualActualization" >Ręczna aktualizacja stanu dróg</button>
+				<button type="button" class="btn btn-default" name="updatesHistory" onclick="location.href='/updatesHistory'">Historia aktualizacji</button>
+            </div>
             <div id="map1"></div>
         </div>
     </div>
@@ -36,11 +21,9 @@
             };
             var map1 = new google.maps.Map(document.getElementById("map1"), mapOptions);
         }
-        console.log('test');
 
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdWvcN-Awg6yJiQXUvcYYTa-DnNesUny4&amp;callback=myMap" async="" defer=""></script>
-    {% endblock %}
-</body>
 
-</html>
+{% endblock %}
+{% include 'footer.html' %}
