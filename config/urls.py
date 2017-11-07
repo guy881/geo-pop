@@ -18,6 +18,7 @@ from django.conf.urls import url
 from django.contrib import admin
 from users.views import *
 from drivers.views import *
+from cars.views import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
@@ -30,4 +31,6 @@ urlpatterns = [
     url(r'edit/(?P<pk>[0-9]+)/cars', DriverEditCars.as_view(), name='driver_edit_cars'),
     url(r'^login/$', login, name='login'),
     url(r'^logout/$', logout, name='logout'),
+
+    url(r'^car_list/', CarListView.as_view(), name='car_list'),
 ]
