@@ -3,6 +3,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
 from .models import Car
 
@@ -13,3 +14,7 @@ class CarListView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         return Car.objects.all()
+
+class CarCreateView(CreateView):
+    model = Car
+    fields = ['brand', 'production_year','engine_volume','need_repair','insurance_number','is_available']

@@ -33,4 +33,5 @@ urlpatterns = [
     url(r'^logout/$', logout, name='logout'),
 
     url(r'^car_list/', CarListView.as_view(), name='car_list'),
+    url(r'^car_create/', CarCreateView.as_view(), name='car_create'),
 ]
