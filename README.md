@@ -9,7 +9,7 @@ Projekt geo-pop
 
 **Zasady tworzenia kodu:**
 - Kod oraz wiadomości commintów piszemy w języku angielskim
-- Używamy widoków opartych na klasach - https://docs.djangoproject.com/en/1.11/topics/class-based-views/
+- Używamy widoków opartych na klasach - https://docs.djangoproject.com/en/1.11/topics/class-based-views/ atrybuty widoków: https://ccbv.co.uk/ 
 - API dla aplikacji mobilnej będzie napisane przy pomocy django-rest-framework
 - Pracujemy na branchach
 - Po zmianach w modelu uruchamiamy polecenie `python manage.py makemigrations` i dodajemy pliki, które zostały wygenerowane do gita
