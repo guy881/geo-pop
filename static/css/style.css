@@ -20,3 +20,11 @@ h2 {
 .btn {
     margin: 10px 10px 10px 10px;
 }
+
+/* violet bar below navbar */
+.navbar-default {
+    border-color: #5000B2;
+}
+.navbar-static-top {
+    border-width: 0 0 3px;
+}
