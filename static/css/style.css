@@ -23,3 +23,9 @@ h2 {
 .btn {
     margin: 10px 10px 10px 10px;
 }
+.save-button {
+    float: right;
+}
+.container-resources {
+    margin: 20px 20px 20px 20px;
+}
