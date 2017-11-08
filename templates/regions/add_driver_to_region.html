@@ -1,0 +1,22 @@
+{% include 'header.html' %}
+
+<div class="container" style="margin-top: 5vh">
+    <div class="col-md-10 col-md-offset-1">
+
+        {% if success_message %}
+            <div class="alert alert-success">
+                {{ success_message }}
+            </div>
+        {% endif %}
+
+        <div class="row">
+            <div class="col-md-8">
+                <h2 style="text-align: center">Przydziel zasoby do wybranego obszaru</h2>
+            </div>
+            
+        </div>
+
+    </div>
+</div>
+
+{% include 'footer.html' %}

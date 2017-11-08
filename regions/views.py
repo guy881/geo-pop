@@ -7,6 +7,9 @@ from django.views.generic import TemplateView
 
 class RegionsView(TemplateView):
     template_name = "regions/regions.html"
+    
+class AddDriverToRegionView(TemplateView):
+    template_name = "regions/add_driver_to_region.html"
 		
 
 def manualActualization(request):

@@ -1,6 +1,9 @@
+body {
+    min-height: 100%;
+}
 #map1 {
-    width: 500px;
-    height: 500px;
+    width: 600px;
+    height: 600px;
     display: block;
     margin-left: auto;
     margin-right: auto;
