@@ -5,18 +5,22 @@
     margin-left: auto;
     margin-right: auto;
 }
+
 .container {
     margin-top: 5vh;
 }
+
 .buttons-panel {
     margin-top: 20px;
     margin-bottom: 20px;
     display: flex;
     justify-content: center;
 }
+
 h2 {
     text-align: center;
 }
+
 .btn {
     margin: 10px 10px 10px 10px;
 }
@@ -25,6 +29,11 @@ h2 {
 .navbar-default {
     border-color: #5000B2;
 }
+
 .navbar-static-top {
     border-width: 0 0 3px;
+}
+
+#success_message {
+    display: none;
 }
