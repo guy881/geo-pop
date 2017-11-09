@@ -72,8 +72,8 @@ class Obstacle(models.Model):
     result = models.CharField(max_length=50, choices=RESULT_CHOICES)
 
     class Photo(models.Model):
-        image = models.ImageField()
+        image = models.ImageField(null=True)
         location = models.OneToOneField(GeoLocalization)
-        created_date = models.DateTimeField()
+        created_date = models.DateTimeField(null=True)
         send_date = models.DateTimeField()
         driver = models.OneToOneField(Driver)
