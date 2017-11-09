@@ -1,6 +1,7 @@
 body {
     min-height: 100%;
 }
+
 #map1 {
     width: 600px;
     height: 600px;
@@ -19,9 +20,11 @@ body {
 h2 {
     text-align: center;
 }
+
 .save-button {
     float: right;
 }
+
 .container-resources {
     margin: 20px 20px 20px 20px;
 }
@@ -34,6 +37,18 @@ h2 {
 .navbar-static-top {
     border-width: 2px 0 2px;
 }
-.btn {
-     margin: 10px 10px 10px 10px;
- }
+
+.btn-outline-geo {
+    color: #5000b2;
+    background-image: none;
+    background-color: transparent;
+    border-color: #5000b2;
+    transition : all .2s ease-in-out;
+}
+
+.btn-outline-geo:hover {
+    color: #fff;
+    background-color: #5000b2;
+    border-color: #5000b2;
+    transition : all .2s ease-in-out;
+}
