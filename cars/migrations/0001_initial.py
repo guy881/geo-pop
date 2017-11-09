@@ -27,7 +27,6 @@ class Migration(migrations.Migration):
                 ('need_repair', models.TextField(max_length=50)),
                 ('insurance_number', models.CharField(max_length=50)),
                 ('is_available', models.BooleanField()),
-                ('last_location', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to='regions.GeoLocalization')),
             ],
         ),
     ]
