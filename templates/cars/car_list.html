@@ -1,9 +1,47 @@
-{% if car_list %}
-    <ul>
-    {% for car in car_list %}
-        <li>{{ car.brand }}</li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No cars are available.</p>
-{% endif %}
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="container">
+        <div class="col-md-10 col-md-offset-1">
+
+            {% if success_message %}
+                <div class="alert alert-success">
+                    {{ success_message }}
+                </div>
+            {% endif %}
+
+            <div class="row">
+                <div class="col-md-8">
+                    <h2>Lista Samochodów:</h2>
+                </div>
+                <div class="col-md-2">
+                    <a href="{% url 'cars:car_create' %}" class="btn btn-default" role="button">Dodaj Samochód</a>
+                </div>
+            </div>
+
+            {% if all_cars %}
+                {% for car in all_cars %}
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">{{ car.brand }} {{ car.model }}</div>
+                        <div class="panel-body">
+                            <p><b>Marka:</b> {{ car.brand }}</p>
+                            <p><b>Model:</b> {{ car.model }}</p>
+                            <p><b>Rocznik:</b> {{ car.production_year }}</p>
+                            <p><b>Pojemność silnika:</b> {{ car.engine_volume }}</p>
+                            <p><b>Typ nadwozia:</b> {{ car.body_type }}</p>
+                            <p><b>Numer ubezpieczenia:</b> {{ car.insurance_number }}</p>
+                            <p><b>Dostępność:</b> {{ car.is_available|yesno:"Dostępny,Niedostępny"}}</p>
+                            <p><b>Stan:</b> {{ car.need_repair }}</p>
+                            <p><b>Ostatnio przesłane współrzędne:</b> {{ car.last_location }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <h3>Brak samochodów.</h3>
+            {% endif %}
+
+        </div>
+    </div>
+
+{% endblock %}

@@ -16,7 +16,7 @@ class Car(models.Model):
     brand = models.CharField(max_length=50)
     model = models.CharField(max_length=100)
     production_year = models.IntegerField()
-    engine_volume = models.DecimalField(decimal_places=3, max_digits=8)
+    engine_volume = models.DecimalField(decimal_places=1, max_digits=3)
     body_type = models.CharField(max_length=10, choices=BODY_TYPE_CHOICES, default='1')
     need_repair = models.TextField(max_length=50)
     insurance_number = models.CharField(max_length=50)
