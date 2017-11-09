@@ -3,9 +3,10 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
+
 
 from .models import Car
+from .forms import CarForm
 
 class CarListView(LoginRequiredMixin, generic.ListView):
     template_name = 'cars/car_list.html'
@@ -15,6 +16,19 @@ class CarListView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         return Car.objects.all()
 
-class CarCreateView(CreateView):
+class CarCreateView(LoginRequiredMixin, generic.CreateView):
+    form_class = CarForm
     model = Car
-    fields = ['brand', 'production_year','engine_volume','need_repair','insurance_number','is_available']
+    #fields = '__all__'
+    template_name_suffix = '_create_form'
+    success_url ='/car_list/'
+
+class CarUpdateView(LoginRequiredMixin, generic.UpdateView):
+    model = Car
+    fields = '__all__'
+    template_name_suffix = '_update_form'
+
+class CarDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Car
+    fields = '__all__'
+    template_name_suffix = '_delete_form'
