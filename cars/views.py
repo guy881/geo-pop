@@ -9,9 +9,8 @@ from .models import Car
 from .forms import CarForm
 
 class CarListView(LoginRequiredMixin, generic.ListView):
-    template_name = 'cars/car_list.html'
-    #model = Car
-    context_object_name = 'car_list'
+    template_name = 'cars/car_list_final.html'
+    context_object_name = 'all_cars'
 
     def get_queryset(self):
         return Car.objects.all()

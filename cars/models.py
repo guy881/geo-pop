@@ -5,14 +5,14 @@ from regions.models import GeoLocalization
 
 class Car(models.Model):
     BODY_TYPE_CHOICES = (
-        ('1', 'Sedan'),
-        ('2', 'Hatchback'),
-        ('3', 'Kombi'),
-        ('4', 'SUV'),
-        ('5', 'Truck'),
-        ('6', 'Van')
+        ('sedan', 'Sedan'),
+        ('hatchback', 'Hatchback'),
+        ('kombi', 'Kombi'),
+        ('suv', 'SUV'),
+        ('truck', 'Truck'),
+        ('van', 'Van')
     )
-    
+
     brand = models.CharField(max_length=50)
     model = models.CharField(max_length=100)
     production_year = models.IntegerField()
@@ -21,4 +21,4 @@ class Car(models.Model):
     need_repair = models.TextField(max_length=50)
     insurance_number = models.CharField(max_length=50)
     is_available = models.BooleanField()
-    last_location = models.OneToOneField(GeoLocalization,default=None)
+    last_location = models.OneToOneField(GeoLocalization,null=True)
