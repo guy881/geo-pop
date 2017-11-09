@@ -26,9 +26,7 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^drivers/', include('drivers.urls', namespace='drivers'), ),
     url(r'^regions/', include('regions.urls', namespace='regions'), ),
+    url(r'^cars/', include('cars.urls', namespace='cars'), ),
     url(r'^login/$', login, name='login'),
     url(r'^logout/$', logout, name='logout'),
-
-    url(r'^car_list/', CarListView.as_view(), name='car_list'),
-    url(r'^car_create/', CarCreateView.as_view(), name='car_create'),
 ]

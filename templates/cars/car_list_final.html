@@ -16,7 +16,7 @@
                     <h2>Lista Samochodów:</h2>
                 </div>
                 <div class="col-md-2">
-                    <a href="add" class="btn btn-default" role="button">Dodaj Samochód</a>
+                    <a href="{% url 'cars:car_create' %}" class="btn btn-default" role="button">Dodaj Samochód</a>
                 </div>
             </div>
 
@@ -31,8 +31,8 @@
                             <p><b>Pojemność silnika:</b> {{ car.engine_volume }}</p>
                             <p><b>Typ nadwozia:</b> {{ car.body_type }}</p>
                             <p><b>Numer ubezpieczenia:</b> {{ car.insurance_number }}</p>
-                            <p><b>Dostępność:</b> {{ car.is_available }}</p>
-                            <p><b>Stan:</b> {{ car.needs_repair }}</p>
+                            <p><b>Dostępność:</b> {{ car.is_available|yesno:"Dostępny,Niedostępny"}}</p>
+                            <p><b>Stan:</b> {{ car.need_repair }}</p>
                             <p><b>Ostatnio przesłane współrzędne:</b> {{ car.last_location }}</p>
                         </div>
                     </div>

@@ -18,7 +18,6 @@ class CarListView(LoginRequiredMixin, generic.ListView):
 class CarCreateView(LoginRequiredMixin, generic.CreateView):
     form_class = CarForm
     model = Car
-    #fields = '__all__'
     template_name_suffix = '_create_form'
     success_url ='/car_list/'
 
