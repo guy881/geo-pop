@@ -76,9 +76,9 @@ Przykład można zobaczyć w templatce `users/login.html`
 
 * Rozmiar inputów w formularzach (oraz w zasadzie wszystkich innych elementów) powinien być domyślny.
 
-* Proponujemy również standardowe `modale` bootstrapowe: http://getbootstrap.com/docs/4.0/components/modal/#live-demo
+* Proponujemy również standardowe `modale` bootstrapowe: https://getbootstrap.com/docs/3.3/javascript/#modals
 
-* Do prezentacji postępów aktualizacji obszarów proponujemy użyć ten `progress bar`: http://getbootstrap.com/docs/4.0/components/progress/#labels
+* Do prezentacji postępów aktualizacji obszarów proponujemy użyć ten `progress bar`: https://getbootstrap.com/docs/3.3/components/#labels
 
 * Jakby ktoś chciał używać jakichkolwiek ikonek (np. na guzikach przy 'Dodaj kierowcę') to śmiało, ale proszę korzystać tylko i wyłącznie z tego Bootstrapowego zbioru: https://getbootstrap.com/docs/3.3/components/
 
