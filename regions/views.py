@@ -9,7 +9,13 @@ from drivers.models import Driver
 
 class RegionsView(TemplateView):
     template_name = "regions/regions.html"
-    
+	
+    def getRegions(self, request):
+        '''regions = Region.objects.all()'''
+        '''js_data = json.dumps(list(regions))'''
+        return render(request, 'regions/regions.html', {"my_data": "costam"})
+
+
 class AddDriverToRegionView(TemplateView):
     template_name = "regions/add_driver_to_region.html"
      

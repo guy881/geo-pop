@@ -21,6 +21,15 @@
             };
             var map1 = new google.maps.Map(document.getElementById("map1"), mapOptions);
 			
+			//
+			//tutaj nie działa
+			var regions = '{{ my_data }}';
+			alert(regions); 
+			//for (r in regions) {
+				//alert(r); 
+			//};
+			//
+			
 			var rectangle = new google.maps.Rectangle({
                   strokeWeight: 2,
                   fillColor: '#00FF00',
@@ -48,8 +57,6 @@
 					contextmenuDir.style.visibility = "hidden";
 				});
             });
-
-
 
 			function getCanvasXY(caurrentLatLng, map){
 				var scale = Math.pow(2, map1.getZoom());
