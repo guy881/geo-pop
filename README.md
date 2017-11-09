@@ -81,7 +81,7 @@ Przykład można zobaczyć w templatce `users/login.html`
 
 * Proponujemy również standardowe `modale` bootstrapowe: https://getbootstrap.com/docs/3.3/javascript/#modals
 
-* Do prezentacji postępów aktualizacji obszarów proponujemy użyć ten `progress bar`: https://getbootstrap.com/docs/3.3/components/#labels
+* Do prezentacji postępów aktualizacji obszarów proponujemy użyć ten `progress bar`: https://getbootstrap.com/docs/3.3/components/#progress
 
 * Jakby ktoś chciał używać jakichkolwiek ikonek (np. na guzikach przy 'Dodaj kierowcę') to śmiało, ale proszę korzystać tylko i wyłącznie z tego Bootstrapowego zbioru: https://getbootstrap.com/docs/3.3/components/
 
