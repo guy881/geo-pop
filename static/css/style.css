@@ -29,3 +29,12 @@ h2 {
 .container-resources {
     margin: 20px 20px 20px 20px;
 }
+}
+
+/* violet bar below navbar */
+.navbar-default {
+    border-color: #5000B2;
+}
+.navbar-static-top {
+    border-width: 0 0 3px;
+}
