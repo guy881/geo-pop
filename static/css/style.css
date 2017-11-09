@@ -1,0 +1,27 @@
+#map1 {
+    width: 500px;
+    height: 500px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.buttons-panel {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
+}
+
+h2 {
+    text-align: center;
+}
+
+/* violet bar below navbar */
+.navbar-default {
+    border-color: #5000B2;
+}
+
+.navbar-static-top {
+    border-width: 2px 0 2px;
+}

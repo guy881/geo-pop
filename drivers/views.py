@@ -46,7 +46,7 @@ class DriverCreateView(LoginRequiredMixin, generic.CreateView):
             return super().post(request, *args, **kwargs)
         else:
             print('oks')
-            return reverse('driver_create', kwargs={'error': 'You are not a staff member'})
+            return reverse('drivers:create', kwargs={'error': 'You are not a staff member'})
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -59,7 +59,7 @@ class DriverCreateView(LoginRequiredMixin, generic.CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
-        return reverse('driver_image', kwargs={'pk': self.object.pk})
+        return reverse('drivers:edit_image', kwargs={'pk': self.object.pk})
 
 
 class DriverEditBasic(LoginRequiredMixin, generic.UpdateView):
@@ -70,7 +70,7 @@ class DriverEditBasic(LoginRequiredMixin, generic.UpdateView):
         return Driver.objects.all()
 
     def get_success_url(self):
-        return reverse('driver_image', kwargs={'pk': self.object.pk})
+        return reverse('drivers:edit_image', kwargs={'pk': self.object.pk})
 
     def post(self, request, *args, **kwargs):
         next_btn = request.POST.get('next', None)
@@ -78,12 +78,11 @@ class DriverEditBasic(LoginRequiredMixin, generic.UpdateView):
 
         if form1.is_valid():
             super(DriverEditBasic, self).post(self, request, *args, **kwargs)
-            return HttpResponseRedirect(reverse('driver_image', kwargs={'pk': kwargs['pk']}))
+            return HttpResponseRedirect(reverse('drivers:edit_image', kwargs={'pk': kwargs['pk']}))
         else:
-           kwargs['error']= _('Please fill out all required fields!')
-        kwargs['success']= _('Data saved correctly!')
+            kwargs['error'] = _('Please fill out all required fields!')
+        kwargs['success'] = _('Data saved correctly!')
         return super(DriverEditBasic, self).post(self, request, *args, **kwargs)
-
 
 
 import base64
@@ -95,7 +94,7 @@ from django.forms import modelform_factory
 class DriverEditImage(LoginRequiredMixin, generic.UpdateView):
     # form_class = forms.AllImagesForm
     model = Driver
-    fields = ['image',]
+    fields = ['image', ]
     template_name = 'drivers/image_form.html'
 
     def get_form_class(self):
@@ -104,10 +103,10 @@ class DriverEditImage(LoginRequiredMixin, generic.UpdateView):
         return form
 
     def get_queryset(self):
-        return  Driver.objects.all()
+        return Driver.objects.all()
 
     def get_success_url(self):
-        return reverse('driver_edit_cars', kwargs={'pk': self.object.pk})
+        return reverse('drivers:edit_cars', kwargs={'pk': self.object.pk})
 
     def post(self, request, *args, **kwargs):
         back_btn = request.POST.get('back', None)
@@ -133,14 +132,14 @@ class DriverEditImage(LoginRequiredMixin, generic.UpdateView):
                 request.FILES[field] = image
 
         if back_btn:
-            return HttpResponseRedirect(reverse('driver_edit_basic', kwargs={'pk': kwargs['pk']}))
+            return HttpResponseRedirect(reverse('drivers:edit_basic', kwargs={'pk': kwargs['pk']}))
         if next_btn:
             form1 = form_class(request.POST)
             if form1.is_valid():
                 super(DriverEditImage, self).post(self, request, *args, **kwargs)
-                return HttpResponseRedirect(reverse('driver_edit_cars', kwargs={'pk': kwargs['pk']}))
+                return HttpResponseRedirect(reverse('drivers:edit_cars', kwargs={'pk': kwargs['pk']}))
             else:
-               kwargs['error']= _('Please fill out all required fields!')
+                kwargs['error'] = _('Please fill out all required fields!')
         else:
             form1 = forms.DriverImageForm(request.POST, validate=False)
             kwargs['success'] = _('Data saved correctly!')
@@ -156,7 +155,7 @@ class DriverEditCars(LoginRequiredMixin, generic.UpdateView):
         return Driver.objects.all()
 
     def get_success_url(self):
-        return reverse('driver_edit_cars', kwargs={'pk': self.kwargs['pk']})
+        return reverse('drivers:edit_cars', kwargs={'pk': self.kwargs['pk']})
 
     def get_context_data(self, **kwargs):
         obj = get_object_or_404(Driver, pk=self.kwargs['pk'])
@@ -176,7 +175,7 @@ class DriverEditCars(LoginRequiredMixin, generic.UpdateView):
         next_btn = request.POST.get('next', None)
         # back without save
         if back_btn:
-            return HttpResponseRedirect(reverse('driver_edit_image', kwargs={'pk': kwargs['pk']}))
+            return HttpResponseRedirect(reverse('drivers:edit_image', kwargs={'pk': kwargs['pk']}))
 
         obj = get_object_or_404(Driver, pk=self.kwargs['pk'])
         post_data = request.POST or None
@@ -190,10 +189,9 @@ class DriverEditCars(LoginRequiredMixin, generic.UpdateView):
         elif next_btn:
             if form.is_valid() and parent_form.is_valid():
                 super(DriverEditCars, self).post(request, *args, **kwargs)
-                return HttpResponseRedirect(reverse('driver_edit_cars', kwargs={'pk': kwargs['pk']}))
+                return HttpResponseRedirect(reverse('drivers:edit_cars', kwargs={'pk': kwargs['pk']}))
             else:
-               kwargs['error']= _('Please fill out all required fields!')
+                kwargs['error'] = _('Please fill out all required fields!')
         else:
-           kwargs['success']= _('Data saved correctly!')
+            kwargs['success'] = _('Data saved correctly!')
         return super(DriverEditCars, self).post(request, *args, **kwargs)
-

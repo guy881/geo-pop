@@ -1,4 +1,6 @@
-{% include 'header.html' %}
+{% extends 'base.html' %}
+
+{% block content %}
 
 <div class="container" style="margin-top: 5vh">
     <div class="col-md-10 col-md-offset-1">
@@ -14,13 +16,13 @@
                 <h2 style="text-align: center">Lista Driver:</h2>
             </div>
             <div class="col-md-2">
-                <a href="{% url 'driver_create' %}" class="btn btn-default" role="button">Dodaj driver</a>
+                <a href="{% url 'drivers:create' %}" class="btn btn-default" role="button">Dodaj driver</a>
             </div>
         </div>
         {% if object_list %}
             <ul>
             {% for d in  object_list %}
-                <li>{{ d }} <a href="{% url 'driver_edit_basic' pk=d.pk %} "> Edytuj </a></li>
+                <li>{{ d }} <a href="{% url 'drivers:driver_edit_basic' pk=d.pk %} "> Edytuj </a></li>
             {% endfor %}
             </ul>
         {% else %}
@@ -30,5 +32,5 @@
     </div>
 </div>
 
-{% include 'footer.html' %}
+{% endblock %}
 

@@ -1,5 +1,3 @@
-from django.template import RequestContext
-from django.shortcuts import render_to_response
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate
 from django.contrib.auth import login as auth_login
@@ -7,7 +5,6 @@ from django.contrib.auth import logout as auth_logut
 from django.shortcuts import render
 
 
-# Create your views here.
 def login(request):
     error = ''
     if request.method == "POST":
@@ -20,7 +17,7 @@ def login(request):
             if user is not None:
                 if user.is_active:
                     auth_login(request, user)
-                    return HttpResponseRedirect("/admin")
+                    return HttpResponseRedirect("/")
             else:
                 error = 'Niepoprawne dane użytkownika'
     return render(request, "users/login.html", {"error": error})

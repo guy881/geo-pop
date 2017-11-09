@@ -97,6 +97,11 @@ DATABASES = {
         'HOST': '34.241.189.197',
         'PORT': '5432',
     }
+    # local sqlite, uncomment if you need it
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+    # }
 }
 
 
@@ -140,13 +145,15 @@ USE_TZ = True
 STATIC_URL = '/static/'
 # Static files (CSS, JavaScript, Images)
 
-BASE_STATICFILES_DIR = os.path.join(BASE_DIR, 'static', 'public')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
 
-STATICFILES_DIRS = [
-    BASE_STATICFILES_DIR
-]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'var', 'media')
 
 LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/"
