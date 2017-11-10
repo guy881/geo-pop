@@ -1,28 +1,28 @@
-def isValid(driver):
+def is_valid(driver):
     #TODO define rules to validate
     return True
 
 
-def NoTasksPending(driver):
+def no_task_pending(driver):
     #TODO specify bussiness flow
     return True
 
 
 class DriversRepository:
 
-    def addDriver(self, driver):
-        if isValid(driver):
+    def add_driver(self, driver):
+        if is_valid(driver):
             driver.save()
 
-    def updateDriver(self, driver):
-        if isValid(driver):
+    def update_driver(self, driver):
+        if is_valid(driver):
             driver
 
-    def modifySchedule(self, listOfAvailability):
+    def modify_schedule(self, listOfAvailability):
         #TODO discuss how it should be handled and stored
         return "not implemented yet"
     
 
-    def deleteDriver(self, driver):
-        if NoTasksPending(driver):
+    def delete_driver(self, driver):
+        if no_task_pending(driver):
             driver.delete()
