@@ -5,9 +5,11 @@
     <div class="container">
         <div class="col-md-10 col-md-offset-1">
 
-            {% if success_message %}
+            {% if messages %}
                 <div class="alert alert-success">
-                    {{ success_message }}
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
                 </div>
             {% endif %}
 
