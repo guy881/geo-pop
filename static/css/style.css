@@ -43,12 +43,22 @@ h2 {
     background-image: none;
     background-color: transparent;
     border-color: #5000b2;
-    transition : all .2s ease-in-out;
+    transition: all .2s ease-in-out;
 }
 
 .btn-outline-geo:hover {
     color: #fff;
     background-color: #5000b2;
     border-color: #5000b2;
-    transition : all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+}
+
+.panel-primary {
+    border-color: #5000B2;
+}
+
+.panel-primary > .panel-heading {
+    color: #fff;
+    background-color: #5000B2;
+    border-color: #5000B2;
 }
