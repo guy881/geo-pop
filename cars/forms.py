@@ -37,7 +37,7 @@ class CarForm(ModelForm):
                 self.add_error('model', ValidationError('Nazwa modelu może się składać tylko z liter i cyfr!'))
             if production_year <= 1769 or production_year > datetime.datetime.now().year:
                 self.add_error('production_year', forms.ValidationError('Rocznik poza zakresem!'))
-            if engine_volume <= 0.0 or engine_volume >= 10.0:
+            if engine_volume <= 0.0 or engine_volume >= 10000.0:
                 self.add_error('engine_volume', forms.ValidationError('Pojemność silnika poza zakresem!'))
             if not re.match("^[A-Za-z0-9_-]+$", insurance_number):
                 self.add_error('insurance_number', forms.ValidationError('Numer ubezpieczenia może się składać tylko z liter i cyfr!'))
