@@ -14,49 +14,49 @@
     <script type="text/javascript">
         function myMap() {
             var mapOptions = {
-                center: new google.maps.LatLng(52.2297700, 19.0117800),
-                zoom: 6,
+                center: new google.maps.LatLng(52.22977, 21.01178),
+                zoom: 10,
                 mapTypeId: google.maps.MapTypeId.TERRAIN,
                 disableDefaultUI: true,
             };
             var map1 = new google.maps.Map(document.getElementById("map1"), mapOptions);
 			
-			//
-			//tutaj nie działa
-			var regions = '{{ my_data }}';
-			alert(regions); 
-			//for (r in regions) {
-				//alert(r); 
-			//};
-			//
 			
-			var rectangle = new google.maps.Rectangle({
-                  strokeWeight: 2,
-                  fillColor: '#00FF00',
-                  fillOpacity: 0.35,
-                  map: map1,
-                  bounds: {
-                    north: 53.685,
-                    south: 52.671,
-                    east: 17.234,
-                    west: 15.251
-                  }
-            });
-				
-            rectangle.addListener('rightclick', function(event){
-				var projection = map1.getProjection() ;
-				$('.contextmenu').remove();
-				var contextmenuDir = document.createElement("div");
-				contextmenuDir.className  = 'contextmenu';
-				contextmenuDir.innerHTML = '<a id="menu1"><div class="context">Zaznacz obszar do aktualizacji<\/div><\/a>'
-										   + '<a id="menu2"><div class="context">Przydziel zasoby do obszaru<\/div><\/a>';
-				$(map1.getDiv()).append(contextmenuDir);
-				setMenuXY(event.latLng, map1);
-				contextmenuDir.style.visibility = "visible";
-				map1.addListener('idle', function(event){
-					contextmenuDir.style.visibility = "hidden";
+			<!-- -->
+			var nlat = {{nlat}};
+			var nlon = {{nlon}};
+			var slat = {{slat}};
+			var slon = {{slon}};
+			for (i = 0; i < nlat.length; i++) {
+				var rectangle = new google.maps.Rectangle({
+					  strokeWeight: 2,
+					  fillColor: '#00FF00',
+					  fillOpacity: 0.35,
+					  map: map1,
+					  bounds: {
+						north: parseFloat(nlat[i]),
+						south: parseFloat(slat[i]),
+						east: parseFloat(slon[i]),
+						west: parseFloat(nlon[i])
+					  }
 				});
-            });
+				rectangle.addListener('rightclick', function(event){
+					var projection = map1.getProjection() ;
+					$('.contextmenu').remove();
+					var contextmenuDir = document.createElement("div");
+					contextmenuDir.className  = 'contextmenu';
+					contextmenuDir.innerHTML = '<a id="menu1"><div class="context">Zaznacz obszar do aktualizacji<\/div><\/a>'
+											   + '<a id="menu2"><div class="context">Przydziel zasoby do obszaru<\/div><\/a>';
+					$(map1.getDiv()).append(contextmenuDir);
+					setMenuXY(event.latLng, map1);
+					contextmenuDir.style.visibility = "visible";
+					map1.addListener('idle', function(event){
+						contextmenuDir.style.visibility = "hidden";
+					});
+				});
+			
+			}
+
 
 			function getCanvasXY(caurrentLatLng, map){
 				var scale = Math.pow(2, map1.getZoom());
