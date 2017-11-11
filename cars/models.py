@@ -12,7 +12,7 @@ class Car(models.Model):
         ('truck', 'Truck'),
         ('van', 'Van')
     )
-    
+
     brand = models.CharField(max_length=50)
     model = models.CharField(max_length=100)
     production_year = models.IntegerField()
@@ -21,4 +21,4 @@ class Car(models.Model):
     need_repair = models.TextField(max_length=50, null=True, blank=True)
     insurance_number = models.CharField(max_length=50, null=True, blank=True)
     is_available = models.BooleanField()
-    last_location = models.OneToOneField(GeoLocalization, null=True)
+    last_location = models.OneToOneField(GeoLocalization,null=True)
