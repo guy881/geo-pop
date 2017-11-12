@@ -5,9 +5,9 @@
 <div class="container" style="margin-top: 5vh">
     <div class="col-md-10 col-md-offset-1">
 
-        {% if success_message %}
+        {% if success or error %}
             <div class="alert alert-success">
-                {{ success_message }}
+                {{ success }} {{ error }}
             </div>
         {% endif %}
 
@@ -22,7 +22,7 @@
         {% if object_list %}
             <ul>
             {% for d in  object_list %}
-                <li>{{ d }} <a href="{% url 'drivers:driver_edit_basic' pk=d.pk %} "> Edytuj </a></li>
+                <li>{{ d.full_name }} <a href="{% url 'drivers:edit_basic' pk=d.pk %} "> Edytuj </a></li>
             {% endfor %}
             </ul>
         {% else %}
