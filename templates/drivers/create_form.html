@@ -20,7 +20,7 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                             <input name="full_name" id="full_name" placeholder="Full name" class="form-control"
-                                   type="text" onblur="check_full_name()">
+                                   type="text" onblur="check_full_name(this.form.name)">
                         </div>
                     </div>
                     <span id="full_name_glyph" style="visibility: hidden;color: orangered"><i
@@ -32,7 +32,7 @@
                     <div class="col-md-4 inputGroupContainer">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <select name="gender" id="gender" class="form-control selectpicker" onblur="check_gender()">
+                            <select name="gender" id="gender" class="form-control selectpicker" onblur="check_gender(this.form.name)">
                                 <option value="default">Select your gender</option>
                                 <option>man</option>
                                 <option>woman</option>
@@ -51,7 +51,7 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
                             <textarea class="form-control" id="schedule" name="schedule"
-                                      placeholder="Schedule" onblur="check_schedule()"></textarea>
+                                      placeholder="Schedule" onblur="check_schedule(this.form.name)"></textarea>
                         </div>
                     </div>
                     <span id="schedule_glyph" style="visibility: hidden;color: orangered"><i
@@ -63,7 +63,7 @@
                     <div class="col-md-4 inputGroupContainer">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
-                            <input name="pesel" id="pesel" placeholder="71010111111" class="form-control" type="text" onblur="check_pesel()">
+                            <input name="pesel" id="pesel" placeholder="71010111111" class="form-control" type="text" onblur="check_pesel(this.form.name)">
                         </div>
                     </div>
                     <span id="pesel_glyph" style="visibility: hidden;color: orangered"><i
@@ -76,7 +76,7 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
                             <input name="phone_number" id="phone_number" placeholder="600600600" class="form-control"
-                                   type="text" onblur="check_phone_number()">
+                                   type="text" onblur="check_phone_number(this.form.name)">
                         </div>
                     </div>
                     <span id="phone_number_glyph" style="visibility: hidden;color: orangered"><i
@@ -88,12 +88,12 @@
                     <div class="col-md-4 inputGroupContainer">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
-                            <select name="permissions_level" id="permissions_level" class="form-control selectpicker", onblur="check_permissions_level()">
-                                <option value="default">Select permissions level</option>
+                            <input type="number" name="permissions_level" id="permissions_level" class="form-control selectpicker" placeholder="10" onblur="check_permissions_level(this.form.name)">
+                                {% comment %}<option value="default">Select permissions level</option>
                                 <option>1</option>
                                 <option>2</option>
-                                <option>3</option>
-                            </select>
+                                <option>3</option>{% endcomment %}
+
                         </div>
                     </div>
                     <span id="permissions_level_glyph" style="visibility: hidden;color: orangered"><i

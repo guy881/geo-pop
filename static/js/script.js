@@ -40,8 +40,8 @@ function showOK(field, glyph) {
     return true;
 }
 
-function check_full_name() {
-    var full_name = document.forms["create_driver_form"]["full_name"].value;
+function check_full_name(form_name) {
+    var full_name = document.forms[form_name]["full_name"].value;
     var field = document.getElementById("full_name_error");
     var glyph = document.getElementById("full_name_glyph");
     if (isEmpty(full_name)) {
@@ -55,8 +55,8 @@ function check_full_name() {
     }
 }
 
-function check_gender() {
-    var gender = document.forms["create_driver_form"]["gender"].value;
+function check_gender(form_name) {
+    var gender = document.forms[form_name]["gender"].value;
     var field = document.getElementById("gender_error");
     var glyph = document.getElementById("gender_glyph");
     if (isEmpty(gender)) {
@@ -81,8 +81,8 @@ function check_gender() {
     }
 }*/
 
-function check_pesel() {
-    var pesel = document.forms["create_driver_form"]["pesel"].value;
+function check_pesel(form_name) {
+    var pesel = document.forms[form_name]["pesel"].value;
     var field = document.getElementById("pesel_error");
     var glyph = document.getElementById("pesel_glyph");
     if (isEmpty(pesel)) {
@@ -94,8 +94,8 @@ function check_pesel() {
     }
 }
 
-function check_phone_number() {
-    var phone_number = document.forms["create_driver_form"]["phone_number"].value;
+function check_phone_number(form_name) {
+    var phone_number = document.forms[form_name]["phone_number"].value;
     var field = document.getElementById("phone_number_error");
     var glyph = document.getElementById("phone_number_glyph");
     if (isEmpty(phone_number)) {
@@ -107,8 +107,8 @@ function check_phone_number() {
     }
 }
 
-function check_permissions_level() {
-    var permissions_level = document.forms["create_driver_form"]["permissions_level"].value;
+function check_permissions_level(form_name) {
+    var permissions_level = document.forms[form_name]["permissions_level"].value;
     var field = document.getElementById("permissions_level_error");
     var glyph = document.getElementById("permissions_level_glyph");
     if (isEmpty(permissions_level)) {

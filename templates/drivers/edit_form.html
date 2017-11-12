@@ -9,7 +9,7 @@
         <h2>{{ error }}</h2>
 
 
-        <form class="well form-horizontal" action="" method="post" name="create_driver_form"
+        <form class="well form-horizontal" action="" method="post" name="edit_driver_form"
               onsubmit="validate_form()">
             <fieldset>
                 {% csrf_token %}
@@ -20,7 +20,7 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                             <input name="full_name" id="full_name" placeholder="Full name" class="form-control"
-                                   type="text" onblur="check_full_name()" value="{{ form.full_name.value }}">
+                                   type="text" onblur="check_full_name(this.form.name)" value="{{ form.full_name.value }}">
                         </div>
                     </div>
                     <span id="full_name_glyph" style="visibility: hidden;color: orangered"><i
@@ -32,7 +32,7 @@
                     <div class="col-md-4 inputGroupContainer">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <select name="gender" id="gender" class="form-control selectpicker" onblur="check_gender()" value="{{ form.gender.value }}">
+                            <select name="gender" id="gender" class="form-control selectpicker" onblur="check_gender(this.form.name)" value="{{ form.gender.value }}">
                                 <option value="default">Select your gender</option>
                                 <option value="man">man</option>
                                 <option value="woman">woman</option>
@@ -51,7 +51,7 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
                             <textarea class="form-control" id="schedule" name="schedule"
-                                      placeholder="Schedule" onblur="check_schedule()"></textarea>
+                                      placeholder="Schedule" onblur="check_schedule(this.form.name)"></textarea>
                         </div>
                     </div>
                     <span id="schedule_glyph" style="visibility: hidden;color: orangered"><i
@@ -63,7 +63,7 @@
                     <div class="col-md-4 inputGroupContainer">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
-                            <input name="pesel" id="pesel" placeholder="71010111111" class="form-control" type="text" onblur="check_pesel()" value="{{ form.pesel.value }}">
+                            <input name="pesel" id="pesel" placeholder="71010111111" class="form-control" type="text" onblur="check_pesel(this.form.name)" value="{{ form.pesel.value }}">
                         </div>
                     </div>
                     <span id="pesel_glyph" style="visibility: hidden;color: orangered"><i
@@ -76,7 +76,7 @@
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
                             <input name="phone_number" id="phone_number" placeholder="600600600" class="form-control"
-                                   type="text" onblur="check_phone_number()" value="{{ form.phone_number.value }}">
+                                   type="text" onblur="check_phone_number(this.form.name)" value="{{ form.phone_number.value }}">
                         </div>
                     </div>
                     <span id="phone_number_glyph" style="visibility: hidden;color: orangered"><i
@@ -88,12 +88,11 @@
                     <div class="col-md-4 inputGroupContainer">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
-                            <select name="permissions_level" id="permissions_level" class="form-control selectpicker", onblur="check_permissions_level()" value="{{ form.permissions_level.value }}">
-                                <option value="default">Select permissions level</option>
+                            <input type="number" name="permissions_level" id="permissions_level" class="form-control selectpicker" value="{{ form.permissions_level.value }}" onblur="check_permissions_level(this.form.name)" value="{{ form.permissions_level.value }}">
+    {% comment %}                            <option value="default">Select permissions level</option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
-                                <option value="3">3</option>
-                            </select>
+                                <option value="3">3</option>{% endcomment %}
                         </div>
                     </div>
                     <span id="permissions_level_glyph" style="visibility: hidden;color: orangered"><i
