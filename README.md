@@ -63,22 +63,25 @@ Przykład można zobaczyć w templatce `users/login.html`
 </div>
 ```
 
-* Buttony wybieramy w stylu `outline`, tzn. z tego zestawu (bez 'light' z uwagi na to że używamy jasnych kolorów):
+* Buttony wybieramy ze standardowych lub używamy naszego super customowego, jedynego w swoim rodzaju buttona ;)
 ```html
-<button type="button" class="btn btn-outline-primary">Primary</button>
-<button type="button" class="btn btn-outline-secondary">Secondary</button>
-<button type="button" class="btn btn-outline-success">Success</button>
-<button type="button" class="btn btn-outline-danger">Danger</button>
-<button type="button" class="btn btn-outline-warning">Warning</button>
-<button type="button" class="btn btn-outline-info">Info</button>
-<button type="button" class="btn btn-outline-dark">Dark</button>
+  <button type="button" class="btn btn-outline-geo">Łoooooo!</button>
+
+  <button type="button" class="btn">Basic</button>
+  <button type="button" class="btn btn-default">Default</button>
+  <button type="button" class="btn btn-primary">Primary</button>
+  <button type="button" class="btn btn-success">Success</button>
+  <button type="button" class="btn btn-info">Info</button>
+  <button type="button" class="btn btn-warning">Warning</button>
+  <button type="button" class="btn btn-danger">Danger</button>
+  <button type="button" class="btn btn-link">Link</button>   
 ```
 
 * Rozmiar inputów w formularzach (oraz w zasadzie wszystkich innych elementów) powinien być domyślny.
 
-* Proponujemy również standardowe `modale` bootstrapowe: http://getbootstrap.com/docs/4.0/components/modal/#live-demo
+* Proponujemy również standardowe `modale` bootstrapowe: https://getbootstrap.com/docs/3.3/javascript/#modals
 
-* Do prezentacji postępów aktualizacji obszarów proponujemy użyć ten `progress bar`: http://getbootstrap.com/docs/4.0/components/progress/#labels
+* Do prezentacji postępów aktualizacji obszarów proponujemy użyć ten `progress bar`: https://getbootstrap.com/docs/3.3/components/#progress
 
 * Jakby ktoś chciał używać jakichkolwiek ikonek (np. na guzikach przy 'Dodaj kierowcę') to śmiało, ale proszę korzystać tylko i wyłącznie z tego Bootstrapowego zbioru: https://getbootstrap.com/docs/3.3/components/
 

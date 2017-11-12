@@ -1,8 +1,8 @@
-{% include 'header.html' %}
-   {% block pagecontent %}
+{% extends 'base.html' %}
+   {% block content %}
     <div class="container">
         <div class="col-lg-12 col-md-12 col-sm-12">
-            <h2>Regions</h2>
+            <h2>Obszary</h2>
 			<div class="buttons-panel">
 				<a type="button" class="btn btn-default" name="actualUpdates" href="/regions/actualUpdates">Wyświetl aktualnie przeprowadzane aktualizacje</a>
 				<a type="button" class="btn btn-default" name="manualActualization" href="/regions/manualActualization" name="manualActualization" >Ręczna aktualizacja stanu dróg</a>
@@ -26,4 +26,3 @@
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdWvcN-Awg6yJiQXUvcYYTa-DnNesUny4&amp;callback=myMap" async="" defer=""></script>
 
 {% endblock %}
-{% include 'footer.html' %}
