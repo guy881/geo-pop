@@ -7,10 +7,10 @@ function validate_form() {
     check_permissions_level();
 }
 
-var empty_message = "Fill in the field, please!";
-var too_short_message = "Wrong value length";
-var white_space_message = "You must include a white space";
-var default_message = "You can't choose default answer";
+var empty_message = "Proszę wypełnij to pole";
+var too_short_message = "Zła długość podanej danej";
+var white_space_message = "Podaj pełne imię i nazwisko przedzielone spacją";
+var default_message = "Nie możesz wybrać wartości domyślnej";
 
 
 function isEmpty(field) {
@@ -34,9 +34,10 @@ function showWrong(field, message, glyph) {
     return false;
 }
 
-function showOK(field, glyph) {
+function showOK(field, glyph, glyph_positive) {
     field.innerHTML = "";
     glyph.style.visibility = "hidden";
+    glyph_positive.style.visibility = "visible"
     return true;
 }
 
