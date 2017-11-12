@@ -1,13 +1,15 @@
+import base64
+from io import BytesIO
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.core.paginator import EmptyPage
+from django.forms import modelform_factory
+from django.http import HttpResponseRedirect
+from django.shortcuts import reverse, get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from django.views import generic
-from django.http import HttpResponseRedirect
-
-from .models import Driver
-from django.contrib.auth.mixins import LoginRequiredMixin
 from . import forms
-from django.shortcuts import reverse, get_object_or_404
-
-from django.core.paginator import EmptyPage
+from .models import Driver
 
 
 class DriverList(LoginRequiredMixin, generic.ListView):
@@ -73,7 +75,7 @@ class DriverEditBasic(LoginRequiredMixin, generic.UpdateView):
         return reverse('drivers:list')
 
     def post(self, request, *args, **kwargs):
-        next_btn = request.POST.get('next', None)
+        # next_btn = request.POST.get('next', None)
         form1 = forms.DriverBasicForm(request.POST)
 
         if form1.is_valid():
@@ -84,13 +86,6 @@ class DriverEditBasic(LoginRequiredMixin, generic.UpdateView):
         kwargs['success'] = _('Data saved correctly!')
         return super(DriverEditBasic, self).post(self, request, *args, **kwargs)
 
-
-import base64
-from io import BytesIO
-from django.core.files.uploadedfile import InMemoryUploadedFile
-from django.forms import modelform_factory
-
-
 class DriverEditImage(LoginRequiredMixin, generic.UpdateView):
     # form_class = forms.AllImagesForm
     model = Driver
@@ -99,7 +94,6 @@ class DriverEditImage(LoginRequiredMixin, generic.UpdateView):
 
     def get_form_class(self):
         form = modelform_factory(Driver, fields=self.fields)
-        # print (form)
         return form
 
     def get_queryset(self):
@@ -141,7 +135,7 @@ class DriverEditImage(LoginRequiredMixin, generic.UpdateView):
             else:
                 kwargs['error'] = _('Please fill out all required fields!')
         else:
-            form1 = forms.DriverImageForm(request.POST, validate=False)
+            # form1 = forms.DriverImageForm(request.POST, validate=False)
             kwargs['success'] = _('Data saved correctly!')
         return super(DriverEditImage, self).post(self, request, *args, **kwargs)
 
