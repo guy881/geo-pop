@@ -80,12 +80,14 @@ class RegionsView(LoginRequiredMixin, TemplateView):
             slon.append(float(regions.select_related('south_east__longitude').values_list('south_east__longitude')[i][0]))
         return render(request, 'regions/regions.html', {"nlat": nlat, "nlon": nlon, "slat":slat, "slon":slon})
 
-class AddDriverToRegionView(LoginRequiredMixin, TemplateView):
+    
+class AddDriverToRegionView(LoginRequiredMixin, generic.ListView):
     template_name = "regions/add_driver_to_region.html"
-     
-    def get_queryset(self, request):
-        drivers = Driver.objects.all()
-        return drivers
+    context_object_name = 'add_driver_region'
+    
+    def get_queryset(self):
+        return Driver.objects.all()
+    
 		
         
 #def manualActualization(request):
