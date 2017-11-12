@@ -16,7 +16,7 @@ class DriverBasicForm(forms.ModelForm):
 
     class Meta:
         model = models.Driver
-        fields = ('full_name', 'gender', 'pesel', 'phone_number')
+        fields = ('full_name', 'gender', 'pesel', 'phone_number','permissions_level')
 
     def pesel_check(self, pesel):
         if (re.match('[0-9]{11}$', pesel)):
@@ -73,7 +73,7 @@ class DriverImageForm(forms.ModelForm):
 
     class Meta:
         model = models.Driver
-        fields = ('image',)
+        fields = ('profile_photo',)
         # exclude = ('full_name', 'gender', 'pesel', 'phone_number')
 
     def __init__(self, *args, validate=True, **kwargs):
