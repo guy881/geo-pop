@@ -59,7 +59,7 @@ class DriverCreateView(LoginRequiredMixin, generic.CreateView):
         return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
-        return reverse('drivers:edit_image', kwargs={'pk': self.object.pk})
+        return reverse('drivers:list')
 
 
 class DriverEditBasic(LoginRequiredMixin, generic.UpdateView):
@@ -70,7 +70,7 @@ class DriverEditBasic(LoginRequiredMixin, generic.UpdateView):
         return Driver.objects.all()
 
     def get_success_url(self):
-        return reverse('drivers:edit_image', kwargs={'pk': self.object.pk})
+        return reverse('drivers:list')
 
     def post(self, request, *args, **kwargs):
         next_btn = request.POST.get('next', None)
@@ -78,7 +78,7 @@ class DriverEditBasic(LoginRequiredMixin, generic.UpdateView):
 
         if form1.is_valid():
             super(DriverEditBasic, self).post(self, request, *args, **kwargs)
-            return HttpResponseRedirect(reverse('drivers:edit_image', kwargs={'pk': kwargs['pk']}))
+            return HttpResponseRedirect(reverse('drivers:list'))
         else:
             kwargs['error'] = _('Please fill out all required fields!')
         kwargs['success'] = _('Data saved correctly!')

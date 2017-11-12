@@ -12,5 +12,5 @@ class Driver(models.Model):
     profile_photo = models.ImageField()
     permissions_level = models.IntegerField()
     phone_number = models.TextField(max_length=15)
-    user = models.OneToOneField(CustomUser)
-    car = models.OneToOneField(Car)
+    user = models.OneToOneField(CustomUser, null= True)
+    car = models.OneToOneField(Car, null= True)
