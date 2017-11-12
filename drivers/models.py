@@ -1,6 +1,7 @@
 from django.db import models
 
 from cars.models import Car
+from regions.models import Region
 from users.models import CustomUser
 
 
@@ -23,7 +24,7 @@ class Driver(models.Model):
     )
     full_name = models.TextField(max_length=50)
     gender = models.TextField(max_length=50)
-    schedule = models.TextField()
+    schedule = models.ManyToManyField(Region)
     pesel = models.TextField(max_length=11)
     profile_photo = models.ImageField()
     permissions_level = models.CharField(max_length=50, choices=PERMISSIONS_CHOICES)
