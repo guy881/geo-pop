@@ -22,7 +22,6 @@ class DriverTest(TestCase):
     def test_driver_creation(self):
         w = self.create_driver()
         self.assertTrue(isinstance(w, Driver))
-        self.assertEqual(str(w), w.full_name + ' ' + w.pesel)
         self.assertEqual(w.gender, 'yes')
         self.assertEqual(w.phone_number, 2)
         self.assertEqual(w.permissions_level, 1)
