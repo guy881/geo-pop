@@ -1,4 +1,6 @@
-{% include 'header.html' %}
+{% extends 'base.html' %}
+
+{% block content %}
 
 <div class="container" style="margin-top: 5vh">
     <div class="col-md-8 col-md-offset-2">
@@ -12,17 +14,6 @@
             <fieldset>
                 {% csrf_token %}
                 {{ form.non_field_errors }}
-                {% comment %}            {% for field in form %}
-                <div class="form-group">
-                    <div class="col-md-4 col-md-offset-left-2">
-                        {{ field.errors }}
-                        {{ field.label_tag }}
-                    </div>
-                    <div class="col-md-4 col-md-offset-right-2">
-                        {{ field }}
-                    </div>
-                </div>
-            {% endfor %}{% endcomment %}
                 <div class="form-group">
                     <label class="col-md-4 control-label">Full name</label>
                     <div class="col-md-4 inputGroupContainer">
@@ -53,7 +44,7 @@
                     <span id="gender_glyph" style="visibility: hidden;color: orangered"><i
                             class="glyphicon glyphicon-warning-sign"></i></span>
                     <span id="gender_error"></span>
-                </div>
+                </div>{% comment %}
                 <div class="form-group">
                     <label class="col-md-4 control-label">Schedule</label>
                     <div class="col-md-4 inputGroupContainer">
@@ -66,7 +57,7 @@
                     <span id="schedule_glyph" style="visibility: hidden;color: orangered"><i
                             class="glyphicon glyphicon-warning-sign"></i></span>
                     <span id="schedule_error"></span>
-                </div>
+                </div>{% endcomment %}
                 <div class="form-group">
                     <label class="col-md-4 control-label">Pesel</label>
                     <div class="col-md-4 inputGroupContainer">
@@ -124,11 +115,7 @@
     </div>
 </div>
 
-{% include 'footer.html' %}
-
-<script type="text/javascript">
-
-</script>
+{% endblock %}
 
 {% comment %}<div class="panel-body">
     <span class="term-description">{% trans 'Full name' %}</span>

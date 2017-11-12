@@ -1,7 +1,7 @@
 function validate_form() {
     check_full_name();
     check_gender();
-    check_schedule();
+    //check_schedule();
     check_pesel();
     check_phone_number();
     check_permissions_level();
@@ -44,7 +44,6 @@ function check_full_name() {
     var full_name = document.forms["create_driver_form"]["full_name"].value;
     var field = document.getElementById("full_name_error");
     var glyph = document.getElementById("full_name_glyph");
-    var message;
     if (isEmpty(full_name)) {
         showWrong(field, empty_message, glyph)
     } else if (full_name.length < 6) {
@@ -69,7 +68,7 @@ function check_gender() {
     }
 }
 
-function check_schedule() {
+/*function check_schedule() {
     var schedule = document.forms["create_driver_form"]["schedule"].value;
     var field = document.getElementById("schedule_error");
     var glyph = document.getElementById("schedule_glyph");
@@ -80,7 +79,7 @@ function check_schedule() {
     } else {
         showOK(field, glyph)
     }
-}
+}*/
 
 function check_pesel() {
     var pesel = document.forms["create_driver_form"]["pesel"].value;

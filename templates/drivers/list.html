@@ -1,4 +1,6 @@
-{% include 'header.html' %}
+{% extends 'base.html' %}
+
+{% block content %}
 
 <div class="container" style="margin-top: 5vh">
     <div class="col-md-10 col-md-offset-1">
@@ -18,7 +20,7 @@
                 {% for d in object_list %}
                     <li class="list-group-item" style="margin: auto">{{ d }} <a class="btn btn-warning"
                                                                                 style="float: right; padding: 2px;"
-                                                                                href="{% url 'drivers:driver_edit_basic' pk=d.pk %} ">Edit driver </a></li>
+                                                                                href="{% url 'drivers:edit_basic' pk=d.pk %} ">Edit driver </a></li>
                 {% endfor %}
             </ul>
         {% else %}
@@ -32,4 +34,4 @@
     </div>
 </div>
 
-{% include 'footer.html' %}
+{% endblock %}
