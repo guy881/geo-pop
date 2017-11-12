@@ -3,11 +3,13 @@
     <div class="container">
         <div class="col-lg-12 col-md-12 col-sm-12">
             <h2>Obszary</h2>
+<!--
 			<div class="buttons-panel">
 				<a type="button" class="btn btn-default" name="actualUpdates" href="/regions/actualUpdates">Wyświetl aktualnie przeprowadzane aktualizacje</a>
 				<a type="button" class="btn btn-default" name="manualActualization" href="/regions/manualActualization" name="manualActualization" >Ręczna aktualizacja stanu dróg</a>
 				<a type="button" class="btn btn-default" name="updatesHistory" href="/regions/updatesHistory">Historia aktualizacji</a>
             </div>
+-->
             <div id="map1"></div>
         </div>
     </div>
@@ -46,7 +48,7 @@
 					var contextmenuDir = document.createElement("div");
 					contextmenuDir.className  = 'contextmenu';
 					contextmenuDir.innerHTML = '<a id="menu1"><div class="context">Zaznacz obszar do aktualizacji<\/div><\/a>'
-											   + '<a id="menu2"><div class="context">Przydziel zasoby do obszaru<\/div><\/a>';
+											   + '<a href="{% url 'regions:addDriverToRegionView' %}" id="menu2"><div class="context">Przydziel zasoby do obszaru<\/div><\/a>';
 					$(map1.getDiv()).append(contextmenuDir);
 					setMenuXY(event.latLng, map1);
 					contextmenuDir.style.visibility = "visible";

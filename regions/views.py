@@ -10,8 +10,10 @@ from drivers.models import Driver
 import json
 from django.core.serializers.json import DjangoJSONEncoder
 from django.http import JsonResponse
+from django.views import generic
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-class RegionsView(TemplateView):
+class RegionsView(LoginRequiredMixin, TemplateView):
     template_name = "regions/regions.html"
 
     def get(self, request):
@@ -78,7 +80,7 @@ class RegionsView(TemplateView):
             slon.append(float(regions.select_related('south_east__longitude').values_list('south_east__longitude')[i][0]))
         return render(request, 'regions/regions.html', {"nlat": nlat, "nlon": nlon, "slat":slat, "slon":slon})
 
-class AddDriverToRegionView(TemplateView):
+class AddDriverToRegionView(LoginRequiredMixin, TemplateView):
     template_name = "regions/add_driver_to_region.html"
      
     def get_queryset(self, request):
@@ -86,13 +88,13 @@ class AddDriverToRegionView(TemplateView):
         return drivers
 		
         
-def manualActualization(request):
-	return HttpResponse("Ręczna aktualizacja stanu dróg")
-	
-
-def actualUpdates(request):
-	return HttpResponse("Wyświetl aktualnie przeprowadzane aktualizacje")
-	
-	
-def updatesHistory(request):
-	return HttpResponse("Historia aktualizacji")
+#def manualActualization(request):
+#	return HttpResponse("Ręczna aktualizacja stanu dróg")
+#	
+#
+#def actualUpdates(request):
+#	return HttpResponse("Wyświetl aktualnie przeprowadzane aktualizacje")
+#	
+#	
+#def updatesHistory(request):
+#	return HttpResponse("Historia aktualizacji")
