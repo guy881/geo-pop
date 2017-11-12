@@ -55,7 +55,7 @@ class DriverBasicForm(forms.ModelForm):
                 self.add_error('phone_number', ValidationError('Phone number is in bad format'))
 
         if gender:
-            reg = '(m|f|k|apache helicopter|man|female|male|women|kobieta|mężczyzna|other|inne)$'
+            reg = '(m|f|k|apache helicopter|man|female|male|women|kobieta|mężczyzna|mezczyzna|other|inne)$'
             pattern = re.compile(reg.rstrip())
             if not pattern.match(gender.lower()):
                 self.add_error('gender', ValidationError('Gender is in bad format'))

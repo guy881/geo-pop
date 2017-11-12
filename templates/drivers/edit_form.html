@@ -2,23 +2,153 @@
 
 {% block content %}
 
-<div class="container" style="margin-top: 5vh">
-    <div class="col-md-6 col-md-offset-2">
-        <h2 style="text-align: center">Dodaj Driver</h2>
-        <h2>{{ error }}</h2>
-
-
-        <form class="form-horizontal" action="" method="post">
-            {% csrf_token %}
-            {{ form.non_field_errors }}
-            {{ form }}
-            <div class="form-group">
-                <div class="col-sm-offset-4 col-sm-8">
-                    <button type="submit" class="btn btn-default">Zapisz</button>
+    <div class="container" style="margin-top: 5vh">
+        <div class="col-md-8 col-md-offset-2">
+            <h2 style="text-align: center">Edytuj kierowcę</h2>
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    {% for field in form %}
+                        {{ field.errors }}
+                    {% endfor %}
                 </div>
-            </div>
-        </form>
+            {% endif %}
+
+
+            <form class="well form-horizontal" action="" method="post" name="edit_driver_form"
+                  onsubmit="validate_form()">
+                <fieldset>
+                    {% csrf_token %}
+                    {{ form.non_field_errors }}
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Imię i nazwisko</label>
+                        <div class="col-md-4 inputGroupContainer">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                <input name="full_name" id="full_name" placeholder="Imię i nazwisko"
+                                       class="form-control"
+                                       type="text" onblur="check_full_name(this.form.name)"
+                                       value="{{ form.full_name.value }}">
+                            </div>
+                        </div>
+                        <span id="full_name_glyph_positive" style="visibility: hidden;color: lawngreen"><i
+                                class="glyphicon glyphicon-ok"></i></span>
+                        <span id="full_name_glyph" style="visibility: hidden;color: orangered"><i
+                                class="glyphicon glyphicon-warning-sign"></i></span>
+                        <span id="full_name_error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Płeć</label>
+                        <div class="col-md-4 inputGroupContainer">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                <select name="gender" id="gender" class="form-control selectpicker"
+                                        onblur="check_gender(this.form.name)" value="{{ form.gender.value }}">
+                                    <option value="default">Wybierz płeć</option>
+                                    <option value="mezczyzna">mężczyzna</option>
+                                    <option value="kobieta">kobieta</option>
+                                    <option value="inne">inne</option>
+                                    <option value="apache helicopter">apache helicopter</option>
+                                </select>
+                            </div>
+                        </div>
+                        <span id="gender_glyph_positive" style="visibility: hidden;color: lawngreen"><i
+                                class="glyphicon glyphicon-ok"></i></span>
+                        <span id="gender_glyph" style="visibility: hidden;color: orangered"><i
+                                class="glyphicon glyphicon-warning-sign"></i></span>
+                        <span id="gender_error"></span>
+                    </div>
+                    {% comment %}
+                <div class="form-group">
+                    <label class="col-md-4 control-label">Schedule</label>
+                    <div class="col-md-4 inputGroupContainer">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                            <textarea class="form-control" id="schedule" name="schedule"
+                                      placeholder="Schedule" onblur="check_schedule(this.form.name)"></textarea>
+                        </div>
+                    </div>
+                    <span id="schedule_glyph" style="visibility: hidden;color: orangered"><i
+                            class="glyphicon glyphicon-warning-sign"></i></span>
+                    <span id="schedule_error"></span>
+                </div>{% endcomment %}
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Pesel</label>
+                        <div class="col-md-4 inputGroupContainer">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
+                                <input name="pesel" id="pesel" placeholder="71010111111" class="form-control"
+                                       type="text" onblur="check_pesel(this.form.name)" value="{{ form.pesel.value }}">
+                            </div>
+                        </div>
+                        <span id="pesel_glyph_positive" style="visibility: hidden;color: lawngreen"><i
+                                class="glyphicon glyphicon-ok"></i></span>
+                        <span id="pesel_glyph" style="visibility: hidden;color: orangered"><i
+                                class="glyphicon glyphicon-warning-sign"></i></span>
+                        <span id="pesel_error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Numer telefonu</label>
+                        <div class="col-md-4 inputGroupContainer">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
+                                <input name="phone_number" id="phone_number" placeholder="600600600"
+                                       class="form-control"
+                                       type="text" onblur="check_phone_number(this.form.name)"
+                                       value="{{ form.phone_number.value }}">
+                            </div>
+                        </div>
+                        <span id="phone_number_glyph_positive" style="visibility: hidden;color: lawngreen"><i
+                                class="glyphicon glyphicon-ok"></i></span>
+                        <span id="phone_number_glyph" style="visibility: hidden;color: orangered"><i
+                                class="glyphicon glyphicon-warning-sign"></i></span>
+                        <span id="phone_number_error"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label">Uprawnienia</label>
+                        <div class="col-md-4 inputGroupContainer">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
+                                <select name="permissions_level" id="permissions_level"
+                                        class="form-control selectpicker" placeholder="10"
+                                        onblur="check_permissions_level(this.form.name)"
+                                        value="{{ form.permissions_level.value }}">
+                                    <option value="default">Wybierz kategorię</option>
+                                    <option value="AM">Kategoria AM</option>
+                                    <option value="A1">Kategoria A1</option>
+                                    <option value="A2">Kategoria A2</option>
+                                    <option value="B">Kategoria B</option>
+                                    <option value="B+E">Kategoria B+E</option>
+                                    <option value="C">Kategoria C</option>
+                                    <option value="C+E">Kategoria C+E</option>
+                                    <option value="C1">Kategoria C1</option>
+                                    <option value="C1+E">Kategoria C1+e</option>
+                                    <option value="D">Kategoria D</option>
+                                    <option value="D+E">Kategoria D+E</option>
+                                    <option value="D1">Kategoria D1</option>
+                                    <option value="D1+E">Kategoria D1+E</option>
+                                </select>
+                            </div>
+                            <span id="permissions_level_glyph_positive" style="visibility: hidden;color: lawngreen"><i
+                                    class="glyphicon glyphicon-ok"></i></span>
+                            <span id="permissions_level_glyph" style="visibility: hidden;color: orangered"><i
+                                    class="glyphicon glyphicon-warning-sign"></i></span>
+                            <span id="permissions_level_error"></span>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label"></label>
+                            <div class="col-md-4">
+                                <button type="submit" id="submit" class="btn btn-warning">Zapisz<span
+                                        class="glyphicon glyphicon-send"></span>
+                                </button>
+                                <button class="btn btn-danger" name="cancel" formnovalidate>Wróć<span
+                                        class="glyphicon glyphicon-remove"></span>
+                                </button>
+
+                            </div>
+                        </div>
+                </fieldset>
+            </form>
+        </div>
     </div>
-</div>
 
 {% endblock %}
