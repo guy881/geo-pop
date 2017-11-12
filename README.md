@@ -54,7 +54,7 @@ Przykład można zobaczyć w templatce `users/login.html`
 
 * Nie zmieniamy kolorów tła oraz divów, szczególnie na kolory jaskrawe - trzymamy się jasnej kolorystyki (odcienie szarości)
 
-* Jeśli ktoś chce użyć jakiegokolwiek akcentu kolorystycznego poza skalą szarości to nasza aplikacja ma kolor przewodni fioletowy, dokładnie `#5000B2` (pasek pod `navbarem` jest właśnie w tym kolorze). Możecie użyć albo dokładnie tego koloru albo jego odcieni. Tyczy się to zarówno aplikacji webowej jak i aplikacji mobilnej.
+* Jeśli ktoś chce użyć jakiegokolwiek akcentu kolorystycznego poza skalą szarości to nasza aplikacja ma kolor przewodni fioletowy, dokładnie `#5000B2` (pasek pod `navbarem` jest właśnie w tym kolorze). Możecie użyć albo dokładnie tego koloru albo jego odcieni. Tyczy się to zarówno aplikacji webowej jak i aplikacji mobilnej.
 
 * Alerty (do wyświetlania błędów) dajemy podstawowe, np.:
 ```html
@@ -74,7 +74,7 @@ Przykład można zobaczyć w templatce `users/login.html`
   <button type="button" class="btn btn-info">Info</button>
   <button type="button" class="btn btn-warning">Warning</button>
   <button type="button" class="btn btn-danger">Danger</button>
-  <button type="button" class="btn btn-link">Link</button>   
+  <button type="button" class="btn btn-link">Link</button>
 ```
 
 * Rozmiar inputów w formularzach (oraz w zasadzie wszystkich innych elementów) powinien być domyślny.
@@ -88,4 +88,3 @@ Przykład można zobaczyć w templatce `users/login.html`
 #### Do pozostałych elementów, które nie zostały powyżej opisane należy używać innych komponentów Bootstrapowych (nie należy pisać nowej biblioteki oraz najlepiej nie dodawać innych bibliotek CSS).
 
 ###### Wzorem do naśladowania i bardzo dobrym przykładem wysokiej jakości stylu UI/UX jest ta strona: http://tumanski.pl/ . Możecie kierowiać się nią w chwilach zwątpienia (:
-

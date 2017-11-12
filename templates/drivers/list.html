@@ -2,35 +2,49 @@
 
 {% block content %}
 
-<div class="container" style="margin-top: 5vh">
-    <div class="col-md-10 col-md-offset-1">
+    <div class="container" style="margin-top: 5vh">
+        <div class="col-md-10 col-md-offset-1">
+            {% if messages %}
+                <div class="alert alert-success">
+                    {% for message in messages %}
+                        {{ message }}
+                    {% endfor %}
+                </div>
+            {% endif %}
 
-        {% if success or error %}
-            <div class="alert alert-success">
-                {{ success }} {{ error }}
+            <div class="row">
+                <div class="col-md-10">
+                    <h2 style="text-align:left">Driver list:</h2>
+                </div>
+                <div class="col-md-2">
+                    <a href="{% url 'drivers:create' %}" class="btn btn-outline-geo pull-right" role="button" style="float: right">Add
+                        driver</a>
+                </div>
             </div>
-        {% endif %}
+            {% if object_list %}
+                {% for d in object_list %}
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">{{ d.full_name }}
+                            <a class="btn btn-warning" style="float: right; padding: 2px;"
+                               href="{% url 'drivers:edit_basic' pk=d.pk %} ">Edit driver </a>
+                        </div>
+                        <div class="panel-body">
+                            <p><b>Gender:</b> {{ d.gender }}</p>
+                            <p><b>Pesel:</b> {{ d.pesel }}</p>
+                            <p><b>Phone number:</b> {{ d.phone_number }}</p>
+                            <p><b>Permissions level:</b> {{ d.permissions_level }}</p>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="row">
+                    <div class="col-md-8">
+                        <h3 style="text-align: left">No drivers.</h3>
+                    </div>
+                </div>
 
-        <div class="row">
-            <div class="col-md-8">
-                <h2 style="text-align: center">Lista Driver:</h2>
-            </div>
-            <div class="col-md-2">
-                <a href="{% url 'drivers:create' %}" class="btn btn-default" role="button">Dodaj driver</a>
-            </div>
+            {% endif %}
         </div>
-        {% if object_list %}
-            <ul>
-            {% for d in  object_list %}
-                <li>{{ d.full_name }} <a href="{% url 'drivers:edit_basic' pk=d.pk %} "> Edytuj </a></li>
-            {% endfor %}
-            </ul>
-        {% else %}
-            <h3 style="text-align: center">Brak driverow.</h3>
-        {% endif %}
-
     </div>
-</div>
 
 {% endblock %}
-
