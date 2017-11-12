@@ -30,6 +30,8 @@
                                        value="{{ form.full_name.value }}">
                             </div>
                         </div>
+                        <span id="full_name_glyph_positive" style="visibility: hidden;color: lawngreen"><i
+                            class="glyphicon glyphicon-ok"></i></span>
                         <span id="full_name_glyph" style="visibility: hidden;color: orangered"><i
                                 class="glyphicon glyphicon-warning-sign"></i></span>
                         <span id="full_name_error"></span>
@@ -49,6 +51,8 @@
                                 </select>
                             </div>
                         </div>
+                        <span id="gender_glyph_positive" style="visibility: hidden;color: lawngreen"><i
+                            class="glyphicon glyphicon-ok"></i></span>
                         <span id="gender_glyph" style="visibility: hidden;color: orangered"><i
                                 class="glyphicon glyphicon-warning-sign"></i></span>
                         <span id="gender_error"></span>
@@ -76,6 +80,8 @@
                                        type="text" onblur="check_pesel(this.form.name)" value="{{ form.pesel.value }}">
                             </div>
                         </div>
+                        <span id="pesel_glyph_positive" style="visibility: hidden;color: lawngreen"><i
+                            class="glyphicon glyphicon-ok"></i></span>
                         <span id="pesel_glyph" style="visibility: hidden;color: orangered"><i
                                 class="glyphicon glyphicon-warning-sign"></i></span>
                         <span id="pesel_error"></span>
@@ -91,6 +97,8 @@
                                        value="{{ form.phone_number.value }}">
                             </div>
                         </div>
+                        <span id="phone_number_glyph_positive" style="visibility: hidden;color: lawngreen"><i
+                            class="glyphicon glyphicon-ok"></i></span>
                         <span id="phone_number_glyph" style="visibility: hidden;color: orangered"><i
                                 class="glyphicon glyphicon-warning-sign"></i></span>
                         <span id="phone_number_error"></span>
@@ -105,6 +113,8 @@
                                        onblur="check_permissions_level(this.form.name)"
                                        value="{{ form.permissions_level.value }}"></div>
                         </div>
+                        <span id="permissions_level_glyph_positive" style="visibility: hidden;color: lawngreen"><i
+                            class="glyphicon glyphicon-ok"></i></span>
                         <span id="permissions_level_glyph" style="visibility: hidden;color: orangered"><i
                                 class="glyphicon glyphicon-warning-sign"></i></span>
                         <span id="permissions_level_error"></span>
