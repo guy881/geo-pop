@@ -5,9 +5,13 @@
     <div class="container" style="margin-top: 5vh">
         <div class="col-md-8 col-md-offset-2">
             <h2 style="text-align: center">Dodaj kierowcę</h2>
-            <h2>{{ success }}</h2>
-            <h2>{{ error }}</h2>
-
+            {% if form.errors %}
+                <div class="alert alert-danger">
+                    {% for field in form %}
+                        {{ field.errors }}
+                    {% endfor %}
+                </div>
+            {% endif %}
 
             <form class="well form-horizontal" action="" method="post" name="create_driver_form"
                   onsubmit="validate_form()">
@@ -110,8 +114,9 @@
                             <button type="submit" id="submit" class="btn btn-warning">Zapisz<span
                                     class="glyphicon glyphicon-send"></span>
                             </button>
-                            <a type="button" class="btn btn-danger" href="{% url 'drivers:list' %} ">Wróć<span
-                                    class="glyphicon glyphicon-remove"></span></a>
+                            <button class="btn btn-danger" name="cancel" formnovalidate>Wróć<span
+                                class="glyphicon glyphicon-remove"></span>
+                            </button>
                         </div>
                     </div>
                 </fieldset>

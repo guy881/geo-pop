@@ -2,10 +2,11 @@ import base64
 from io import BytesIO
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.files.uploadedfile import InMemoryUploadedFile
-from django.core.paginator import EmptyPage
+from django.core.paginator import EmptyPage, PageNotAnInteger
 from django.forms import modelform_factory
 from django.http import HttpResponseRedirect
 from django.shortcuts import reverse, get_object_or_404
+from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 from django.views import generic
 from . import forms
@@ -20,19 +21,15 @@ class DriverList(LoginRequiredMixin, generic.ListView):
     def get(self, request, *args, **kwargs):
         ret = super().get(request, *args, **kwargs)
         page = request.GET.get('page', None)
-        num_pages = ret.context_data['paginator'].num_pages
-
+        paginator = ret.context_data['paginator']
         try:
-            page = int(page)
-            pages = range(page - 2 if page - 2 > 0 else 1, page + 3 if page + 3 <= num_pages + 1 else num_pages + 1)
+            paginator = paginator.page(page)
+        except PageNotAnInteger:
+            paginator = paginator.page(1)
         except EmptyPage:
-            page = num_pages
-            pages = range(page - 2 if page - 2 > 0 else 1, num_pages + 1)
-        except:
-            page = 1
-            pages = range(page - 2 if page - 2 > 0 else 1, page + 3 if page + 3 <= num_pages + 1 else num_pages + 1)
+            paginator = paginator.page(paginator.num_pages)
 
-        ret.context_data['pages'] = pages
+        ret.context_data['paginator'] = paginator
         return ret
 
     def get_queryset(self):
@@ -44,21 +41,21 @@ class DriverCreateView(LoginRequiredMixin, generic.CreateView):
     template_name = 'drivers/create_form.html'
 
     def post(self, request, *args, **kwargs):
-        if self.request.user.is_staff:
-            return super().post(request, *args, **kwargs)
+        if not self.request.user.is_staff:
+            messages.success(request, 'Nie jesteś członkiem zespołu. Nie mozesz dodawać kierowcy')
+            return HttpResponseRedirect(reverse('drivers:list'))
+        elif "cancel" in request.POST:
+            messages.error(request, 'Pomyślnie anulowano dodawanie kierowcy')
+            return HttpResponseRedirect(reverse('drivers:list'))
         else:
-            print('oks')
-            return reverse('drivers:create', kwargs={'error': 'You are not a staff member'})
+            messages.success(self.request, 'Pomyślnie dodawano kierowce')
+            return super().post(request, *args, **kwargs)
+
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['request'] = self.request
         return kwargs
-
-    def form_valid(self, form):
-        self.object = form.save(commit=False)
-        self.object.save()
-        return HttpResponseRedirect(self.get_success_url())
 
     def get_success_url(self):
         return reverse('drivers:list')
@@ -75,15 +72,17 @@ class DriverEditBasic(LoginRequiredMixin, generic.UpdateView):
         return reverse('drivers:list')
 
     def post(self, request, *args, **kwargs):
-        # next_btn = request.POST.get('next', None)
         form1 = forms.DriverBasicForm(request.POST)
-
-        if form1.is_valid():
-            super(DriverEditBasic, self).post(self, request, *args, **kwargs)
+        if not self.request.user.is_staff:
+            messages.success(request, 'Nie jesteś członkiem zespołu. Nie mozesz dodawać kierowcy')
             return HttpResponseRedirect(reverse('drivers:list'))
-        else:
-            kwargs['error'] = _('Please fill out all required fields!')
-        kwargs['success'] = _('Data saved correctly!')
+        elif "cancel" in request.POST:
+            messages.error(request, 'Pomyślnie anulowano dodawanie kierowcy')
+            return HttpResponseRedirect(reverse('drivers:list'))
+        elif form1.is_valid():
+            super(DriverEditBasic, self).post(self, request, *args, **kwargs)
+            messages.success(request, _('Pomyślnie edytowano kierowce'))
+            return HttpResponseRedirect(reverse('drivers:list'))
         return super(DriverEditBasic, self).post(self, request, *args, **kwargs)
 
 class DriverEditImage(LoginRequiredMixin, generic.UpdateView):
@@ -133,10 +132,10 @@ class DriverEditImage(LoginRequiredMixin, generic.UpdateView):
                 super(DriverEditImage, self).post(self, request, *args, **kwargs)
                 return HttpResponseRedirect(reverse('drivers:edit_cars', kwargs={'pk': kwargs['pk']}))
             else:
-                kwargs['error'] = _('Please fill out all required fields!')
+               messages.error(request,_('Please fill out all required fields!'))
         else:
             # form1 = forms.DriverImageForm(request.POST, validate=False)
-            kwargs['success'] = _('Data saved correctly!')
+           messages.success(request,_('Data saved correctly!'))
         return super(DriverEditImage, self).post(self, request, *args, **kwargs)
 
 
@@ -185,7 +184,7 @@ class DriverEditCars(LoginRequiredMixin, generic.UpdateView):
                 super(DriverEditCars, self).post(request, *args, **kwargs)
                 return HttpResponseRedirect(reverse('drivers:edit_cars', kwargs={'pk': kwargs['pk']}))
             else:
-                kwargs['error'] = _('Please fill out all required fields!')
+               messages.error(request,_('Please fill out all required fields!'))
         else:
-            kwargs['success'] = _('Data saved correctly!')
+           messages.success(request,_('Data saved correctly!'))
         return super(DriverEditCars, self).post(request, *args, **kwargs)
