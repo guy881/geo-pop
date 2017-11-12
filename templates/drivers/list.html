@@ -14,11 +14,10 @@
 
             <div class="row">
                 <div class="col-md-10">
-                    <h2 style="text-align:left">Driver list:</h2>
+                    <h2 style="text-align:left">Lista kierowców:</h2>
                 </div>
                 <div class="col-md-2">
-                    <a href="{% url 'drivers:create' %}" class="btn btn-outline-geo pull-right" role="button" style="float: right">Add
-                        driver</a>
+                    <a href="{% url 'drivers:create' %}" class="btn btn-outline-geo pull-right" role="button" style="float: right">Dodaj kierowcę</a>
                 </div>
             </div>
             {% if object_list %}
@@ -26,20 +25,20 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading">{{ d.full_name }}
                             <a class="btn btn-warning" style="float: right; padding: 2px;"
-                               href="{% url 'drivers:edit_basic' pk=d.pk %} ">Edit driver </a>
+                               href="{% url 'drivers:edit_basic' pk=d.pk %} ">Edytuj kierowcę</a>
                         </div>
                         <div class="panel-body">
-                            <p><b>Gender:</b> {{ d.gender }}</p>
+                            <p><b>Płeć:</b> {{ d.gender }}</p>
                             <p><b>Pesel:</b> {{ d.pesel }}</p>
-                            <p><b>Phone number:</b> {{ d.phone_number }}</p>
-                            <p><b>Permissions level:</b> {{ d.permissions_level }}</p>
+                            <p><b>Numer telefonu:</b> {{ d.phone_number }}</p>
+                            <p><b>Uprawnienia:</b> {{ d.permissions_level }}</p>
                         </div>
                     </div>
                 {% endfor %}
             {% else %}
                 <div class="row">
                     <div class="col-md-8">
-                        <h3 style="text-align: left">No drivers.</h3>
+                        <h3 style="text-align: left">Brak kierowców</h3>
                     </div>
                 </div>
 
