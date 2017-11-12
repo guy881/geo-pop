@@ -21,7 +21,7 @@
                     {{ form.non_field_errors }}
                     <div class="form-group">
                         <label class="col-md-4 control-label">Imię i nazwisko</label>
-                        <div class="col-md-4 inputGroupContainer">
+                        <div class="col-md-5 inputGroupContainer">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                                 <input name="full_name" id="full_name" placeholder="Imię i nazwisko"
@@ -31,14 +31,14 @@
                             </div>
                         </div>
                         <span id="full_name_glyph_positive" style="visibility: hidden;color: lawngreen"><i
-                            class="glyphicon glyphicon-ok"></i></span>
+                                class="glyphicon glyphicon-ok"></i></span>
                         <span id="full_name_glyph" style="visibility: hidden;color: orangered"><i
                                 class="glyphicon glyphicon-warning-sign"></i></span>
                         <span id="full_name_error"></span>
                     </div>
                     <div class="form-group">
                         <label class="col-md-4 control-label">Płeć</label>
-                        <div class="col-md-4 inputGroupContainer">
+                        <div class="col-md-5 inputGroupContainer">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
                                 <select name="gender" id="gender" class="form-control selectpicker"
@@ -52,7 +52,7 @@
                             </div>
                         </div>
                         <span id="gender_glyph_positive" style="visibility: hidden;color: lawngreen"><i
-                            class="glyphicon glyphicon-ok"></i></span>
+                                class="glyphicon glyphicon-ok"></i></span>
                         <span id="gender_glyph" style="visibility: hidden;color: orangered"><i
                                 class="glyphicon glyphicon-warning-sign"></i></span>
                         <span id="gender_error"></span>
@@ -73,7 +73,7 @@
                 </div>{% endcomment %}
                     <div class="form-group">
                         <label class="col-md-4 control-label">Pesel</label>
-                        <div class="col-md-4 inputGroupContainer">
+                        <div class="col-md-5 inputGroupContainer">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
                                 <input name="pesel" id="pesel" placeholder="71010111111" class="form-control"
@@ -81,14 +81,14 @@
                             </div>
                         </div>
                         <span id="pesel_glyph_positive" style="visibility: hidden;color: lawngreen"><i
-                            class="glyphicon glyphicon-ok"></i></span>
+                                class="glyphicon glyphicon-ok"></i></span>
                         <span id="pesel_glyph" style="visibility: hidden;color: orangered"><i
                                 class="glyphicon glyphicon-warning-sign"></i></span>
                         <span id="pesel_error"></span>
                     </div>
                     <div class="form-group">
                         <label class="col-md-4 control-label">Numer telefonu</label>
-                        <div class="col-md-4 inputGroupContainer">
+                        <div class="col-md-5 inputGroupContainer">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
                                 <input name="phone_number" id="phone_number" placeholder="600600600"
@@ -98,39 +98,54 @@
                             </div>
                         </div>
                         <span id="phone_number_glyph_positive" style="visibility: hidden;color: lawngreen"><i
-                            class="glyphicon glyphicon-ok"></i></span>
+                                class="glyphicon glyphicon-ok"></i></span>
                         <span id="phone_number_glyph" style="visibility: hidden;color: orangered"><i
                                 class="glyphicon glyphicon-warning-sign"></i></span>
                         <span id="phone_number_error"></span>
                     </div>
                     <div class="form-group">
                         <label class="col-md-4 control-label">Uprawnienia</label>
-                        <div class="col-md-4 inputGroupContainer">
+                        <div class="col-md-5 inputGroupContainer">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
-                                <input type="number" name="permissions_level" id="permissions_level"
-                                       class="form-control selectpicker" value="{{ form.permissions_level.value }}"
-                                       onblur="check_permissions_level(this.form.name)"
-                                       value="{{ form.permissions_level.value }}"></div>
+                                <select name="permissions_level" id="permissions_level"
+                                        class="form-control selectpicker" placeholder="10"
+                                        onblur="check_permissions_level(this.form.name)"
+                                        value="{{ form.permissions_level.value }}">
+                                    <option value="default">Wybier kategorię uprawnień</option>
+                                    <option value="AM">Prawo jazdy kategori AM</option>
+                                    <option value="A1">Prawo jazdy kategori A1</option>
+                                    <option value="A2">Prawo jazdy kategori A2</option>
+                                    <option value="B">Prawo jazdy kategori B</option>
+                                    <option value="B+E">Prawo jazdy kategori B+E</option>
+                                    <option value="C">Prawo jazdy kategori C</option>
+                                    <option value="C+E">Prawo jazdy kategori C+E</option>
+                                    <option value="C1">Prawo jazdy kategori C1</option>
+                                    <option value="C1+E">Prawo jazdy kategori C1+e</option>
+                                    <option value="D">Prawo jazdy kategori D</option>
+                                    <option value="D+E">Prawo jazdy kategori D+E</option>
+                                    <option value="D1">Prawo jazdy kategori D1</option>
+                                    <option value="D1+E">Prawo jazdy kategori D1+E</option>
+                                </select>
+                            </div>
+                            <span id="permissions_level_glyph_positive" style="visibility: hidden;color: lawngreen"><i
+                                    class="glyphicon glyphicon-ok"></i></span>
+                            <span id="permissions_level_glyph" style="visibility: hidden;color: orangered"><i
+                                    class="glyphicon glyphicon-warning-sign"></i></span>
+                            <span id="permissions_level_error"></span>
                         </div>
-                        <span id="permissions_level_glyph_positive" style="visibility: hidden;color: lawngreen"><i
-                            class="glyphicon glyphicon-ok"></i></span>
-                        <span id="permissions_level_glyph" style="visibility: hidden;color: orangered"><i
-                                class="glyphicon glyphicon-warning-sign"></i></span>
-                        <span id="permissions_level_error"></span>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-md-4 control-label"></label>
-                        <div class="col-md-4">
-                            <button type="submit" id="submit" class="btn btn-warning">Zapisz<span
-                                    class="glyphicon glyphicon-send"></span>
-                            </button>
-                            <button class="btn btn-danger" name="cancel" formnovalidate>Wróć<span
-                                class="glyphicon glyphicon-remove"></span>
-                            </button>
+                        <div class="form-group">
+                            <label class="col-md-4 control-label"></label>
+                            <div class="col-md-4">
+                                <button type="submit" id="submit" class="btn btn-warning">Zapisz<span
+                                        class="glyphicon glyphicon-send"></span>
+                                </button>
+                                <button class="btn btn-danger" name="cancel" formnovalidate>Wróć<span
+                                        class="glyphicon glyphicon-remove"></span>
+                                </button>
 
+                            </div>
                         </div>
-                    </div>
                 </fieldset>
             </form>
         </div>
