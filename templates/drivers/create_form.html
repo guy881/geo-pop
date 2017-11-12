@@ -7,7 +7,8 @@
         <h2>{{ error }}</h2>
 
 
-        <form class="well form-horizontal" action="" method="post" id="create_driver_form">
+        <form class="well form-horizontal" action="" method="post" name="create_driver_form"
+              onsubmit="validate_form()">
             <fieldset>
                 {% csrf_token %}
                 {{ form.non_field_errors }}
@@ -23,21 +24,25 @@
                 </div>
             {% endfor %}{% endcomment %}
                 <div class="form-group">
-                    <label class="col-md-4 control-label">{{ form.full_name.label_tag }}</label>
+                    <label class="col-md-4 control-label">Full name</label>
                     <div class="col-md-4 inputGroupContainer">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <input name="full_name" placeholder="Full name" class="form-control" type="text">
+                            <input name="full_name" id="full_name" placeholder="Full name" class="form-control"
+                                   type="text" onblur="check_full_name()">
                         </div>
                     </div>
+                    <span id="full_name_glyph" style="visibility: hidden;color: orangered"><i
+                            class="glyphicon glyphicon-warning-sign"></i></span>
+                    <span id="full_name_error"></span>
                 </div>
                 <div class="form-group">
-                    <label class="col-md-4 control-label">{{ form.gender.label_tag }}</label>
+                    <label class="col-md-4 control-label">Gender</label>
                     <div class="col-md-4 inputGroupContainer">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
-                            <select name="gender" class="form-control selectpicker">
-                                <option value="">Select your gender</option>
+                            <select name="gender" id="gender" class="form-control selectpicker" onblur="check_gender()">
+                                <option value="default">Select your gender</option>
                                 <option>man</option>
                                 <option>woman</option>
                                 <option>other</option>
@@ -45,55 +50,70 @@
                             </select>
                         </div>
                     </div>
+                    <span id="gender_glyph" style="visibility: hidden;color: orangered"><i
+                            class="glyphicon glyphicon-warning-sign"></i></span>
+                    <span id="gender_error"></span>
                 </div>
                 <div class="form-group">
                     <label class="col-md-4 control-label">Schedule</label>
                     <div class="col-md-4 inputGroupContainer">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-                            <textarea class="form-control" name="schedule" placeholder="Schedule"></textarea>
+                            <textarea class="form-control" id="schedule" name="schedule"
+                                      placeholder="Schedule" onblur="check_schedule()"></textarea>
                         </div>
                     </div>
+                    <span id="schedule_glyph" style="visibility: hidden;color: orangered"><i
+                            class="glyphicon glyphicon-warning-sign"></i></span>
+                    <span id="schedule_error"></span>
                 </div>
                 <div class="form-group">
                     <label class="col-md-4 control-label">Pesel</label>
                     <div class="col-md-4 inputGroupContainer">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
-                            <input name="pesel" placeholder="71010111111" class="form-control" type="text">
+                            <input name="pesel" id="pesel" placeholder="71010111111" class="form-control" type="text" onblur="check_pesel()">
                         </div>
                     </div>
+                    <span id="pesel_glyph" style="visibility: hidden;color: orangered"><i
+                            class="glyphicon glyphicon-warning-sign"></i></span>
+                    <span id="pesel_error"></span>
                 </div>
                 <div class="form-group">
                     <label class="col-md-4 control-label">Phone number</label>
                     <div class="col-md-4 inputGroupContainer">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-earphone"></i></span>
-                            <input name="phone_number" placeholder="600600600" class="form-control" type="text">
+                            <input name="phone_number" id="phone_number" placeholder="600600600" class="form-control"
+                                   type="text" onblur="check_phone_number()">
                         </div>
                     </div>
+                    <span id="phone_number_glyph" style="visibility: hidden;color: orangered"><i
+                            class="glyphicon glyphicon-warning-sign"></i></span>
+                    <span id="phone_number_error"></span>
                 </div>
                 <div class="form-group">
                     <label class="col-md-4 control-label">Permissions level</label>
                     <div class="col-md-4 inputGroupContainer">
                         <div class="input-group">
                             <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
-                            <select name="permissions_level" class="form-control selectpicker">
-                                <option value="">Select permissions level</option>
+                            <select name="permissions_level" id="permissions_level" class="form-control selectpicker", onblur="check_permissions_level()">
+                                <option value="default">Select permissions level</option>
                                 <option>1</option>
                                 <option>2</option>
                                 <option>3</option>
                             </select>
                         </div>
                     </div>
-                </div>{
-                <div class="alert alert-success" role="alert" id="success_message">Success <i
-                        class="glyphicon glyphicon-thumbs-up"></i> Saved successfully!
+                    <span id="permissions_level_glyph" style="visibility: hidden;color: orangered"><i
+                            class="glyphicon glyphicon-warning-sign"></i></span>
+                    <span id="permissions_level_error"></span>
                 </div>
                 <div class="form-group">
                     <label class="col-md-4 control-label"></label>
                     <div class="col-md-4">
-                        <button type="submit" class="btn btn-warning">Save<span class="glyphicon glyphicon-send"></span>
+                        <button type="submit" id="submit" class="btn btn-warning">Save<span
+                                class="glyphicon glyphicon-send"></span>
                         </button>
                         <a type="button" class="btn btn-danger" href="{% url 'drivers:list' %} ">Go back<span
                                 class="glyphicon glyphicon-remove"></span></a>
@@ -105,6 +125,10 @@
 </div>
 
 {% include 'footer.html' %}
+
+<script type="text/javascript">
+
+</script>
 
 {% comment %}<div class="panel-body">
     <span class="term-description">{% trans 'Full name' %}</span>
