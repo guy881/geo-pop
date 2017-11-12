@@ -3,6 +3,6 @@ from regions.views import RegionsView, AddDriverToRegionView
 
 
 urlpatterns = [
-    url(r'list/', RegionsView.as_view(), name='regions'),
-    url(r'add/', AddDriverToRegionView.as_view(), name='addDriverToRegionView'),
+    url(r'$', RegionsView.as_view(), name='regions'),
+    url(r'regions/add/', AddDriverToRegionView.as_view(), name='addDriverToRegionView'),
 ]
