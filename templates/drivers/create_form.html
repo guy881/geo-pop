@@ -28,6 +28,8 @@
                                        type="text" onblur="check_full_name(this.form.name)">
                             </div>
                         </div>
+                        <span id="full_name_glyph_positive" style="visibility: hidden;color: greenyellow"><i
+                                class="glyphicon glyphicon-ok"></i></span>
                         <span id="full_name_glyph" style="visibility: hidden;color: orangered"><i
                                 class="glyphicon glyphicon-warning-sign"></i></span>
                         <span id="full_name_error"></span>
@@ -47,10 +49,10 @@
                                 </select>
                             </div>
                         </div>
+                        <span id="gender_glyph_positive" style="visibility: hidden;color: greenyellow"><i
+                                class="glyphicon glyphicon-ok"></i></span>
                         <span id="gender_glyph" style="visibility: hidden;color: orangered"><i
                                 class="glyphicon glyphicon-warning-sign"></i></span>
-                        {% comment %}<span id="gender_glyph_positive" style="visibility: hidden;color: lawngreen"><i
-                            class="glyphicon glyphicon-ok"></i></span>{% endcomment %}
                         <span id="gender_error"></span>
                     </div>
                     {% comment %}
@@ -76,6 +78,8 @@
                                        type="text" onblur="check_pesel(this.form.name)">
                             </div>
                         </div>
+                        <span id="pesel_glyph_positive" style="visibility: hidden;color: greenyellow"><i
+                                class="glyphicon glyphicon-ok"></i></span>
                         <span id="pesel_glyph" style="visibility: hidden;color: orangered"><i
                                 class="glyphicon glyphicon-warning-sign"></i></span>
                         <span id="pesel_error"></span>
@@ -90,6 +94,8 @@
                                        type="text" onblur="check_phone_number(this.form.name)">
                             </div>
                         </div>
+                        <span id="phone_number_glyph_positive" style="visibility: hidden;color: greenyellow"><i
+                                class="glyphicon glyphicon-ok"></i></span>
                         <span id="phone_number_glyph" style="visibility: hidden;color: orangered"><i
                                 class="glyphicon glyphicon-warning-sign"></i></span>
                         <span id="phone_number_error"></span>
@@ -99,11 +105,28 @@
                         <div class="col-md-4 inputGroupContainer">
                             <div class="input-group">
                                 <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
-                                <input type="number" name="permissions_level" id="permissions_level"
-                                       class="form-control selectpicker" placeholder="10"
-                                       onblur="check_permissions_level(this.form.name)">
+                                <select name="permissions_level" id="permissions_level"
+                                        class="form-control selectpicker" placeholder="10"
+                                        onblur="check_permissions_level(this.form.name)">
+                                    <option value="default">Wybierz kategorię</option>
+                                    <option value="AM">Kategoria AM</option>
+                                    <option value="A1">Kategoria A1</option>
+                                    <option value="A2">Kategoria A2</option>
+                                    <option value="B">Kategoria B</option>
+                                    <option value="B+E">Kategoria B+E</option>
+                                    <option value="C">Kategoria C</option>
+                                    <option value="C+E">Kategoria C+E</option>
+                                    <option value="C1">Kategoria C1</option>
+                                    <option value="C1+E">Kategoria C1+e</option>
+                                    <option value="D">Kategoria D</option>
+                                    <option value="D+E">Kategoria D+E</option>
+                                    <option value="D1">Kategoria D1</option>
+                                    <option value="D1+E">Kategoria D1+E</option>
+                                </select>
                             </div>
                         </div>
+                        <span id="permissions_level_glyph_positive" style="visibility: hidden;color: greenyellow"><i
+                                class="glyphicon glyphicon-ok"></i></span>
                         <span id="permissions_level_glyph" style="visibility: hidden;color: orangered"><i
                                 class="glyphicon glyphicon-warning-sign"></i></span>
                         <span id="permissions_level_error"></span>
@@ -115,7 +138,7 @@
                                     class="glyphicon glyphicon-send"></span>
                             </button>
                             <button class="btn btn-danger" name="cancel" formnovalidate>Wróć<span
-                                class="glyphicon glyphicon-remove"></span>
+                                    class="glyphicon glyphicon-remove"></span>
                             </button>
                         </div>
                     </div>
@@ -125,20 +148,3 @@
     </div>
 
 {% endblock %}
-
-{% comment %}<div class="panel-body">
-    <span class="term-description">{% trans 'Full name' %}</span>
-    <hr>
-    <textarea id="{{ form.full_name }}" name="{{ form.full_name }}"
-              class="js_ckeditor_terms"
-              data-constraints="{% if form.full_name.required %}@Required{% endif %}"
-              class="form-control {% if form.full_name.errors %}form-control-has-validation{% endif %}">{% if form.full_name.data %}
-        {{ form.full_name.data }} {% elif form.full_name.value %}
-        {{ form.full_name.value }}{% endif %}
-    </textarea>
-    {% if form.full_name.errors %}
-        {% for error in form.full_name.errors %}
-            <span class="form-validation">{{ error }}</span>
-        {% endfor %}
-    {% endif %}
-</div>{% endcomment %}
