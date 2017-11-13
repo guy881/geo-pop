@@ -7,13 +7,11 @@ from django.views.generic import TemplateView
 from .models import GeoLocalization, Region
 from django.utils import timezone
 from drivers.models import Driver
-import json
-from django.core.serializers.json import DjangoJSONEncoder
-from django.http import JsonResponse
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
+from django.urls import reverse
+
 
 
 class RegionsView(LoginRequiredMixin, TemplateView):
@@ -106,9 +104,13 @@ class AddDriverToRegionView(LoginRequiredMixin, generic.ListView):
     
     def post(self, request, *args, **kwargs):
         region_id = kwargs['pk']
-        driver_id = request.POST.get('driver');
+        driver_id = request.POST.get('driver')
+        driver_instance = get_object_or_404(Driver,pk=driver_id)
+        region_instance = get_object_or_404(Region,pk=region_id)
+        driver_instance.schedule.add(region_instance) #distinct?
+        driver_instance.save()
         kwargs['success'] = _('Data saved correctly!')
-        #return super(AddDriverToRegionView, self).post(self, request, *args, **kwargs)
+        return HttpResponseRedirect(reverse('regions:regions'))
 
 
 		
