@@ -20,6 +20,7 @@ from django.views.generic import TemplateView
 from users.views import *
 from drivers.views import *
 from cars.views import *
+from regions.views import *
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
