@@ -1,23 +1,23 @@
 {% extends 'base.html' %}
-   {% block content %}
+{% block content %}
     <div class="container">
         <div class="col-lg-12 col-md-12 col-sm-12">
             <h2>Obszary</h2>
 
-             {% if messages %}
+            {% if messages %}
                 <div class="alert alert-success">
                     {% for message in messages %}
                         {{ message }}
                     {% endfor %}
                 </div>
             {% endif %}
-<!--
-			<div class="buttons-panel">
-				<a type="button" class="btn btn-default" name="actualUpdates" href="/regions/actualUpdates">Wyświetl aktualnie przeprowadzane aktualizacje</a>
-				<a type="button" class="btn btn-default" name="manualActualization" href="/regions/manualActualization" name="manualActualization" >Ręczna aktualizacja stanu dróg</a>
-				<a type="button" class="btn btn-default" name="updatesHistory" href="/regions/updatesHistory">Historia aktualizacji</a>
-            </div>
--->
+            <!--
+                        <div class="buttons-panel">
+                            <a type="button" class="btn btn-default" name="actualUpdates" href="/regions/actualUpdates">Wyświetl aktualnie przeprowadzane aktualizacje</a>
+                            <a type="button" class="btn btn-default" name="manualActualization" href="/regions/manualActualization" name="manualActualization" >Ręczna aktualizacja stanu dróg</a>
+                            <a type="button" class="btn btn-default" name="updatesHistory" href="/regions/updatesHistory">Historia aktualizacji</a>
+                        </div>
+            -->
             <div id="map1"></div>
         </div>
     </div>
@@ -30,99 +30,102 @@
                 disableDefaultUI: true,
             };
             var map1 = new google.maps.Map(document.getElementById("map1"), mapOptions);
-			
-			
-			<!-- -->
-			var nlat = {{nlat}};
-			var nlon = {{nlon}};
-			var slat = {{slat}};
-			var slon = {{slon}};
-			for (i = 0; i < nlat.length; i++) {
-				var rectangle = new google.maps.Rectangle({
-					  strokeWeight: 2,
-					  fillColor: '#00FF00',
-					  fillOpacity: 0.35,
-					  map: map1,
-					  bounds: {
-						north: parseFloat(nlat[i]),
-						south: parseFloat(slat[i]),
-						east: parseFloat(slon[i]),
-						west: parseFloat(nlon[i])
-					  }
-				});
-				rectangle.addListener('rightclick', function(event){
-					var projection = map1.getProjection() ;
-					$('.contextmenu').remove();
-					var contextmenuDir = document.createElement("div");
-					contextmenuDir.className  = 'contextmenu';
-					contextmenuDir.innerHTML = '<a id="menu1"><div class="context">Zaznacz obszar do aktualizacji<\/div><\/a>'
-                    + '<a href="./regions/add/1184" id="menu2"><div class="context">Przydziel zasoby do obszaru<\/div><\/a>';
-				    /*TODO: Do zmiany kiedy regiony zostaną wprowadzone do bazy danych przez autora widoku*/
-					$(map1.getDiv()).append(contextmenuDir);
-					setMenuXY(event.latLng, map1);
-					contextmenuDir.style.visibility = "visible";
-					map1.addListener('idle', function(event){
-						contextmenuDir.style.visibility = "hidden";
-					});
-				});
-			
-			}
 
 
-			function getCanvasXY(caurrentLatLng, map){
-				var scale = Math.pow(2, map1.getZoom());
-				var nw = new google.maps.LatLng(
-				  map.getBounds().getNorthEast().lat(),
-				  map.getBounds().getSouthWest().lng()
-				);
-				var worldCoordinateNW = map.getProjection().fromLatLngToPoint(nw);
-				var worldCoordinate = map.getProjection().fromLatLngToPoint(caurrentLatLng);
-				var caurrentLatLngOffset = new google.maps.Point(
-				  Math.floor((worldCoordinate.x - worldCoordinateNW.x) * scale),
-				  Math.floor((worldCoordinate.y - worldCoordinateNW.y) * scale)
-				);
-				return caurrentLatLngOffset;
-			}
+            <!-- -->
+            var nlat = {{nlat}};
+            var nlon = {{nlon}};
+            var slat = {{slat}};
+            var slon = {{slon}};
+            for (i = 0; i < nlat.length; i++) {
+                var rectangle = new google.maps.Rectangle({
+                    strokeWeight: 2,
+                    fillColor: '#00FF00',
+                    fillOpacity: 0.35,
+                    map: map1,
+                    bounds: {
+                        north: parseFloat(nlat[i]),
+                        south: parseFloat(slat[i]),
+                        east: parseFloat(slon[i]),
+                        west: parseFloat(nlon[i])
+                    }
+                });
+                rectangle.addListener('rightclick', function (event) {
+                    var projection = map1.getProjection();
+                    $('.contextmenu').remove();
+                    var contextmenuDir = document.createElement("div");
+                    contextmenuDir.className = 'contextmenu';
+                    contextmenuDir.innerHTML = '<a id="menu1"><div class="context">Zaznacz obszar do aktualizacji<\/div><\/a>'
+                        + '<a href="./regions/add/1184" id="menu2"><div class="context">Przydziel zasoby do obszaru<\/div><\/a>';
+                    /*TODO: Do zmiany kiedy regiony zostaną wprowadzone do bazy danych przez autora widoku*/
+                    $(map1.getDiv()).append(contextmenuDir);
+                    setMenuXY(event.latLng, map1);
+                    contextmenuDir.style.visibility = "visible";
+                    map1.addListener('idle', function (event) {
+                        contextmenuDir.style.visibility = "hidden";
+                    });
+                });
+
+            }
 
 
-			function setMenuXY(caurrentLatLng, map){
-				var mapWidth = $('#map_canvas').width();
-				var mapHeight = $('#map_canvas').height();
-				var menuWidth = $('.contextmenu').width();
-				var menuHeight = $('.contextmenu').height();
-				var clickedPosition = getCanvasXY(caurrentLatLng, map);
-				var x = clickedPosition.x ;
-				var y = clickedPosition.y ;
-				if((mapWidth - x ) < menuWidth)//if to close to the map border, decrease x position
-					x = x - menuWidth;
-				if((mapHeight - y ) < menuHeight)//if to close to the map border, decrease y position
-					y = y - menuHeight;
-				$('.contextmenu').css('left',x  );
-				$('.contextmenu').css('top',y );
-			};
-			
+            function getCanvasXY(caurrentLatLng, map) {
+                var scale = Math.pow(2, map1.getZoom());
+                var nw = new google.maps.LatLng(
+                    map.getBounds().getNorthEast().lat(),
+                    map.getBounds().getSouthWest().lng()
+                );
+                var worldCoordinateNW = map.getProjection().fromLatLngToPoint(nw);
+                var worldCoordinate = map.getProjection().fromLatLngToPoint(caurrentLatLng);
+                var caurrentLatLngOffset = new google.maps.Point(
+                    Math.floor((worldCoordinate.x - worldCoordinateNW.x) * scale),
+                    Math.floor((worldCoordinate.y - worldCoordinateNW.y) * scale)
+                );
+                return caurrentLatLngOffset;
+            }
+
+
+            function setMenuXY(caurrentLatLng, map) {
+                var mapWidth = $('#map_canvas').width();
+                var mapHeight = $('#map_canvas').height();
+                var menuWidth = $('.contextmenu').width();
+                var menuHeight = $('.contextmenu').height();
+                var clickedPosition = getCanvasXY(caurrentLatLng, map);
+                var x = clickedPosition.x;
+                var y = clickedPosition.y;
+                if ((mapWidth - x ) < menuWidth)//if to close to the map border, decrease x position
+                    x = x - menuWidth;
+                if ((mapHeight - y ) < menuHeight)//if to close to the map border, decrease y position
+                    y = y - menuHeight;
+                $('.contextmenu').css('left', x);
+                $('.contextmenu').css('top', y);
+            };
+
         }
 
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdWvcN-Awg6yJiQXUvcYYTa-DnNesUny4&amp;callback=myMap" async="" defer=""></script>
-	<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdWvcN-Awg6yJiQXUvcYYTa-DnNesUny4&amp;callback=myMap"
+            async="" defer=""></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
 
-	<style type="text/css">
-		#map_canvas{
-			width: 400px;
-			height: 300px;
-		}
-		.contextmenu{
-			visibility:hidden;
-			background:#ffffff;
-			border:1px solid #8888FF;
-			z-index: 10;
-			position: relative;
-			width: 140px;
-		}
-		.contextmenu div{
-			padding-left: 5px
-		}
-	</style>
+    <style type="text/css">
+        #map_canvas {
+            width: 400px;
+            height: 300px;
+        }
+
+        .contextmenu {
+            visibility: hidden;
+            background: #ffffff;
+            border: 1px solid #8888FF;
+            z-index: 10;
+            position: relative;
+            width: 140px;
+        }
+
+        .contextmenu div {
+            padding-left: 5px
+        }
+    </style>
 
 {% endblock %}

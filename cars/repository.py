@@ -2,7 +2,6 @@ from cars.models import Car
 
 
 class CarsRepository:
-
     @staticmethod
     def add_car(car):
         car.save()

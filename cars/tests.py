@@ -1,13 +1,13 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.test import TestCase
+
 from .models import Car
 
 
 class CarTest(TestCase):
-
     def create_car(self, brand='Mazda', model='mx-5', production_year=1999, engine_volume=2.8,
                    body_type='sedan', need_repair='Igła, niemiec płakał jak sprzedawał',
-                   insurance_number='LOLXD12345', is_available=True ):
+                   insurance_number='LOLXD12345', is_available=True):
         return Car.objects.create(
             brand=brand,
             model=model,
@@ -32,7 +32,7 @@ class CarTest(TestCase):
         self.assertEqual(w.production_year, 1999)
         self.assertEqual(w.engine_volume, 2.8)
         self.assertEqual(w.body_type, 'sedan')
-        self.assertEqual(w.insurance_number, 'LOLXD12345' )
+        self.assertEqual(w.insurance_number, 'LOLXD12345')
 
     def test_car_update(self):
         c1 = self.create_car()
