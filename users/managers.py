@@ -2,7 +2,6 @@ from django.contrib.auth.base_user import BaseUserManager
 
 
 class CustomUserManager(BaseUserManager):
-
     def _create_user(self, email, password, **extra_fields):
         if not email:
             raise ValueError("Given email must be set")

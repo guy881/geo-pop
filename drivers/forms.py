@@ -1,11 +1,11 @@
-from django import forms
-from django.utils.translation import ugettext_lazy as _
-from django.core.exceptions import ValidationError
 import re
-from . import models
-from cars import models as models_c
-from django.forms.models import inlineformset_factory
+
+from django import forms
+from django.core.exceptions import ValidationError
 from django.forms import ImageField
+from django.utils.translation import ugettext_lazy as _
+
+from . import models
 
 
 class DriverBasicForm(forms.ModelForm):
@@ -16,7 +16,7 @@ class DriverBasicForm(forms.ModelForm):
 
     class Meta:
         model = models.Driver
-        fields = ('full_name', 'gender', 'pesel', 'phone_number','permissions_level')
+        fields = ('full_name', 'gender', 'pesel', 'phone_number', 'permissions_level')
 
     def pesel_check(self, pesel):
         if (re.match('[0-9]{11}$', pesel)):
@@ -25,8 +25,9 @@ class DriverBasicForm(forms.ModelForm):
             return 0
         l = int(pesel[10])
         suma = ((l * int(pesel[0])) + (3 * int(pesel[l])) + (7 * int(pesel[2])) + (9 * int(pesel[3])) + (
-        (l * int(pesel[4]))) + (3 * int(pesel[5])) + (7 * int(pesel[6])) + (9 * int(pesel[7])) + (l * int(pesel[8])) + (
-                3 * int(pesel[9])))
+            (l * int(pesel[4]))) + (3 * int(pesel[5])) + (7 * int(pesel[6])) + (9 * int(pesel[7])) + (
+                l * int(pesel[8])) + (
+                    3 * int(pesel[9])))
         controlbit = 10 - (suma % 10)
         if controlbit == 10:
             controlbit = 0
@@ -45,13 +46,13 @@ class DriverBasicForm(forms.ModelForm):
         gender = cleaned_data.get("gender")
         pesel = cleaned_data.get("pesel")
 
-        if full_name and  not ' ' in full_name:
-                    self.add_error('full_name', ValidationError('Give full name'))
+        if full_name and not ' ' in full_name:
+            self.add_error('full_name', ValidationError('Give full name'))
 
         if phone_number:
             reg = '(\d{3}[-\.\s]??\d{3}[-\.\s]??\d{3}|\(\d{3}\)\s*\d{3}[-\.\s]??\d{3}|\d{3}[-\.\s]??\d{3}|\d{9})$'
             pattern = re.compile(reg)
-            if not  pattern.match(phone_number):
+            if not pattern.match(phone_number):
                 self.add_error('phone_number', ValidationError('Phone number is in bad format'))
 
         if gender:
@@ -89,7 +90,6 @@ class DriverImageForm(forms.ModelForm):
         return cleaned_data
 
 
-
 class DriverCarsForm(forms.ModelForm):
     class Meta:
         model = models.Driver
@@ -103,8 +103,5 @@ class DriverCarsForm(forms.ModelForm):
             self.add_error(field, ValidationError(_('This field is required!')))
         return cleaned_data
 
-
 # CarFormSet_no_extra = inlineformset_factory(models_c.Car, models.Driver, fields=('is_available', 'state', 'coordinates', 'velocity'), extra=0)
 # CarFormSet = inlineformset_factory(models_c.Car, models.Driver, fields=('is_available', 'state', 'coordinates', 'velocity'), extra=1)
-
-

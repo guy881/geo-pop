@@ -1,11 +1,12 @@
+from datetime import datetime
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.test import TestCase
+
 from .models import Region, GeoLocalization
-from datetime import datetime
 
 
 class RegionTest(TestCase):
-
     def create_region(self, is_updated=True,
                       last_updated=datetime(2009, 1, 6, 15, 8, 24, 78915)):
         loc1 = GeoLocalization.objects.create(latitude=35.21, longitude=64.145)

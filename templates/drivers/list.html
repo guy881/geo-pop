@@ -17,7 +17,8 @@
                     <h2 style="text-align:left">Lista kierowców:</h2>
                 </div>
                 <div class="col-md-2">
-                    <a href="{% url 'drivers:create' %}" class="btn btn-outline-geo pull-right" role="button" style="float: right">Dodaj kierowcę</a>
+                    <a href="{% url 'drivers:create' %}" class="btn btn-outline-geo pull-right" role="button"
+                       style="float: right">Dodaj kierowcę</a>
                 </div>
             </div>
             {% if object_list %}
@@ -47,7 +48,7 @@
     </div>
 
     {% if is_paginated %}
-       <div class="pagination">
+        <div class="pagination">
             <span class="step-links">
                 {% if paginator.has_previous %}
                     <a href="?page={{ paginator.previous_page_number }}">Wcześniejsza</a>

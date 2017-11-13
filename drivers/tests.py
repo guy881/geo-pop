@@ -1,10 +1,10 @@
-from django.test import TestCase
-from .models import Driver
 from django.core.exceptions import ObjectDoesNotExist
+from django.test import TestCase
+
+from .models import Driver
 
 
 class DriverTest(TestCase):
-
     def create_driver(self, full_name="Test", gender="yes", pesel="132456789", permissions_level=1, phone_number=2):
         return Driver.objects.create(
             full_name=full_name,

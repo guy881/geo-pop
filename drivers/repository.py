@@ -1,6 +1,4 @@
-
 class DriversRepository:
-
     @staticmethod
     def add_driver(driver):
         driver.save()

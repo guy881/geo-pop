@@ -1,6 +1,4 @@
-
 class RegionsRepository:
-
     @staticmethod
     def add_region(region):
         region.save()

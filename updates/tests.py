@@ -1,13 +1,13 @@
+from datetime import datetime
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.test import TestCase
 
 from regions.models import GeoLocalization
 from .models import Obstacle
-from datetime import datetime
 
 
 class UpdateTest(TestCase):
-
     def create_obstacle(self, date=datetime(2009, 1, 6, 15, 8, 24, 78915),
                         status='1', type='I02', result='S07'):
 
@@ -39,7 +39,7 @@ class UpdateTest(TestCase):
         fields = ['status', 'type', 'result']
 
         c1.date = datetime(2009, 1, 6, 15, 8, 24, 78915)
-        #problem z datą i timezonami
+        # problem z datą i timezonami
         c1.status = '3'
         c1.type = 'I09'
         c1.result = 'J04'

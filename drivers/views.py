@@ -1,14 +1,16 @@
 import base64
 from io import BytesIO
+
+from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.paginator import EmptyPage, PageNotAnInteger
 from django.forms import modelform_factory
 from django.http import HttpResponseRedirect
 from django.shortcuts import reverse, get_object_or_404
-from django.contrib import messages
 from django.utils.translation import ugettext_lazy as _
 from django.views import generic
+
 from . import forms
 from .models import Driver
 
@@ -51,7 +53,6 @@ class DriverCreateView(LoginRequiredMixin, generic.CreateView):
             messages.success(self.request, 'Pomyślnie dodawano kierowce')
             return super().post(request, *args, **kwargs)
 
-
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
         kwargs['request'] = self.request
@@ -84,6 +85,7 @@ class DriverEditBasic(LoginRequiredMixin, generic.UpdateView):
             messages.success(request, _('Pomyślnie edytowano kierowce'))
             return HttpResponseRedirect(reverse('drivers:list'))
         return super(DriverEditBasic, self).post(self, request, *args, **kwargs)
+
 
 class DriverEditImage(LoginRequiredMixin, generic.UpdateView):
     # form_class = forms.AllImagesForm
@@ -132,10 +134,10 @@ class DriverEditImage(LoginRequiredMixin, generic.UpdateView):
                 super(DriverEditImage, self).post(self, request, *args, **kwargs)
                 return HttpResponseRedirect(reverse('drivers:edit_cars', kwargs={'pk': kwargs['pk']}))
             else:
-               messages.error(request,_('Please fill out all required fields!'))
+                messages.error(request, _('Please fill out all required fields!'))
         else:
             # form1 = forms.DriverImageForm(request.POST, validate=False)
-           messages.success(request,_('Data saved correctly!'))
+            messages.success(request, _('Data saved correctly!'))
         return super(DriverEditImage, self).post(self, request, *args, **kwargs)
 
 
@@ -184,7 +186,7 @@ class DriverEditCars(LoginRequiredMixin, generic.UpdateView):
                 super(DriverEditCars, self).post(request, *args, **kwargs)
                 return HttpResponseRedirect(reverse('drivers:edit_cars', kwargs={'pk': kwargs['pk']}))
             else:
-               messages.error(request,_('Please fill out all required fields!'))
+                messages.error(request, _('Please fill out all required fields!'))
         else:
-           messages.success(request,_('Data saved correctly!'))
+            messages.success(request, _('Data saved correctly!'))
         return super(DriverEditCars, self).post(request, *args, **kwargs)
