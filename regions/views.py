@@ -11,10 +11,12 @@ from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 
 
 
-class RegionsView(LoginRequiredMixin, TemplateView):
+class RegionsView(LoginRequiredMixin, SuccessMessageMixin, TemplateView):
     template_name = "regions/regions.html"
 
     def get(self, request):
@@ -90,11 +92,12 @@ class RegionsView(LoginRequiredMixin, TemplateView):
 
     
     
-class AddDriverToRegionView(LoginRequiredMixin, generic.ListView):
+class AddDriverToRegionView(LoginRequiredMixin, SuccessMessageMixin, generic.ListView):
     template_name = "regions/add_driver_to_region.html"
     context_object_name = 'add_driver_region'
     model = Region
     instance = Region.objects.all()[0]
+    success_message = 'Pomyślnie dodano zasoby do regionu'
     #instance = get_object_or_404(Region, pk=self.kwargs['pk']) 
     #zamienić gdy regiony zostaną wprowadzone do bazy danych. Mockup.
     
@@ -109,8 +112,11 @@ class AddDriverToRegionView(LoginRequiredMixin, generic.ListView):
         region_instance = get_object_or_404(Region,pk=region_id)
         driver_instance.schedule.add(region_instance) #distinct?
         driver_instance.save()
-        kwargs['success'] = _('Data saved correctly!')
+        #kwargs['success'] = _('Data saved correctly!')
+        messages.success(self.request, 'Pomyślnie przypisano zasoby do regionu')
         return HttpResponseRedirect(reverse('regions:regions'))
+
+        #return super().post(request, *args, **kwargs)
 
 
 		
