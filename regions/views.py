@@ -15,57 +15,6 @@ class RegionsView(TemplateView):
     template_name = "regions/regions.html"
 
     def get(self, request):
-        GeoLocalization.objects.all().delete()
-        Region.objects.all().delete()
-        lat = [52.3500, 52.2771, 52.1870, 52.0962]
-        lon = [20.7810, 20.8678, 20.9573, 21.0475, 21.1374, 21.2271]
-        Region.objects.create(is_updated=True, last_updated=timezone.now(),
-                              north_west=GeoLocalization.objects.create(latitude=lat[0], longitude=lon[0]),
-                              south_east=GeoLocalization.objects.create(latitude=lat[1], longitude=lon[1]))
-        Region.objects.create(is_updated=True, last_updated=timezone.now(),
-                              north_west=GeoLocalization.objects.create(latitude=lat[0], longitude=lon[1]),
-                              south_east=GeoLocalization.objects.create(latitude=lat[1], longitude=lon[2]))
-        Region.objects.create(is_updated=True, last_updated=timezone.now(),
-                              north_west=GeoLocalization.objects.create(latitude=lat[0], longitude=lon[2]),
-                              south_east=GeoLocalization.objects.create(latitude=lat[1], longitude=lon[3]))
-        Region.objects.create(is_updated=True, last_updated=timezone.now(),
-                              north_west=GeoLocalization.objects.create(latitude=lat[0], longitude=lon[3]),
-                              south_east=GeoLocalization.objects.create(latitude=lat[1], longitude=lon[4]))
-        Region.objects.create(is_updated=True, last_updated=timezone.now(),
-                              north_west=GeoLocalization.objects.create(latitude=lat[0], longitude=lon[4]),
-                              south_east=GeoLocalization.objects.create(latitude=lat[1], longitude=lon[5]))
-
-        Region.objects.create(is_updated=True, last_updated=timezone.now(),
-                              north_west=GeoLocalization.objects.create(latitude=lat[1], longitude=lon[0]),
-                              south_east=GeoLocalization.objects.create(latitude=lat[2], longitude=lon[1]))
-        Region.objects.create(is_updated=True, last_updated=timezone.now(),
-                              north_west=GeoLocalization.objects.create(latitude=lat[1], longitude=lon[1]),
-                              south_east=GeoLocalization.objects.create(latitude=lat[2], longitude=lon[2]))
-        Region.objects.create(is_updated=True, last_updated=timezone.now(),
-                              north_west=GeoLocalization.objects.create(latitude=lat[1], longitude=lon[2]),
-                              south_east=GeoLocalization.objects.create(latitude=lat[2], longitude=lon[3]))
-        Region.objects.create(is_updated=True, last_updated=timezone.now(),
-                              north_west=GeoLocalization.objects.create(latitude=lat[1], longitude=lon[3]),
-                              south_east=GeoLocalization.objects.create(latitude=lat[2], longitude=lon[4]))
-        Region.objects.create(is_updated=True, last_updated=timezone.now(),
-                              north_west=GeoLocalization.objects.create(latitude=lat[1], longitude=lon[4]),
-                              south_east=GeoLocalization.objects.create(latitude=lat[2], longitude=lon[5]))
-
-        Region.objects.create(is_updated=True, last_updated=timezone.now(),
-                              north_west=GeoLocalization.objects.create(latitude=lat[2], longitude=lon[0]),
-                              south_east=GeoLocalization.objects.create(latitude=lat[3], longitude=lon[1]))
-        Region.objects.create(is_updated=True, last_updated=timezone.now(),
-                              north_west=GeoLocalization.objects.create(latitude=lat[2], longitude=lon[1]),
-                              south_east=GeoLocalization.objects.create(latitude=lat[3], longitude=lon[2]))
-        Region.objects.create(is_updated=True, last_updated=timezone.now(),
-                              north_west=GeoLocalization.objects.create(latitude=lat[2], longitude=lon[2]),
-                              south_east=GeoLocalization.objects.create(latitude=lat[3], longitude=lon[3]))
-        Region.objects.create(is_updated=True, last_updated=timezone.now(),
-                              north_west=GeoLocalization.objects.create(latitude=lat[2], longitude=lon[3]),
-                              south_east=GeoLocalization.objects.create(latitude=lat[3], longitude=lon[4]))
-        Region.objects.create(is_updated=True, last_updated=timezone.now(),
-                              north_west=GeoLocalization.objects.create(latitude=lat[2], longitude=lon[4]),
-                              south_east=GeoLocalization.objects.create(latitude=lat[3], longitude=lon[5]))
         regions = Region.objects.all()
         nlat=[]
         nlon=[]
