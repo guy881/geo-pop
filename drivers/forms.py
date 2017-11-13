@@ -16,7 +16,7 @@ class DriverBasicForm(forms.ModelForm):
 
     class Meta:
         model = models.Driver
-        fields = ('full_name', 'gender', 'pesel', 'phone_number')
+        fields = ('full_name', 'gender', 'pesel', 'phone_number','permissions_level')
 
     def pesel_check(self, pesel):
         if (re.match('[0-9]{11}$', pesel)):
@@ -55,7 +55,7 @@ class DriverBasicForm(forms.ModelForm):
                 self.add_error('phone_number', ValidationError('Phone number is in bad format'))
 
         if gender:
-            reg = '(m|f|k|apache helicopter|man|female|male|women|kobieta|mężczyzna|other|inne)$'
+            reg = '(m|f|k|apache helicopter|man|female|male|women|kobieta|mężczyzna|mezczyzna|other|inne)$'
             pattern = re.compile(reg.rstrip())
             if not pattern.match(gender.lower()):
                 self.add_error('gender', ValidationError('Gender is in bad format'))
@@ -73,7 +73,7 @@ class DriverImageForm(forms.ModelForm):
 
     class Meta:
         model = models.Driver
-        fields = ('image',)
+        fields = ('profile_photo',)
         # exclude = ('full_name', 'gender', 'pesel', 'phone_number')
 
     def __init__(self, *args, validate=True, **kwargs):
