@@ -1,13 +1,13 @@
 
-class DriversRepository:
+class RegionsRepository:
 
     @staticmethod
-    def add_driver(driver):
-        driver.save()
+    def add_region(region):
+        region.save()
 
     @staticmethod
-    def update_driver(driver):
-        driver.save()
+    def update_region(region):
+        region.save()
 
     @staticmethod
     def modify_schedule(listOfAvailability):
@@ -15,5 +15,5 @@ class DriversRepository:
         return "not implemented yet"
 
     @staticmethod
-    def delete_driver(driver):
-        driver.delete()
+    def delete_region(region):
+        region.delete()
