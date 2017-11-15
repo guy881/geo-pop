@@ -33,14 +33,22 @@
 			
 			
 			<!-- -->
+			var rupdate = {{rupdate}};
 			var nlat = {{nlat}};
 			var nlon = {{nlon}};
 			var slat = {{slat}};
 			var slon = {{slon}};
 			for (i = 0; i < nlat.length; i++) {
+				//alert(rupdate[i]);
+				var c;
+				if (parseInt(rupdate[i])==0){
+					c = '#FF0000';
+				}else if (parseInt(rupdate[i])==1){
+					c = '#00FF00';
+				}
 				var rectangle = new google.maps.Rectangle({
 					  strokeWeight: 2,
-					  fillColor: '#00FF00',
+					  fillColor: c,
 					  fillOpacity: 0.35,
 					  map: map1,
 					  bounds: {
@@ -51,6 +59,7 @@
 					  }
 				});
 				rectangle.addListener('rightclick', function(event){
+					var r = this;
 					var projection = map1.getProjection() ;
 					$('.contextmenu').remove();
 					var contextmenuDir = document.createElement("div");
@@ -64,6 +73,15 @@
 					map1.addListener('idle', function(event){
 						contextmenuDir.style.visibility = "hidden";
 					});
+					
+					/*document.getElementById("menu1").addEventListener ("click", function() {
+						rect(r);
+					});
+		
+					function rect(rectangle){
+						rectangle.setOptions({fillColor: '#FF0000'});
+					}
+					*/
 				});
 			
 			}
