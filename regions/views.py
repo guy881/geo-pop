@@ -16,27 +16,13 @@ import ast
 
 class RegionsView(LoginRequiredMixin, SuccessMessageMixin, TemplateView):
     template_name = "regions/regions.html"
+    context_object_name = 'all_regions'
 
-    def get(self, request):
-        regions = Region.objects.all()
-        #GeoLocalization.objects.all().delete()
-        #Region.objects.all().delete()
-        regions = Region.objects.all()
+    def get_context_data(self, **kwargs):
+        context = super(RegionsView, self).get_context_data(**kwargs)
+        context['all_regions'] = Region.objects.values('is_updated', 'north_west__latitude', 'north_west__longitude', 'south_east__latitude', 'south_east__longitude')
+        return context
 
-        nlat=[]
-        nlon=[]
-        slat = []
-        slon = []
-        rupdate=[]
-        for i in range (0, regions.count()) :
-            nlat.append(float(regions.select_related('north_west__latitude').values_list('north_west__latitude')[i][0]))
-            nlon.append(float(regions.select_related('north_west__longitude').values_list('north_west__longitude')[i][0]))
-            slat.append(float(regions.select_related('south_east__latitude').values_list('south_east__latitude')[i][0]))
-            slon.append(float(regions.select_related('south_east__longitude').values_list('south_east__longitude')[i][0]))
-            rupdate.append(int(regions.select_related('is_updated').values_list('is_updated')[i][0]))
-        return render(request, 'regions/regions.html', {"nlat": nlat, "nlon": nlon, "slat":slat, "slon":slon, "rupdate":rupdate})
-
-    
     
 class AddDriverToRegionView(LoginRequiredMixin, SuccessMessageMixin, generic.ListView):
     template_name = "regions/add_driver_to_region.html"
