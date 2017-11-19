@@ -20,8 +20,16 @@ class RegionsView(LoginRequiredMixin, SuccessMessageMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super(RegionsView, self).get_context_data(**kwargs)
-        context['all_regions'] = Region.objects.values('is_updated', 'north_west__latitude', 'north_west__longitude', 'south_east__latitude', 'south_east__longitude')
+        context['all_regions'] = Region.objects.values('id', 'is_updated', 'north_west__latitude', 'north_west__longitude', 'south_east__latitude', 'south_east__longitude')
         return context
+
+    def post(self, request, *args, **kwargs):
+        region_id = request.POST.get('region')
+        region_instance = get_object_or_404(Region, pk=region_id)
+        region_instance.is_updated = 'False'
+        region_instance.save()
+        messages.success(self.request, 'Pomyślnie dodano obszar do aktualizacji')
+        return HttpResponseRedirect(reverse('regions:regions'))
 
     
 class AddDriverToRegionView(LoginRequiredMixin, SuccessMessageMixin, generic.ListView):
