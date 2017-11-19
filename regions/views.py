@@ -1,6 +1,5 @@
-from django.contrib import messages
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.messages.views import SuccessMessageMixin
+from django.template import  RequestContext
+from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.views.generic import TemplateView
@@ -10,13 +9,9 @@ from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.utils.translation import ugettext_lazy as _
 from django.urls import reverse
+from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
 import ast
-from django.shortcuts import get_object_or_404
-from django.shortcuts import render
-from django.urls import reverse
-from django.utils import timezone
-from django.views import generic
-
 
 
 class RegionsView(LoginRequiredMixin, SuccessMessageMixin, TemplateView):
@@ -36,44 +31,43 @@ class RegionsView(LoginRequiredMixin, SuccessMessageMixin, TemplateView):
         messages.success(self.request, 'Pomyślnie dodano obszar do aktualizacji')
         return HttpResponseRedirect(reverse('regions:regions'))
 
-		
-		
+    
 class AddDriverToRegionView(LoginRequiredMixin, SuccessMessageMixin, generic.ListView):
     template_name = "regions/add_driver_to_region.html"
     context_object_name = 'add_driver_region'
     model = Region
     instance = Region.objects.all()[0]
     success_message = 'Pomyślnie dodano zasoby do regionu'
-
-    # instance = get_object_or_404(Region, pk=self.kwargs['pk'])
-    # zamienić gdy regiony zostaną wprowadzone do bazy danych. Mockup.
-
-    def get_queryset(self):
+    #instance = get_object_or_404(Region, pk=self.kwargs['pk']) 
+    #zamienić gdy regiony zostaną wprowadzone do bazy danych. Mockup.
+    
+    def get_queryset(self): 
         return Driver.objects.all()
-
+     
+    
     def post(self, request, *args, **kwargs):
         region_id = kwargs['pk']
         driver_id = request.POST.get('driver')
-        driver_instance = get_object_or_404(Driver, pk=driver_id)
-        region_instance = get_object_or_404(Region, pk=region_id)
-        driver_instance.schedule.add(region_instance)  # distinct?
+        driver_instance = get_object_or_404(Driver,pk=driver_id)
+        region_instance = get_object_or_404(Region,pk=region_id)
+        driver_instance.schedule.add(region_instance) #distinct?
         driver_instance.save()
-        # kwargs['success'] = _('Data saved correctly!')
+        #kwargs['success'] = _('Data saved correctly!')
         messages.success(self.request, 'Pomyślnie przypisano zasoby do regionu')
         return HttpResponseRedirect(reverse('regions:regions'))
 
-        # return super().post(request, *args, **kwargs)
+        #return super().post(request, *args, **kwargs)
 
 
-
-
-        # def manualActualization(request):
-        #	return HttpResponse("Ręczna aktualizacja stanu dróg")
-        #
-        #
-        # def actualUpdates(request):
-        #	return HttpResponse("Wyświetl aktualnie przeprowadzane aktualizacje")
-        #
-        #
-        # def updatesHistory(request):
-        #	return HttpResponse("Historia aktualizacji")
+		
+        
+#def manualActualization(request):
+#	return HttpResponse("Ręczna aktualizacja stanu dróg")
+#	
+#
+#def actualUpdates(request):
+#	return HttpResponse("Wyświetl aktualnie przeprowadzane aktualizacje")
+#	
+#	
+#def updatesHistory(request):
+#	return HttpResponse("Historia aktualizacji")
