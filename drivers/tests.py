@@ -1,10 +1,10 @@
-from django.test import TestCase
-from .models import Driver
 from django.core.exceptions import ObjectDoesNotExist
+from django.test import TestCase
+
+from .models import Driver
 
 
 class DriverTest(TestCase):
-
     def create_driver(self, full_name="Test", gender="yes", pesel="132456789", permissions_level=1, phone_number=2):
         return Driver.objects.create(
             full_name=full_name,
@@ -22,7 +22,6 @@ class DriverTest(TestCase):
     def test_driver_creation(self):
         w = self.create_driver()
         self.assertTrue(isinstance(w, Driver))
-        self.assertEqual(str(w), w.full_name + ' ' + w.pesel)
         self.assertEqual(w.gender, 'yes')
         self.assertEqual(w.phone_number, 2)
         self.assertEqual(w.permissions_level, 1)

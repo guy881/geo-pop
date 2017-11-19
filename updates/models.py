@@ -1,7 +1,7 @@
 from django.db import models
 
-from regions.models import GeoLocalization
 from drivers.models import Driver
+from regions.models import GeoLocalization
 
 
 class Obstacle(models.Model):
@@ -13,41 +13,41 @@ class Obstacle(models.Model):
         ('8', 'Droga zamknięta')
     )
     TYPE_CHOICES = (
-         ('I02', 'Blokada drogi'),
-         ('I04', 'Inne'),
-         ('I05', 'Rajd'),
-         ('I06', 'Pielgrzymka'),
-         ('I07', 'Zawody sportowe'),
-         ('I08', 'Demonstracja'),
-         ('I09', 'Uroczystość'),
-         ('I10', 'Przejazd ważnej osobistości'),
-         ('I11', 'Przejazd pojazdu nienormatywnego'),
-         ('I12', 'Zwiększone natężenie ruchu'),
-         ('I13', 'Protest'),
-         ('K00', 'Katastrofa budowlana'),
-         ('K01', 'Katastrofa ekologiczna'),
-         ('K02', 'Pożar'),
-         ('K03', 'Inne'),
-         ('K04', 'Powódź'),
-         ('S00', 'Brak informacji'),
-         ('U27', 'Remont mostu'),
-         ('U33', 'Roboty drogowe'),
-         ('U42', 'Inne'),
-         ('R00', 'Zderzenie się pojazdów w ruchu - czołowe'),
-         ('R01', 'Zderzenie się pojazdów w ruchu - boczne'),
-         ('R02', 'Zderzenie się pojazdów w ruchu - tylne'),
-         ('R03', 'Najechanie pojazdu na pieszego'),
-         ('R04', 'Najechanie pojazdu na pojazd unieruchomiony'),
-         ('R05', 'Najechanie pojazdu na drzewo, słup'),
-         ('R06', 'Najechanie pojazdu na zaporę kolejową'),
-         ('R07', 'Najechanie pojazdu na urządzenie drogowe'),
-         ('R08', 'Najechanie pojazdu na zwierzę'),
-         ('R09', 'Wywrócenie się pojazdu'),
-         ('R10', 'Inne'),
-         ('R11', 'Zderzenie się pojazdów w ruchu'),
-         ('R12', 'Wypadnięcie pojazdu z jezdni'),
-         ('R13', 'Wjechanie pojazdu do rowu'),
-         ('R14', 'Awaria pojazdu')
+        ('I02', 'Blokada drogi'),
+        ('I04', 'Inne'),
+        ('I05', 'Rajd'),
+        ('I06', 'Pielgrzymka'),
+        ('I07', 'Zawody sportowe'),
+        ('I08', 'Demonstracja'),
+        ('I09', 'Uroczystość'),
+        ('I10', 'Przejazd ważnej osobistości'),
+        ('I11', 'Przejazd pojazdu nienormatywnego'),
+        ('I12', 'Zwiększone natężenie ruchu'),
+        ('I13', 'Protest'),
+        ('K00', 'Katastrofa budowlana'),
+        ('K01', 'Katastrofa ekologiczna'),
+        ('K02', 'Pożar'),
+        ('K03', 'Inne'),
+        ('K04', 'Powódź'),
+        ('S00', 'Brak informacji'),
+        ('U27', 'Remont mostu'),
+        ('U33', 'Roboty drogowe'),
+        ('U42', 'Inne'),
+        ('R00', 'Zderzenie się pojazdów w ruchu - czołowe'),
+        ('R01', 'Zderzenie się pojazdów w ruchu - boczne'),
+        ('R02', 'Zderzenie się pojazdów w ruchu - tylne'),
+        ('R03', 'Najechanie pojazdu na pieszego'),
+        ('R04', 'Najechanie pojazdu na pojazd unieruchomiony'),
+        ('R05', 'Najechanie pojazdu na drzewo, słup'),
+        ('R06', 'Najechanie pojazdu na zaporę kolejową'),
+        ('R07', 'Najechanie pojazdu na urządzenie drogowe'),
+        ('R08', 'Najechanie pojazdu na zwierzę'),
+        ('R09', 'Wywrócenie się pojazdu'),
+        ('R10', 'Inne'),
+        ('R11', 'Zderzenie się pojazdów w ruchu'),
+        ('R12', 'Wypadnięcie pojazdu z jezdni'),
+        ('R13', 'Wjechanie pojazdu do rowu'),
+        ('R14', 'Awaria pojazdu')
     )
     RESULT_CHOICES = (
         ('J00', 'Brak informacji'),

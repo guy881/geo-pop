@@ -1,14 +1,14 @@
-from django.shortcuts import render, get_object_or_404
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.messages.views import SuccessMessageMixin
+from django.core.urlresolvers import reverse_lazy
 from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.views import generic
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.messages.views import SuccessMessageMixin
-from django.contrib import messages
-from django.core.urlresolvers import reverse_lazy
 
-from .models import Car
 from .forms import CarForm
+from .models import Car
+
 
 class CarListView(LoginRequiredMixin, generic.ListView):
     template_name = 'cars/car_list_final.html'
@@ -17,11 +17,12 @@ class CarListView(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         return Car.objects.all()
 
+
 class CarCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
     form_class = CarForm
     model = Car
     template_name_suffix = '_add'
-    success_url =reverse_lazy('cars:car_list')
+    success_url = reverse_lazy('cars:car_list')
     success_message = 'Pomyślnie dodano nowy samochód'
 
     def post(self, request, *args, **kwargs):
@@ -31,10 +32,12 @@ class CarCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView)
         else:
             return super(CarCreateView, self).post(request, *args, **kwargs)
 
+
 class CarUpdateView(LoginRequiredMixin, generic.UpdateView):
     model = Car
     fields = '__all__'
     template_name_suffix = '_update_form'
+
 
 class CarDeleteView(LoginRequiredMixin, generic.DeleteView):
     model = Car

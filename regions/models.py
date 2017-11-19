@@ -12,3 +12,4 @@ class Region(models.Model):
     # top left and bottom right corner of region
     north_west = models.OneToOneField(GeoLocalization, on_delete=models.CASCADE, parent_link=True, related_name='Region.south_east+')
     south_east = models.OneToOneField(GeoLocalization, on_delete=models.CASCADE, parent_link=True)
+
