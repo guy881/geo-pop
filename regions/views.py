@@ -14,6 +14,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 import ast
 
 
+
 class RegionsView(LoginRequiredMixin, SuccessMessageMixin, TemplateView):
     template_name = "regions/regions.html"
     context_object_name = 'all_regions'
