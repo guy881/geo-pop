@@ -48,6 +48,12 @@
                                     <option value="kobieta">kobieta</option>
                                     <option value="inne">inne</option>
                                     <option value="apache helicopter">apache helicopter</option>
+                                    <script>
+                                        $(function () {
+                                            var temp = "{{ form.gender.value }}";
+                                            $("#gender").val(temp);
+                                        });
+                                    </script>
                                 </select>
                             </div>
                         </div>
@@ -111,8 +117,8 @@
                                 <select name="permissions_level" id="permissions_level"
                                         class="form-control selectpicker" placeholder="10"
                                         onblur="check_permissions_level(this.form.name)"
-                                        value="{{ form.permissions_level.value }}">
-                                    <option value="default">Wybierz kategorię</option>
+                                        {% comment %}value="{{ form.permissions_level.value }}"{% endcomment %}>
+                                    <option value="default" selected="selected">Wybierz kategorię</option>
                                     <option value="AM">Kategoria AM</option>
                                     <option value="A1">Kategoria A1</option>
                                     <option value="A2">Kategoria A2</option>
@@ -126,6 +132,20 @@
                                     <option value="D+E">Kategoria D+E</option>
                                     <option value="D1">Kategoria D1</option>
                                     <option value="D1+E">Kategoria D1+E</option>
+                                    <script>
+                                        $(function () {
+                                            var temp = "{{ form.permissions_level.value }}";
+                                            $("#permissions_level").val(temp);
+                                        });
+                                        {% comment %}var plvalue = {{ form.permissions_level.value }};
+                                        var permissions_level = document.getElementById("permissions_level");
+                                        for (var i, j = 0; i = permissions_level.options[j]; j++) {
+                                            if (i.value == plvalue) {
+                                                permissions_level.selectedIndex = j;
+                                                break;
+                                            }
+                                        }{% endcomment %}
+                                    </script>
                                 </select>
                             </div>
                             <span id="permissions_level_glyph_positive" style="visibility: hidden;color: lawngreen"><i
@@ -134,21 +154,24 @@
                                     class="glyphicon glyphicon-warning-sign"></i></span>
                             <span id="permissions_level_error"></span>
                         </div>
-                        <div class="form-group">
-                            <label class="col-md-4 control-label"></label>
-                            <div class="col-md-4">
-                                <button type="submit" id="submit" class="btn btn-warning">Zapisz<span
-                                        class="glyphicon glyphicon-send"></span>
-                                </button>
-                                <button class="btn btn-danger" name="cancel" formnovalidate>Wróć<span
-                                        class="glyphicon glyphicon-remove"></span>
-                                </button>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4 control-label"></label>
+                        <div class="col-md-4">
+                            <button type="submit" id="submit" class="btn btn-warning">Zapisz<span
+                                    class="glyphicon glyphicon-send"></span>
+                            </button>
+                            <button class="btn btn-danger" name="cancel" formnovalidate>Wróć<span
+                                    class="glyphicon glyphicon-remove"></span>
+                            </button>
 
-                            </div>
                         </div>
+                    </div>
                 </fieldset>
             </form>
         </div>
     </div>
+
+
 
 {% endblock %}
