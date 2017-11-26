@@ -49,6 +49,7 @@
 			];
 			
 			for (i = 0; i < allRegions.length; i++) {
+			    var currentId = allRegions[i].id;
 				var color;
 				if (allRegions[i].is_updated=='False'){
 					color = '#FF0000';
@@ -69,7 +70,19 @@
 					  //region id is saved in zIndex
 					  zIndex : parseInt(allRegions[i].id)
 				});
+
+
+				document.oldColor = null;
+				document.lastSelectedRect = null;
+
 				rectangle.addListener('rightclick', function(event){
+				    if(document.lastSelectedRect != null) {
+                        document.lastSelectedRect.setOptions({fillColor: document.oldColor});
+                    }
+
+                    document.lastSelectedRect=this;
+				    document.oldColor = this.fillColor;
+
 					var thisRectangle = this;
 					var previouscolor = thisRectangle.fillColor;
 					thisRectangle.setOptions({fillColor: '#000000'});
@@ -77,9 +90,14 @@
 					$('.contextmenu').remove();
 					var contextmenuDir = document.createElement("div");
 					contextmenuDir.className  = 'contextmenu';
-					contextmenuDir.innerHTML = '<a id="menu1" class="zaznaczDoAktualizacji"><div class="context">Zaznacz obszar do aktualizacji<\/div><\/a>'
-                    + '<a href="./regions/add/1184" id="menu2"><div class="context">Przydziel zasoby do obszaru<\/div><\/a>';
-				    /*TODO: Do zmiany kiedy regiony zostaną wprowadzone do bazy danych przez autora widoku*/
+					if (previouscolor == "#00FF00") {
+                        contextmenuDir.innerHTML = '<a id="menu1" class="zaznaczDoAktualizacji"><div class="context">Zaznacz obszar do aktualizacji<\/div><\/a>'
+                            + '<a href="./regions/add/'+thisRectangle.zIndex+'" id="menu2"><div class="context">Przydziel zasoby do obszaru<\/div><\/a>';
+                    } else if (previouscolor == "#FF0000") {
+					    contextmenuDir.innerHTML = '<a id="menu1" class="zaznaczDoAktualizacji"><div class="context">Zaznacz obszar do aktualizacji<\/div><\/a>'
+                            + '<a href="./regions/add/'+thisRectangle.zIndex+'" id="menu2"><div class="context">Edytuj przydzielone zasoby do obszaru<\/div><\/a>';
+                    }
+
 					$(map1.getDiv()).append(contextmenuDir);
 					setMenuXY(event.latLng, map1);
 					contextmenuDir.style.visibility = "visible";
