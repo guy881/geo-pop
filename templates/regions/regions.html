@@ -1,49 +1,27 @@
 {% extends 'base.html' %}
-{% block content %}
+   {% block content %}
     <div class="container">
         <div class="col-lg-12 col-md-12 col-sm-12">
             <h2>Obszary</h2>
 
-            {% if messages %}
+             {% if messages %}
                 <div class="alert alert-success">
                     {% for message in messages %}
                         {{ message }}
                     {% endfor %}
                 </div>
             {% endif %}
-            <div class="row">
-                <div class="col-md-6 col-md-offset-3">
-                    <h4 style="text-align: center">Postęp aktualizacji obszarów:</h4>
-                </div>
+<!--
+			<div class="buttons-panel">
+				<a type="button" class="btn btn-default" name="actualUpdates" href="/regions/actualUpdates">Wyświetl aktualnie przeprowadzane aktualizacje</a>
+				<a type="button" class="btn btn-default" name="manualActualization" href="/regions/manualActualization" name="manualActualization" >Ręczna aktualizacja stanu dróg</a>
+				<a type="button" class="btn btn-default" name="updatesHistory" href="/regions/updatesHistory">Historia aktualizacji</a>
             </div>
-            <div class="row">
-                <div class="col-md-6 col-md-offset-3">
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar"
-                             aria-valuenow="60"
-                             aria-valuemin="0"
-                             aria-valuemax="100"
-                             style="width: 60%;">
-                        </div>
-                        <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar"
-                             aria-valuenow="40"
-                             aria-valuemin="0"
-                             aria-valuemax="100"
-                             style="width: 40%;">
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--
-                        <div class="buttons-panel">
-                            <a type="button" class="btn btn-default" name="actualUpdates" href="/regions/actualUpdates">Wyświetl aktualnie przeprowadzane aktualizacje</a>
-                            <a type="button" class="btn btn-default" name="manualActualization" href="/regions/manualActualization" name="manualActualization" >Ręczna aktualizacja stanu dróg</a>
-                            <a type="button" class="btn btn-default" name="updatesHistory" href="/regions/updatesHistory">Historia aktualizacji</a>
-                        </div>
-            -->
+-->
             <div id="map1"></div>
         </div>
     </div>
+	{% csrf_token %}
     <script type="text/javascript">
         function myMap() {
             var mapOptions = {
@@ -53,102 +31,163 @@
                 disableDefaultUI: true,
             };
             var map1 = new google.maps.Map(document.getElementById("map1"), mapOptions);
+			
+			
+			<!-- -->
+			var allRegions = [
+				{% for region in all_regions %}
+					{% if not forloop.first %},{% endif %}
+					{
+						id: "{{ region.id }}",
+						is_updated: "{{ region.is_updated }}",
+						north_west_lat: "{{ region.north_west__latitude }}",
+						north_west_lon: "{{ region.north_west__longitude }}",
+						south_east_lat: "{{ region.south_east__latitude }}",
+						south_east_lon: "{{ region.south_east__longitude}}"
+					}
+				{% endfor %}
+			];
+			
+			for (i = 0; i < allRegions.length; i++) {
+			    var currentId = allRegions[i].id;
+				var color;
+				if (allRegions[i].is_updated=='False'){
+					color = '#FF0000';
+				}else if (allRegions[i].is_updated=='True'){
+					color = '#00FF00';
+				}
+				var rectangle = new google.maps.Rectangle({
+					  strokeWeight: 2,
+					  fillColor: color,
+					  fillOpacity: 0.35,
+					  map: map1,
+					  bounds: {
+						north: parseFloat(allRegions[i].north_west_lat),
+						south: parseFloat(allRegions[i].south_east_lat),
+						east: parseFloat(allRegions[i].south_east_lon),
+						west: parseFloat(allRegions[i].north_west_lon)
+					  },
+					  //region id is saved in zIndex
+					  zIndex : parseInt(allRegions[i].id)
+				});
 
 
-            <!-- -->
-            var nlat = {{nlat}};
-            var nlon = {{nlon}};
-            var slat = {{slat}};
-            var slon = {{slon}};
-            for (i = 0; i < nlat.length; i++) {
-                var rectangle = new google.maps.Rectangle({
-                    strokeWeight: 2,
-                    fillColor: '#00FF00',
-                    fillOpacity: 0.35,
-                    map: map1,
-                    bounds: {
-                        north: parseFloat(nlat[i]),
-                        south: parseFloat(slat[i]),
-                        east: parseFloat(slon[i]),
-                        west: parseFloat(nlon[i])
+				document.oldColor = null;
+				document.lastSelectedRect = null;
+
+				rectangle.addListener('rightclick', function(event){
+				    if(document.lastSelectedRect != null) {
+                        document.lastSelectedRect.setOptions({fillColor: document.oldColor});
                     }
-                });
-                rectangle.addListener('rightclick', function (event) {
-                    var projection = map1.getProjection();
-                    $('.contextmenu').remove();
-                    var contextmenuDir = document.createElement("div");
-                    contextmenuDir.className = 'contextmenu';
-                    contextmenuDir.innerHTML = '<a id="menu1"><div class="context">Zaznacz obszar do aktualizacji<\/div><\/a>'
-                        + '<a href="./regions/add/1184" id="menu2"><div class="context">Przydziel zasoby do obszaru<\/div><\/a>';
-                    /*TODO: Do zmiany kiedy regiony zostaną wprowadzone do bazy danych przez autora widoku*/
-                    $(map1.getDiv()).append(contextmenuDir);
-                    setMenuXY(event.latLng, map1);
-                    contextmenuDir.style.visibility = "visible";
-                    map1.addListener('idle', function (event) {
-                        contextmenuDir.style.visibility = "hidden";
-                    });
-                });
 
-            }
+                    document.lastSelectedRect=this;
+				    document.oldColor = this.fillColor;
+
+					var thisRectangle = this;
+					var previouscolor = thisRectangle.fillColor;
+					thisRectangle.setOptions({fillColor: '#000000'});
+					var projection = map1.getProjection() ;
+					$('.contextmenu').remove();
+					var contextmenuDir = document.createElement("div");
+					contextmenuDir.className  = 'contextmenu';
+					if (previouscolor == "#00FF00") {
+                        contextmenuDir.innerHTML = '<a id="menu1" class="zaznaczDoAktualizacji"><div class="context">Zaznacz obszar do aktualizacji<\/div><\/a>'
+                            + '<a href="./regions/add/'+thisRectangle.zIndex+'" id="menu2"><div class="context">Przydziel zasoby do obszaru<\/div><\/a>';
+                    } else if (previouscolor == "#FF0000") {
+					    contextmenuDir.innerHTML = '<a id="menu1" class="zaznaczDoAktualizacji"><div class="context">Zaznacz obszar do aktualizacji<\/div><\/a>'
+                            + '<a href="./regions/add/'+thisRectangle.zIndex+'" id="menu2"><div class="context">Edytuj przydzielone zasoby do obszaru<\/div><\/a>';
+                    }
+
+					$(map1.getDiv()).append(contextmenuDir);
+					setMenuXY(event.latLng, map1);
+					contextmenuDir.style.visibility = "visible";
+					map1.addListener('idle', function(event){
+						contextmenuDir.style.visibility = "hidden";
+						thisRectangle.setOptions({fillColor: previouscolor});
+					});
+					
+					$('.zaznaczDoAktualizacji').click(function(){
+						//console.log(thisRectangle.zIndex);
+						var region_id = thisRectangle.zIndex;
+						var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+						function csrfSafeMethod(method) {
+							// these HTTP methods do not require CSRF protection
+							return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+						}
+						$.ajaxSetup({
+							beforeSend: function(xhr, settings) {
+								if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+									xhr.setRequestHeader("X-CSRFToken", csrftoken);
+								}
+							}
+						});
+						$.ajax({ 
+							url: '/',
+							data: {"region": region_id},
+							type: 'post'
+						});
+						thisRectangle.setOptions({fillColor: '#FF0000'});
+					});
+					
+				});
+			
+			}
 
 
-            function getCanvasXY(caurrentLatLng, map) {
-                var scale = Math.pow(2, map1.getZoom());
-                var nw = new google.maps.LatLng(
-                    map.getBounds().getNorthEast().lat(),
-                    map.getBounds().getSouthWest().lng()
-                );
-                var worldCoordinateNW = map.getProjection().fromLatLngToPoint(nw);
-                var worldCoordinate = map.getProjection().fromLatLngToPoint(caurrentLatLng);
-                var caurrentLatLngOffset = new google.maps.Point(
-                    Math.floor((worldCoordinate.x - worldCoordinateNW.x) * scale),
-                    Math.floor((worldCoordinate.y - worldCoordinateNW.y) * scale)
-                );
-                return caurrentLatLngOffset;
-            }
+			function getCanvasXY(caurrentLatLng, map){
+				var scale = Math.pow(2, map1.getZoom());
+				var nw = new google.maps.LatLng(
+				  map.getBounds().getNorthEast().lat(),
+				  map.getBounds().getSouthWest().lng()
+				);
+				var worldCoordinateNW = map.getProjection().fromLatLngToPoint(nw);
+				var worldCoordinate = map.getProjection().fromLatLngToPoint(caurrentLatLng);
+				var caurrentLatLngOffset = new google.maps.Point(
+				  Math.floor((worldCoordinate.x - worldCoordinateNW.x) * scale),
+				  Math.floor((worldCoordinate.y - worldCoordinateNW.y) * scale)
+				);
+				return caurrentLatLngOffset;
+			}
 
 
-            function setMenuXY(caurrentLatLng, map) {
-                var mapWidth = $('#map_canvas').width();
-                var mapHeight = $('#map_canvas').height();
-                var menuWidth = $('.contextmenu').width();
-                var menuHeight = $('.contextmenu').height();
-                var clickedPosition = getCanvasXY(caurrentLatLng, map);
-                var x = clickedPosition.x;
-                var y = clickedPosition.y;
-                if ((mapWidth - x ) < menuWidth)//if to close to the map border, decrease x position
-                    x = x - menuWidth;
-                if ((mapHeight - y ) < menuHeight)//if to close to the map border, decrease y position
-                    y = y - menuHeight;
-                $('.contextmenu').css('left', x);
-                $('.contextmenu').css('top', y);
-            };
-
+			function setMenuXY(caurrentLatLng, map){
+				var mapWidth = $('#map_canvas').width();
+				var mapHeight = $('#map_canvas').height();
+				var menuWidth = $('.contextmenu').width();
+				var menuHeight = $('.contextmenu').height();
+				var clickedPosition = getCanvasXY(caurrentLatLng, map);
+				var x = clickedPosition.x ;
+				var y = clickedPosition.y ;
+				if((mapWidth - x ) < menuWidth)//if to close to the map border, decrease x position
+					x = x - menuWidth;
+				if((mapHeight - y ) < menuHeight)//if to close to the map border, decrease y position
+					y = y - menuHeight;
+				$('.contextmenu').css('left',x  );
+				$('.contextmenu').css('top',y );
+			};
+			
         }
 
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdWvcN-Awg6yJiQXUvcYYTa-DnNesUny4&amp;callback=myMap"
-            async="" defer=""></script>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdWvcN-Awg6yJiQXUvcYYTa-DnNesUny4&amp;callback=myMap" async="" defer=""></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js"></script>
 
-    <style type="text/css">
-        #map_canvas {
-            width: 400px;
-            height: 300px;
-        }
-
-        .contextmenu {
-            visibility: hidden;
-            background: #ffffff;
-            border: 1px solid #8888FF;
-            z-index: 10;
-            position: relative;
-            width: 140px;
-        }
-
-        .contextmenu div {
-            padding-left: 5px
-        }
-    </style>
+	<style type="text/css">
+		#map_canvas{
+			width: 400px;
+			height: 300px;
+		}
+		.contextmenu{
+			visibility:hidden;
+			background:#ffffff;
+			border:1px solid #8888FF;
+			z-index: 10;
+			position: relative;
+			width: 140px;
+		}
+		.contextmenu div{
+			padding-left: 5px
+		}
+	</style>
 
 {% endblock %}
