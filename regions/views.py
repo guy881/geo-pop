@@ -47,7 +47,7 @@ class AddDriverToRegionView(LoginRequiredMixin, SuccessMessageMixin, generic.Lis
         driver_id = request.POST.get('driver')
         driver_instance = get_object_or_404(Driver,pk=driver_id)
         region_instance = get_object_or_404(Region,pk=region_id)
-        
+
         driver_instance.schedule.clear()
         driver_instance.schedule.add(region_instance) #distinct?
         driver_instance.save()
