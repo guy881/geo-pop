@@ -52,6 +52,8 @@
 
 
             <!-- -->
+            var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+			
             var allRegions = [
                 {% for region in all_regions %}
                     {% if not forloop.first %},{% endif %}
@@ -109,11 +111,13 @@
                     var contextmenuDir = document.createElement("div");
                     contextmenuDir.className = 'contextmenu';
                     if (previouscolor == "#00FF00") {
-                        contextmenuDir.innerHTML = '<a id="menu1" class="zaznaczDoAktualizacji"><div class="context">Zaznacz obszar do aktualizacji<\/div><\/a>'
-                            + '<a href="./regions/add/' + thisRectangle.zIndex + '" id="menu2"><div class="context">Przydziel zasoby do obszaru<\/div><\/a>';
+                        contextmenuDir.innerHTML = '<a id="menu1" class="markToActualize"><div class="context">Zaznacz obszar do aktualizacji<\/div><\/a>'
+                            + '<a href="./regions/add/' + thisRectangle.zIndex + '" id="menu2"><div class="context">Przydziel zasoby do obszaru<\/div><\/a>'
+							+ '<a id="menu3" class="markAsUpdated"><div class="context">Oznacz obszar jako aktualny<\/div><\/a>';
                     } else if (previouscolor == "#FF0000") {
-                        contextmenuDir.innerHTML = '<a id="menu1" class="zaznaczDoAktualizacji"><div class="context">Zaznacz obszar do aktualizacji<\/div><\/a>'
-                            + '<a href="./regions/edit/' + thisRectangle.zIndex + '" id="menu2"><div class="context">Edytuj przydzielone zasoby do obszaru<\/div><\/a>';
+                        contextmenuDir.innerHTML = '<a id="menu1" class="markToActualize"><div class="context">Zaznacz obszar do aktualizacji<\/div><\/a>'
+                            + '<a href="./regions/edit/' + thisRectangle.zIndex + '" id="menu2"><div class="context">Edytuj przydzielone zasoby do obszaru<\/div><\/a>'
+							+ '<a id="menu3" class="markAsUpdated"><div class="context">Oznacz obszar jako aktualny<\/div><\/a>';
                     }
 
                     $(map1.getDiv()).append(contextmenuDir);
@@ -124,10 +128,9 @@
                         thisRectangle.setOptions({fillColor: previouscolor});
                     });
 
-                    $('.zaznaczDoAktualizacji').click(function () {
+                    $('.markToActualize').click(function () {
                         //console.log(thisRectangle.zIndex);
                         var region_id = thisRectangle.zIndex;
-                        var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
 
                         function csrfSafeMethod(method) {
                             // these HTTP methods do not require CSRF protection
@@ -143,11 +146,34 @@
                         });
                         $.ajax({
                             url: '/',
-                            data: {"region": region_id},
+                            data: {"region": region_id, "message": "markToActualize"},
                             type: 'post'
                         });
                         thisRectangle.setOptions({fillColor: '#FF0000'});
                     });
+					
+					$('.markAsUpdated').click(function(){
+						var region_id = thisRectangle.zIndex;
+						function csrfSafeMethod(method) {
+							// these HTTP methods do not require CSRF protection
+							return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+						}
+						$.ajaxSetup({
+							beforeSend: function(xhr, settings) {
+								if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+									xhr.setRequestHeader("X-CSRFToken", csrftoken);
+								}
+							}
+						});
+						$.ajax({ 
+							url: '/',
+							data: {"region": region_id, "message" : "markAsUpdated"},
+							type: 'post'
+						});
+						thisRectangle.setOptions({fillColor: '#00FF00'});
+						contextmenuDir.style.visibility = "hidden";
+						previouscolor = '#00FF00';
+					});
 
                 });
 
@@ -202,6 +228,7 @@
         .contextmenu {
             visibility: hidden;
             background: #ffffff;
+			font-size: 12px;
             border: 1px solid #8888FF;
             z-index: 10;
             position: relative;

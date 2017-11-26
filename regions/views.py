@@ -22,9 +22,21 @@ class RegionsView(LoginRequiredMixin, SuccessMessageMixin, TemplateView):
 
     def post(self, request, *args, **kwargs):
         region_id = request.POST.get('region')
+        functionInfo = request.POST.get('message')
         region_instance = get_object_or_404(Region, pk=region_id)
-        region_instance.is_updated = 'False'
-        region_instance.save()
+        if (functionInfo == "markToActualize"):
+            region_instance.is_updated = 'False'
+            region_instance.save()
+        elif (functionInfo == "markAsUpdated"):
+            print("hej")
+            if ("False" == str(region_instance.is_updated)):
+                region_instance.is_updated = 'True'
+                region_instance.save()
+            elif ("True" == str(region_instance.is_updated)):
+                # jesli jest aktualny, trzeba wyswietlic komunikat
+                print('oki')
+                # messages.add_message(request, messages.INFO, 'Hello world.')
+                messages.success(request, 'Hello world.')
         messages.success(self.request, 'Pomyślnie dodano obszar do aktualizacji')
         return HttpResponseRedirect(reverse('regions:regions'))
 
