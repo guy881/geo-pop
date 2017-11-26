@@ -5,8 +5,8 @@ from datetime import datetime
 import re
 
 # from updates.models import Obstacle
-# from decimal import Decimal
 # from regions.models import GeoLocalization
+# from decimal import Decimal
 
 
 class WebClient:
