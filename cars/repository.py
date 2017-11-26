@@ -16,4 +16,4 @@ class CarsRepository:
 
     @staticmethod
     def get_all_cars():
-        return Car.objects.all
+        return Car.objects.all()
