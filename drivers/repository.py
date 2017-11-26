@@ -1,5 +1,6 @@
 from drivers.models import Driver
 
+
 class DriversRepository:
     @staticmethod
     def add_driver(driver):
