@@ -2,7 +2,6 @@ from cars.models import Car
 
 
 class CarsRepository:
-
     @staticmethod
     def add_car(car):
         car.save()
@@ -17,4 +16,4 @@ class CarsRepository:
 
     @staticmethod
     def get_all_cars():
-        return Car.objects.all
+        return Car.objects.all()

@@ -1,3 +1,4 @@
+from drivers.models import Driver
 
 class DriversRepository:
 
@@ -17,3 +18,7 @@ class DriversRepository:
     @staticmethod
     def delete_driver(driver):
         driver.delete()
+
+    @staticmethod
+    def get_all_drivers():
+        return Driver.objects.all()
