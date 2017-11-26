@@ -33,7 +33,7 @@ class AddDriverToRegionView(LoginRequiredMixin, SuccessMessageMixin, generic.Lis
     template_name = "regions/add_driver_to_region.html"
     context_object_name = 'add_driver_region'
     model = Region
-    instance = Region.objects.all()[0]
+    #instance = Region.objects.all()[0]
     #success_message = 'Pomyślnie dodano zasoby do regionu'
     #instance = get_object_or_404(Region, pk=self.kwargs['pk']) 
     #zamienić gdy regiony zostaną wprowadzone do bazy danych. Mockup.
@@ -47,24 +47,65 @@ class AddDriverToRegionView(LoginRequiredMixin, SuccessMessageMixin, generic.Lis
         driver_id = request.POST.get('driver')
         driver_instance = get_object_or_404(Driver,pk=driver_id)
         region_instance = get_object_or_404(Region,pk=region_id)
+        
+        driver_instance.schedule.clear()
         driver_instance.schedule.add(region_instance) #distinct?
         driver_instance.save()
         messages.success(self.request, 'Pomyślnie przypisano zasoby do regionu')
+
+        #for driver in region_instance.driver_set.all():
+        #    print(driver.full_name)
+
+
+
         return HttpResponseRedirect(reverse('regions:regions'))
 
         #return super().post(request, *args, **kwargs)
 
-		
+
+class editDriverToRegionDto(object):
+    allDrivers = [],
+    selectedDriver = 0
+
+    def __init__(self, allDrivers, selectedDriver):
+        self.allDrivers = allDrivers
+        self.selectedDriver = selectedDriver
+
+
 class EditDriverToRegionView(LoginRequiredMixin, SuccessMessageMixin, generic.ListView):
     template_name = "regions/edit_driver_to_region.html"
     context_object_name = 'edit_driver_region'
 
     def get_queryset(self):
-        return Driver.objects.all()
+        region_id = self.kwargs['pk']
+        region_instance = get_object_or_404(Region, pk=region_id)
+
+        lastIndex = region_instance.driver_set.all().count()-1
+        if(lastIndex<0):
+            current_value = 0
+        else:
+            driver_instance = region_instance.driver_set.all()[lastIndex]
+            current_value = driver_instance.id
+
+        dto = editDriverToRegionDto(Driver.objects.all(), current_value)
+        return dto
 
     def post(self, request, *args, **kwargs):
         region_id = kwargs['pk']
         driver_id = request.POST.get('driver')
         driver_instance = get_object_or_404(Driver, pk=driver_id)
         region_instance = get_object_or_404(Region, pk=region_id)
-        current_value = driver_instance.full_name
+
+        driver_instance.schedule.clear()
+        driver_instance.schedule.add(region_instance)  # distinct?
+
+        driver_instance.save()
+        messages.success(self.request, 'Zapisano')
+
+        # for driver in region_instance.driver_set.all():
+        #    print(driver.full_name)
+
+
+
+        return HttpResponseRedirect(reverse('regions:regions'))
+

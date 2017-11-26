@@ -13,9 +13,8 @@
                         {% csrf_token %}
                         <h4>Wybierz kierowcę:</h4>
                         <select name="driver" class="form-control">
-                            {% for value in add_driver_region %}
-                                <option value="{{ value.id }}"
-                                    {% if value == current_value %}selected="selected"{% endif %}>
+                            {% for value in edit_driver_region.allDrivers %}
+                                <option value="{{ value.id }}"  {% if value.id == edit_driver_region.selectedDriver %}selected="selected"{% endif %}>
                                     {{ value.full_name }}
                                 </option>
                             {% endfor %}

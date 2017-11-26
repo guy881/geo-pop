@@ -95,7 +95,7 @@
                             + '<a href="./regions/add/'+thisRectangle.zIndex+'" id="menu2"><div class="context">Przydziel zasoby do obszaru<\/div><\/a>';
                     } else if (previouscolor == "#FF0000") {
 					    contextmenuDir.innerHTML = '<a id="menu1" class="zaznaczDoAktualizacji"><div class="context">Zaznacz obszar do aktualizacji<\/div><\/a>'
-                            + '<a href="./regions/add/'+thisRectangle.zIndex+'" id="menu2"><div class="context">Edytuj przydzielone zasoby do obszaru<\/div><\/a>';
+                            + '<a href="./regions/edit/'+thisRectangle.zIndex+'" id="menu2"><div class="context">Edytuj przydzielone zasoby do obszaru<\/div><\/a>';
                     }
 
 					$(map1.getDiv()).append(contextmenuDir);
