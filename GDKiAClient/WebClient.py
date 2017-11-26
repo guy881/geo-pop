@@ -5,11 +5,8 @@ from datetime import datetime
 import re
 
 # from updates.models import Obstacle
-from decimal import Decimal
-
-
+# from decimal import Decimal
 # from regions.models import GeoLocalization
-
 
 
 class WebClient:
@@ -18,6 +15,7 @@ class WebClient:
 
     def get_obstacles_data(self):
         data = self.http.request('GET', self.requestUrl).data
+        print(bs4.BeautifulSoup(data, 'xml').prettify())
         return bs4.BeautifulSoup(data, 'xml')
 
 
@@ -29,6 +27,22 @@ class ObstaclesDataModel:
         date_clear_pattern = '\+\d+'
         clear_date = re.sub(date_clear_pattern, '', date)
         return datetime.strptime(clear_date, '%Y-%m-%dT%X')
+
+    def determine_location(self, obstacle):
+        if obstacle.geo_lat and obstacle.geo_long:
+            lat = float(obstacle.geo_lat.string)
+            long = float(obstacle.geo_long.string)
+            return lat, long
+
+    def determine_datetime(self, obstacle):
+        if obstacle.data_powstania and obstacle.data_likwidacji:
+            start = self.parse_date(obstacle.data_powstania.string)
+            stop = self.parse_date(obstacle.data_likwidacji.string)
+            return start, stop
+
+    def determine_description(self, obstacle):
+        if obstacle.objazd:
+            return obstacle.objazd.string
 
     def determine_status(self, obstacle):
         '''
@@ -55,25 +69,28 @@ class ObstaclesDataModel:
 
     def get_collection_of_obstacles(self):
         result = []
-        i = 0
-
-        for obstacle in self.soup.utrudnienia:
+        for count, obstacle in enumerate(self.soup.utrudnienia):
             if obstacle.typ.string == 'U':  # I type does not have this info
-                print(self.determine_status(obstacle))
-                print(self.determine_result(obstacle))
-            #not enough info in GDKiA feed to determine "choice" like "Pielgrzymka", "Rajd" or anything
-            #we should use ('I04', 'Inne'),
+                print("___________________________________________")
+                print("Opis: ", self.determine_description(obstacle))
+                print("Współrzędne: ", self.determine_location(obstacle))
+                print("Status:", self.determine_status(obstacle))
+                print("Wynik:", self.determine_result(obstacle))
+                start, stop = self.determine_datetime(obstacle)
+                print(f"Czas zgłoszenia: {start} \nCzas likwidacji: {stop}")
+                print("Ograniczenie predkosci", obstacle.ogr_predkosc.string)
+            # not enough info in GDKiA feed to determine "choice" like "Pielgrzymka", "Rajd" or anything
+            # we should use ('I04', 'Inne'),
 
             # geoloc = GeoLocalization(latitude=Decimal(obstacle.geo_lat.string),
             #                        longitude=Decimal(obstacle.geo_long.string))
-            
+
             # obstacle_from_db = Obstacle(date=self.parse_date(obstacle.data_likwidacji.string),
             # localization=geoloc,
             # type=obstacle.rodzaj.poz.string)
 
-            if i > 20:
+            if count > 20:
                 break
-            i = i + 1
 
 
 webClient = WebClient()

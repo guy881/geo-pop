@@ -3,3 +3,6 @@ django-versatileimagefield==1.8.1
 psycopg2==2.7.3.2
 gunicorn==19.6.0
 whitenoise==3.2
+bs4
+urllib3
+lxml
