@@ -43,8 +43,8 @@
     <script type="text/javascript">
         function myMap() {
             var mapOptions = {
-                center: new google.maps.LatLng(52.22977, 21.01178),
-                zoom: 10,
+                center: new google.maps.LatLng(52.22977, 21.2178),
+                zoom: 7,
                 mapTypeId: google.maps.MapTypeId.TERRAIN,
                 disableDefaultUI: true,
             };
@@ -91,7 +91,7 @@
                     zIndex: parseInt(allRegions[i].id)
                 });
 
-
+				//for unmarking last selected region
                 document.oldColor = null;
                 document.lastSelectedRect = null;
 
@@ -123,20 +123,31 @@
                     $(map1.getDiv()).append(contextmenuDir);
                     setMenuXY(event.latLng, map1);
                     contextmenuDir.style.visibility = "visible";
-                    map1.addListener('idle', function (event) {
+                   
+				   //close popup when clicking on the map
+					map1.addListener('idle', function (event) {
+                        contextmenuDir.style.visibility = "hidden";
+                        thisRectangle.setOptions({fillColor: previouscolor});
+                    });
+					
+					map1.addListener('click', function (event) {
+                        contextmenuDir.style.visibility = "hidden";
+                        thisRectangle.setOptions({fillColor: previouscolor});
+                    });
+					
+					map1.addListener('rightck', function (event) {
                         contextmenuDir.style.visibility = "hidden";
                         thisRectangle.setOptions({fillColor: previouscolor});
                     });
 
+					//make region red
                     $('.markToActualize').click(function () {
                         //console.log(thisRectangle.zIndex);
                         var region_id = thisRectangle.zIndex;
-
                         function csrfSafeMethod(method) {
                             // these HTTP methods do not require CSRF protection
                             return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
                         }
-
                         $.ajaxSetup({
                             beforeSend: function (xhr, settings) {
                                 if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
@@ -149,9 +160,13 @@
                             data: {"region": region_id, "message": "markToActualize"},
                             type: 'post'
                         });
-                        thisRectangle.setOptions({fillColor: '#FF0000'});
+                        contextmenuDir.style.visibility = "hidden";
+						previouscolor = '#FF0000';
+						thisRectangle.setOptions({fillColor: previouscolor});
+						document.oldColor = previouscolor;
                     });
 					
+					//make region green
 					$('.markAsUpdated').click(function(){
 						var region_id = thisRectangle.zIndex;
 						function csrfSafeMethod(method) {
@@ -170,9 +185,10 @@
 							data: {"region": region_id, "message" : "markAsUpdated"},
 							type: 'post'
 						});
-						thisRectangle.setOptions({fillColor: '#00FF00'});
 						contextmenuDir.style.visibility = "hidden";
 						previouscolor = '#00FF00';
+						thisRectangle.setOptions({fillColor: previouscolor});
+						document.oldColor = previouscolor;
 					});
 
                 });
@@ -229,7 +245,7 @@
             visibility: hidden;
             background: #ffffff;
 			font-size: 12px;
-            border: 1px solid #8888FF;
+            border: 1px solid #000000;
             z-index: 10;
             position: relative;
             width: 140px;
