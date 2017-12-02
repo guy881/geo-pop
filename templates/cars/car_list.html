@@ -26,7 +26,11 @@
             {% if all_cars %}
                 {% for car in all_cars %}
                     <div class="panel panel-primary">
-                        <div class="panel-heading">{{ car.brand }} {{ car.model }}</div>
+                        <div class="panel-heading">
+                            {{ car.brand }} {{ car.model }}
+                            <a class="btn btn-warning" style="float: right; padding: 2px"
+                               href="{% url 'cars:car_list' %} ">Edytuj samochód</a>
+                        </div>
                         <div class="panel-body">
                             <p><b>Marka:</b> {{ car.brand }}</p>
                             <p><b>Model:</b> {{ car.model }}</p>
