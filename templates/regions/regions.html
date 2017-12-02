@@ -35,7 +35,7 @@
                     </div>
                 </div>
             </div>
-
+			<div id="greenFieldAlert"></div>
             <div id="map1"></div>
         </div>
     </div>
@@ -43,8 +43,8 @@
     <script type="text/javascript">
         function myMap() {
             var mapOptions = {
-                center: new google.maps.LatLng(52.22977, 21.01178),
-                zoom: 10,
+                center: new google.maps.LatLng(52.22977, 21.2178),
+                zoom: 8,
                 mapTypeId: google.maps.MapTypeId.TERRAIN,
                 disableDefaultUI: true,
             };
@@ -52,6 +52,8 @@
 
 
             <!-- -->
+            var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
+			
             var allRegions = [
                 {% for region in all_regions %}
                     {% if not forloop.first %},{% endif %}
@@ -89,7 +91,7 @@
                     zIndex: parseInt(allRegions[i].id)
                 });
 
-
+				//for unmarking last selected region
                 document.oldColor = null;
                 document.lastSelectedRect = null;
 
@@ -109,31 +111,42 @@
                     var contextmenuDir = document.createElement("div");
                     contextmenuDir.className = 'contextmenu';
                     if (previouscolor == "#00FF00") {
-                        contextmenuDir.innerHTML = '<a id="menu1" class="zaznaczDoAktualizacji"><div class="context">Zaznacz obszar do aktualizacji<\/div><\/a>'
-                            + '<a href="./regions/add/' + thisRectangle.zIndex + '" id="menu2"><div class="context">Przydziel zasoby do obszaru<\/div><\/a>';
+                        contextmenuDir.innerHTML = '<a id="menu1" class="markToActualize"><div class="context">Zaznacz obszar do aktualizacji<\/div><\/a>'
+                            + '<a href="./regions/add/' + thisRectangle.zIndex + '" id="menu2"><div class="context">Przydziel zasoby do obszaru<\/div><\/a>'
+							+ '<a id="menu3" class="markAsUpdated"><div class="context">Oznacz obszar jako aktualny<\/div><\/a>';
                     } else if (previouscolor == "#FF0000") {
-                        contextmenuDir.innerHTML = '<a id="menu1" class="zaznaczDoAktualizacji"><div class="context">Zaznacz obszar do aktualizacji<\/div><\/a>'
-                            + '<a href="./regions/edit/' + thisRectangle.zIndex + '" id="menu2"><div class="context">Edytuj przydzielone zasoby do obszaru<\/div><\/a>';
+                        contextmenuDir.innerHTML = '<a id="menu1" class="markToActualize"><div class="context">Zaznacz obszar do aktualizacji<\/div><\/a>'
+                            + '<a href="./regions/edit/' + thisRectangle.zIndex + '" id="menu2"><div class="context">Edytuj przydzielone zasoby do obszaru<\/div><\/a>'
+							+ '<a id="menu3" class="markAsUpdated"><div class="context">Oznacz obszar jako aktualny<\/div><\/a>';
                     }
 
                     $(map1.getDiv()).append(contextmenuDir);
                     setMenuXY(event.latLng, map1);
                     contextmenuDir.style.visibility = "visible";
-                    map1.addListener('idle', function (event) {
+                   
+				   //close popup when clicking on the map
+					map1.addListener('idle', function (event) {
+                        contextmenuDir.style.visibility = "hidden";
+                        thisRectangle.setOptions({fillColor: previouscolor});
+                    });
+					
+					map1.addListener('click', function (event) {
+                        contextmenuDir.style.visibility = "hidden";
+                        thisRectangle.setOptions({fillColor: previouscolor});
+                    });
+					
+					map1.addListener('rightck', function (event) {
                         contextmenuDir.style.visibility = "hidden";
                         thisRectangle.setOptions({fillColor: previouscolor});
                     });
 
-                    $('.zaznaczDoAktualizacji').click(function () {
-                        //console.log(thisRectangle.zIndex);
+					//make region red
+                    $('.markToActualize').click(function () {
                         var region_id = thisRectangle.zIndex;
-                        var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
-
                         function csrfSafeMethod(method) {
                             // these HTTP methods do not require CSRF protection
                             return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
                         }
-
                         $.ajaxSetup({
                             beforeSend: function (xhr, settings) {
                                 if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
@@ -143,11 +156,46 @@
                         });
                         $.ajax({
                             url: '/',
-                            data: {"region": region_id},
+                            data: {"region": region_id, "message": "markToActualize"},
                             type: 'post'
                         });
-                        thisRectangle.setOptions({fillColor: '#FF0000'});
+                        contextmenuDir.style.visibility = "hidden";
+						previouscolor = '#FF0000';
+						thisRectangle.setOptions({fillColor: previouscolor});
+						document.oldColor = previouscolor;
                     });
+					
+					//make region green
+					$('.markAsUpdated').click(function(){
+                        if(previouscolor == '#00FF00'){
+							var cannotActualizeAlert = document.getElementById("greenFieldAlert");
+							cannotActualizeAlert.innerHTML = '<div id="dAlert" class="alert alert-danger">Wybrany obszar jest już zaktualizowany</div>';
+							$("#dAlert").fadeTo(2500, 900).slideUp(900, function(){
+								$("#dAlert").slideUp(900);
+							});
+						}else{
+							var region_id = thisRectangle.zIndex;
+							function csrfSafeMethod(method) {
+								return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+							}
+							$.ajaxSetup({
+								beforeSend: function(xhr, settings) {
+									if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+										xhr.setRequestHeader("X-CSRFToken", csrftoken);
+									}
+								}
+							});
+							$.ajax({ 
+								url: '/',
+								data: {"region": region_id, "message" : "markAsUpdated"},
+								type: 'post'
+							});
+							previouscolor = '#00FF00';
+							document.oldColor = previouscolor;
+						}
+						thisRectangle.setOptions({fillColor: previouscolor});
+						contextmenuDir.style.visibility = "hidden";
+					});
 
                 });
 
@@ -202,7 +250,8 @@
         .contextmenu {
             visibility: hidden;
             background: #ffffff;
-            border: 1px solid #8888FF;
+			font-size: 12px;
+            border: 1px solid #000000;
             z-index: 10;
             position: relative;
             width: 140px;
