@@ -28,13 +28,9 @@ class RegionsView(LoginRequiredMixin, SuccessMessageMixin, TemplateView):
             region_instance.is_updated = 'False'
             region_instance.save()
         elif (functionInfo == "markAsUpdated"):
-            if ("False" == str(region_instance.is_updated)):
+            if not region_instance.is_updated:
                 region_instance.is_updated = 'True'
                 region_instance.save()
-            elif ("True" == str(region_instance.is_updated)):
-                # jesli jest aktualny, trzeba wyswietlic komunikat
-                # messages.add_message(request, messages.INFO, 'Hello world.')
-                messages.success(request, 'Hello world.')
         messages.success(self.request, 'Pomyślnie dodano obszar do aktualizacji')
         return HttpResponseRedirect(reverse('regions:regions'))
 

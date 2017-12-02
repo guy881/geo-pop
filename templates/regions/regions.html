@@ -44,7 +44,7 @@
         function myMap() {
             var mapOptions = {
                 center: new google.maps.LatLng(52.22977, 21.2178),
-                zoom: 7,
+                zoom: 8,
                 mapTypeId: google.maps.MapTypeId.TERRAIN,
                 disableDefaultUI: true,
             };
@@ -169,7 +169,7 @@
 					$('.markAsUpdated').click(function(){
                         if(previouscolor == '#00FF00'){
 							var cannotActualizeAlert = document.getElementById("greenFieldAlert");
-							cannotActualizeAlert.innerHTML = '<div id="dAlert" class="alert alert-danger">Nie można oznaczyć wybranego obszaru jako aktualny</div>';
+							cannotActualizeAlert.innerHTML = '<div id="dAlert" class="alert alert-danger">Wybrany obszar jest już zaktualizowany</div>';
 							$("#dAlert").fadeTo(2500, 900).slideUp(900, function(){
 								$("#dAlert").slideUp(900);
 							});
