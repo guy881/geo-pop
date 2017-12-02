@@ -35,7 +35,7 @@
                     </div>
                 </div>
             </div>
-
+			<div id="greenFieldAlert"></div>
             <div id="map1"></div>
         </div>
     </div>
@@ -142,7 +142,6 @@
 
 					//make region red
                     $('.markToActualize').click(function () {
-                        //console.log(thisRectangle.zIndex);
                         var region_id = thisRectangle.zIndex;
                         function csrfSafeMethod(method) {
                             // these HTTP methods do not require CSRF protection
@@ -168,27 +167,34 @@
 					
 					//make region green
 					$('.markAsUpdated').click(function(){
-						var region_id = thisRectangle.zIndex;
-						function csrfSafeMethod(method) {
-							// these HTTP methods do not require CSRF protection
-							return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-						}
-						$.ajaxSetup({
-							beforeSend: function(xhr, settings) {
-								if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-									xhr.setRequestHeader("X-CSRFToken", csrftoken);
-								}
+                        if(previouscolor == '#00FF00'){
+							var cannotActualizeAlert = document.getElementById("greenFieldAlert");
+							cannotActualizeAlert.innerHTML = '<div id="dAlert" class="alert alert-danger">Nie można oznaczyć wybranego obszaru jako aktualny</div>';
+							$("#dAlert").fadeTo(2500, 900).slideUp(900, function(){
+								$("#dAlert").slideUp(900);
+							});
+						}else{
+							var region_id = thisRectangle.zIndex;
+							function csrfSafeMethod(method) {
+								return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 							}
-						});
-						$.ajax({ 
-							url: '/',
-							data: {"region": region_id, "message" : "markAsUpdated"},
-							type: 'post'
-						});
-						contextmenuDir.style.visibility = "hidden";
-						previouscolor = '#00FF00';
+							$.ajaxSetup({
+								beforeSend: function(xhr, settings) {
+									if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+										xhr.setRequestHeader("X-CSRFToken", csrftoken);
+									}
+								}
+							});
+							$.ajax({ 
+								url: '/',
+								data: {"region": region_id, "message" : "markAsUpdated"},
+								type: 'post'
+							});
+							previouscolor = '#00FF00';
+							document.oldColor = previouscolor;
+						}
 						thisRectangle.setOptions({fillColor: previouscolor});
-						document.oldColor = previouscolor;
+						contextmenuDir.style.visibility = "hidden";
 					});
 
                 });
