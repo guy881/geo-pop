@@ -29,7 +29,7 @@
                         <div class="panel-heading">
                             {{ car.brand }} {{ car.model }}
                             <a class="btn btn-warning" style="float: right; padding: 2px"
-                               href="{% url 'cars:car_list' %} ">Edytuj samochód</a>
+                               href="{% url 'cars:car_edit' pk=car.pk %}">Edytuj samochód</a>
                         </div>
                         <div class="panel-body">
                             <p><b>Marka:</b> {{ car.brand }}</p>
@@ -41,6 +41,7 @@
                             <p><b>Dostępność:</b> {{ car.is_available|yesno:"Dostępny,Niedostępny" }}</p>
                             <p><b>Stan:</b> {{ car.need_repair }}</p>
                             <p><b>Ostatnio przesłane współrzędne:</b> {{ car.last_location }}</p>
+                            <p><b>Kierowca:</b> {{ car.driver }}</p>
                         </div>
                     </div>
                 {% endfor %}
