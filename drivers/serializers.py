@@ -5,7 +5,6 @@ from regions.serializers import RegionSerializer
 
 
 class DriverSerializer(serializers.ModelSerializer):
-
     schedule = RegionSerializer(many=True, read_only=True)
 
     class Meta:

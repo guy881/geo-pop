@@ -1,5 +1,5 @@
-# Serializers define the API representation.
 from rest_framework import serializers
+
 from users.models import CustomUser
 
 

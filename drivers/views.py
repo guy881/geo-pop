@@ -196,18 +196,14 @@ class DriverEditCars(LoginRequiredMixin, generic.UpdateView):
         return super(DriverEditCars, self).post(request, *args, **kwargs)
 
 
-class DriverDetailAPIView(APIView):
-
-    def get_object(self, id):
+class DriverDetailAPIView(APIView, LoginRequiredMixin, ):
+    def get_object(self, user_id):
         try:
-            return Driver.objects.get(user=pk)
+            return Driver.objects.get(user=user_id)
         except Driver.DoesNotExist:
             raise Http404
 
     def get(self, request, format=None):
-        # drivers = [driver.full_name for driver in Driver.objects.all()]
         driver = self.get_object(request.user.id)
-        serializer = DriverSerializer(driver, data=request.data)
-        # current_driver = Driver.objects.filter(user=request.user)
-        if serializer is not None:
-            return Response(serializer.data)
+        serializer = DriverSerializer(driver)
+        return Response(serializer.data)
