@@ -34,9 +34,18 @@ class CarCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView)
 
 
 class CarUpdateView(LoginRequiredMixin, generic.UpdateView):
+    form_class = CarForm
     model = Car
-    fields = '__all__'
-    template_name_suffix = '_update_form'
+    template_name_suffix = '_edit'
+    success_url = reverse_lazy('cars:car_list')
+    success_message = 'Pomyślnie edytowano samochód'
+
+    def post(self, request, *args, **kwargs):
+        if "cancel" in request.POST:
+            messages.success(request, 'Pomyślnie anulowano edytowanie samochodu')
+            return HttpResponseRedirect(reverse('cars:car_list'))
+        else:
+            return super(CarUpdateView, self).post(request, *args, **kwargs)
 
 
 class CarDeleteView(LoginRequiredMixin, generic.DeleteView):

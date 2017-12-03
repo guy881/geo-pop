@@ -18,6 +18,8 @@ class RegionsView(LoginRequiredMixin, SuccessMessageMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(RegionsView, self).get_context_data(**kwargs)
         context['all_regions'] = Region.objects.values('id', 'is_updated', 'north_west__latitude', 'north_west__longitude', 'south_east__latitude', 'south_east__longitude')
+        context['updated_percentage'] = get_update_percentage()
+        context['outdated_percentage'] = 100 - get_update_percentage()
         return context
 
     def post(self, request, *args, **kwargs):
@@ -34,20 +36,20 @@ class RegionsView(LoginRequiredMixin, SuccessMessageMixin, TemplateView):
         messages.success(self.request, 'Pomyślnie dodano obszar do aktualizacji')
         return HttpResponseRedirect(reverse('regions:regions'))
 
-    
+
 class AddDriverToRegionView(LoginRequiredMixin, SuccessMessageMixin, generic.ListView):
     template_name = "regions/add_driver_to_region.html"
     context_object_name = 'add_driver_region'
     model = Region
     #instance = Region.objects.all()[0]
     #success_message = 'Pomyślnie dodano zasoby do regionu'
-    #instance = get_object_or_404(Region, pk=self.kwargs['pk']) 
+    #instance = get_object_or_404(Region, pk=self.kwargs['pk'])
     #zamienić gdy regiony zostaną wprowadzone do bazy danych. Mockup.
-    
-    def get_queryset(self): 
+
+    def get_queryset(self):
         return Driver.objects.all()
-     
-    
+
+
     def post(self, request, *args, **kwargs):
         region_id = kwargs['pk']
         driver_id = request.POST.get('driver')
@@ -115,3 +117,5 @@ class EditDriverToRegionView(LoginRequiredMixin, SuccessMessageMixin, generic.Li
 
         return HttpResponseRedirect(reverse('regions:regions'))
 
+def get_update_percentage():
+    return int(round(float(len(Region.objects.filter(is_updated=True))/len(Region.objects.all())),2)*100)
