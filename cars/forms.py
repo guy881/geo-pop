@@ -31,6 +31,10 @@ class CarForm(ModelForm):
         insurance_number = cleaned_data.get('insurance_number')
         is_available = cleaned_data.get('is_available')
 
+        for car in Car.objects.all():
+            if car.insurance_number == insurance_number:
+                self.add_error('insurance_number', forms.ValidationError('W bazie istnieje już samochód o podanym numerze ubezpieczenia'))
+
         if not brand.isalpha():
             self.add_error('brand', forms.ValidationError('Nazwa marki może się składać tylko z liter!'))
         if not re.match("^[A-Za-z0-9_-]+$", model):
