@@ -49,7 +49,8 @@ CUSTOM_APPS = [
 
 PLUGINS = [
     'versatileimagefield',
-    'rest_framework'
+    'rest_framework',
+    'django_extensions',
 ]
 
 INSTALLED_APPS = BASE_APPS + CUSTOM_APPS + PLUGINS
@@ -134,8 +135,8 @@ AUTH_USER_MODEL = 'users.CustomUser'
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+        'rest_framework.permissions.IsAdminUser',
+    ],
     # 'DEFAULT_AUTHENTICATION_CLASSES': (
     #     'rest_framework.authentication.BasicAuthentication',
     #     'rest_framework.authentication.SessionAuthentication',
