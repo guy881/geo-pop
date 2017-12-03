@@ -16,11 +16,23 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
+from rest_framework import routers
 
 from cars.views import *
 from drivers.views import *
 from regions.views import *
 from users.views import *
+
+# # ViewSets define the view behavior.
+# class UserViewSet(viewsets.ModelViewSet):
+#     queryset = CustomUser.objects.all()
+#     serializer_class = CustomUserSerializer
+
+# Routers provide an easy way of automatically determining the URL conf.
+# router = routers.DefaultRouter()
+# router.register(r'users', UserViewSet)
+# router.register(r'driver-api', DriverDetailAPIView.as_view(), 'Driver')
+# print(router.urls)
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
