@@ -110,15 +110,10 @@
                     $('.contextmenu').remove();
                     var contextmenuDir = document.createElement("div");
                     contextmenuDir.className = 'contextmenu';
-                    if (previouscolor == "#00FF00") {
-                        contextmenuDir.innerHTML = '<a id="menu1" class="markToActualize"><div class="context">Zaznacz obszar do aktualizacji<\/div><\/a>'
-                            + '<a href="./regions/add/' + thisRectangle.zIndex + '" id="menu2"><div class="context">Przydziel zasoby do obszaru<\/div><\/a>'
+                    contextmenuDir.innerHTML = '<a id="menu1" class="markToActualize"><div class="context">Zaznacz obszar do aktualizacji<\/div><\/a>'
+                            + '<a href="./regions/edit/' + thisRectangle.zIndex + '" id="menu2"><div class="context">Przydziel zasoby do obszaru<\/div><\/a>'
 							+ '<a id="menu3" class="markAsUpdated"><div class="context">Oznacz obszar jako aktualny<\/div><\/a>';
-                    } else if (previouscolor == "#FF0000") {
-                        contextmenuDir.innerHTML = '<a id="menu1" class="markToActualize"><div class="context">Zaznacz obszar do aktualizacji<\/div><\/a>'
-                            + '<a href="./regions/edit/' + thisRectangle.zIndex + '" id="menu2"><div class="context">Edytuj przydzielone zasoby do obszaru<\/div><\/a>'
-							+ '<a id="menu3" class="markAsUpdated"><div class="context">Oznacz obszar jako aktualny<\/div><\/a>';
-                    }
+
 
                     $(map1.getDiv()).append(contextmenuDir);
                     setMenuXY(event.latLng, map1);
