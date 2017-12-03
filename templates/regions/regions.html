@@ -14,28 +14,42 @@
 
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-                    <h4 style="text-align: center">Postęp aktualizacji obszarów:</h4>
+                    <h4 style="text-align: center" id="update_text"></h4>
+                    <script>
+                        $(function () {
+                            var percentage = "{{ updated_percentage }}";
+                            var element = document.getElementById("update_text");
+
+                            if (percentage === "0") {
+                                element.innerHTML = "Żaden obszar nie został jeszcze aktualizowany.";
+                            } else if (percentage === "100") {
+                                element.innerHTML = "Wszystkie obszary są zaktualizowane.";
+                            } else {
+                                element.innerHTML = "Postęp aktualizacji obszarów:  " + {{ updated_percentage }} +"%.";
+                            }
+                        });
+                    </script>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
                     <div class="progress">
                         <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar"
-                             aria-valuenow="{{updated_percentage}}"
+                             aria-valuenow="{{ updated_percentage }}"
                              aria-valuemin="0"
                              aria-valuemax="100"
-                             style="width: {{updated_percentage}}%;">
+                             style="width: {{ updated_percentage }}%;">
                         </div>
                         <div class="progress-bar progress-bar-danger progress-bar-striped active" role="progressbar"
-                             aria-valuenow="{{outdated_percentage}}"
+                             aria-valuenow="{{ outdated_percentage }}"
                              aria-valuemin="0"
                              aria-valuemax="100"
-                             style="width: {{outdated_percentage}}%;">
+                             style="width: {{ outdated_percentage }}%;">
                         </div>
                     </div>
                 </div>
             </div>
-			<div id="greenFieldAlert"></div>
+            <div id="greenFieldAlert"></div>
             <div id="map1"></div>
         </div>
     </div>
@@ -53,7 +67,7 @@
 
             <!-- -->
             var csrftoken = jQuery("[name=csrfmiddlewaretoken]").val();
-			
+
             var allRegions = [
                 {% for region in all_regions %}
                     {% if not forloop.first %},{% endif %}
@@ -91,7 +105,7 @@
                     zIndex: parseInt(allRegions[i].id)
                 });
 
-				//for unmarking last selected region
+                //for unmarking last selected region
                 document.oldColor = null;
                 document.lastSelectedRect = null;
 
@@ -111,37 +125,39 @@
                     var contextmenuDir = document.createElement("div");
                     contextmenuDir.className = 'contextmenu';
                     contextmenuDir.innerHTML = '<a id="menu1" class="markToActualize"><div class="context">Zaznacz obszar do aktualizacji<\/div><\/a>'
-                            + '<a href="./regions/edit/' + thisRectangle.zIndex + '" id="menu2"><div class="context">Przydziel zasoby do obszaru<\/div><\/a>'
-							+ '<a id="menu3" class="markAsUpdated"><div class="context">Oznacz obszar jako aktualny<\/div><\/a>';
+                        + '<a href="./regions/edit/' + thisRectangle.zIndex + '" id="menu2"><div class="context">Przydziel zasoby do obszaru<\/div><\/a>'
+                        + '<a id="menu3" class="markAsUpdated"><div class="context">Oznacz obszar jako aktualny<\/div><\/a>';
 
 
                     $(map1.getDiv()).append(contextmenuDir);
                     setMenuXY(event.latLng, map1);
                     contextmenuDir.style.visibility = "visible";
-                   
-				   //close popup when clicking on the map
-					map1.addListener('idle', function (event) {
-                        contextmenuDir.style.visibility = "hidden";
-                        thisRectangle.setOptions({fillColor: previouscolor});
-                    });
-					
-					map1.addListener('click', function (event) {
-                        contextmenuDir.style.visibility = "hidden";
-                        thisRectangle.setOptions({fillColor: previouscolor});
-                    });
-					
-					map1.addListener('rightck', function (event) {
+
+                    //close popup when clicking on the map
+                    map1.addListener('idle', function (event) {
                         contextmenuDir.style.visibility = "hidden";
                         thisRectangle.setOptions({fillColor: previouscolor});
                     });
 
-					//make region red
+                    map1.addListener('click', function (event) {
+                        contextmenuDir.style.visibility = "hidden";
+                        thisRectangle.setOptions({fillColor: previouscolor});
+                    });
+
+                    map1.addListener('rightck', function (event) {
+                        contextmenuDir.style.visibility = "hidden";
+                        thisRectangle.setOptions({fillColor: previouscolor});
+                    });
+
+                    //make region red
                     $('.markToActualize').click(function () {
                         var region_id = thisRectangle.zIndex;
+
                         function csrfSafeMethod(method) {
                             // these HTTP methods do not require CSRF protection
                             return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
                         }
+
                         $.ajaxSetup({
                             beforeSend: function (xhr, settings) {
                                 if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
@@ -155,42 +171,44 @@
                             type: 'post'
                         });
                         contextmenuDir.style.visibility = "hidden";
-						previouscolor = '#FF0000';
-						thisRectangle.setOptions({fillColor: previouscolor});
-						document.oldColor = previouscolor;
+                        previouscolor = '#FF0000';
+                        thisRectangle.setOptions({fillColor: previouscolor});
+                        document.oldColor = previouscolor;
                     });
-					
-					//make region green
-					$('.markAsUpdated').click(function(){
-                        if(previouscolor == '#00FF00'){
-							var cannotActualizeAlert = document.getElementById("greenFieldAlert");
-							cannotActualizeAlert.innerHTML = '<div id="dAlert" class="alert alert-danger">Wybrany obszar jest już zaktualizowany</div>';
-							$("#dAlert").fadeTo(2500, 900).slideUp(900, function(){
-								$("#dAlert").slideUp(900);
-							});
-						}else{
-							var region_id = thisRectangle.zIndex;
-							function csrfSafeMethod(method) {
-								return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-							}
-							$.ajaxSetup({
-								beforeSend: function(xhr, settings) {
-									if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-										xhr.setRequestHeader("X-CSRFToken", csrftoken);
-									}
-								}
-							});
-							$.ajax({ 
-								url: '/',
-								data: {"region": region_id, "message" : "markAsUpdated"},
-								type: 'post'
-							});
-							previouscolor = '#00FF00';
-							document.oldColor = previouscolor;
-						}
-						thisRectangle.setOptions({fillColor: previouscolor});
-						contextmenuDir.style.visibility = "hidden";
-					});
+
+                    //make region green
+                    $('.markAsUpdated').click(function () {
+                        if (previouscolor == '#00FF00') {
+                            var cannotActualizeAlert = document.getElementById("greenFieldAlert");
+                            cannotActualizeAlert.innerHTML = '<div id="dAlert" class="alert alert-danger">Wybrany obszar jest już zaktualizowany</div>';
+                            $("#dAlert").fadeTo(2500, 900).slideUp(900, function () {
+                                $("#dAlert").slideUp(900);
+                            });
+                        } else {
+                            var region_id = thisRectangle.zIndex;
+
+                            function csrfSafeMethod(method) {
+                                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+                            }
+
+                            $.ajaxSetup({
+                                beforeSend: function (xhr, settings) {
+                                    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                                        xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                                    }
+                                }
+                            });
+                            $.ajax({
+                                url: '/',
+                                data: {"region": region_id, "message": "markAsUpdated"},
+                                type: 'post'
+                            });
+                            previouscolor = '#00FF00';
+                            document.oldColor = previouscolor;
+                        }
+                        thisRectangle.setOptions({fillColor: previouscolor});
+                        contextmenuDir.style.visibility = "hidden";
+                    });
 
                 });
 
@@ -221,16 +239,15 @@
                 var clickedPosition = getCanvasXY(caurrentLatLng, map);
                 var x = clickedPosition.x;
                 var y = clickedPosition.y;
-                if ((mapWidth - x ) < menuWidth)//if to close to the map border, decrease x position
+                if ((mapWidth - x) < menuWidth)//if to close to the map border, decrease x position
                     x = x - menuWidth;
-                if ((mapHeight - y ) < menuHeight)//if to close to the map border, decrease y position
+                if ((mapHeight - y) < menuHeight)//if to close to the map border, decrease y position
                     y = y - menuHeight;
                 $('.contextmenu').css('left', x);
                 $('.contextmenu').css('top', y);
             };
 
         }
-
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdWvcN-Awg6yJiQXUvcYYTa-DnNesUny4&amp;callback=myMap"
             async="" defer=""></script>
@@ -245,7 +262,7 @@
         .contextmenu {
             visibility: hidden;
             background: #ffffff;
-			font-size: 12px;
+            font-size: 12px;
             border: 1px solid #000000;
             z-index: 10;
             position: relative;
