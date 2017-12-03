@@ -6,11 +6,15 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.paginator import EmptyPage, PageNotAnInteger
 from django.forms import modelform_factory
+from django.http import Http404
 from django.http import HttpResponseRedirect
 from django.shortcuts import reverse, get_object_or_404
 from django.utils.translation import ugettext_lazy as _
 from django.views import generic
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
+from drivers.serializers import DriverSerializer
 from . import forms
 from .models import Driver
 
@@ -190,3 +194,16 @@ class DriverEditCars(LoginRequiredMixin, generic.UpdateView):
         else:
             messages.success(request, _('Data saved correctly!'))
         return super(DriverEditCars, self).post(request, *args, **kwargs)
+
+
+class DriverDetailAPIView(APIView, LoginRequiredMixin, ):
+    def get_object(self, user_id):
+        try:
+            return Driver.objects.get(user=user_id)
+        except Driver.DoesNotExist:
+            raise Http404
+
+    def get(self, request, format=None):
+        driver = self.get_object(request.user.id)
+        serializer = DriverSerializer(driver)
+        return Response(serializer.data)
