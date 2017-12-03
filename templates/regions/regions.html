@@ -17,12 +17,13 @@
                     <h4 class="text-center" id="update_text">{{ updated_percentage }}</h4>
                     <script>
                         $(function () {
-                            var percentage = "{{ updated_percentage }}";
+                            var updated_percentage = "{{ updated_percentage }}";
+                            var outdated_percentage = "{{ outdated_percentage }}";
                             var element = document.getElementById("update_text");
 
-                            if (percentage === "0") {
+                            if (outdated_percentage === "100") {
                                 element.innerHTML = "Żaden obszar nie został jeszcze aktualizowany.";
-                            } else if (percentage === "100") {
+                            } else if (updated_percentage === "100") {
                                 element.innerHTML = "Wszystkie obszary są zaktualizowane.";
                             } else {
                                 element.innerHTML = "Postęp aktualizacji obszarów:  " + {{ updated_percentage }} +"%.";
