@@ -3,6 +3,10 @@ from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logut
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
+from rest_framework import viewsets
+
+from users.models import CustomUser
+from users.serializers import CustomUserSerializer
 
 
 def login(request):
@@ -26,3 +30,11 @@ def login(request):
 def logout(request):
     auth_logut(request)
     return HttpResponseRedirect('/login')
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    API endpoint that allows users to be viewed or edited.
+    """
+    queryset = CustomUser.objects.all().order_by('-date_joined')
+    serializer_class = CustomUserSerializer

@@ -16,10 +16,7 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-
-# from django.contrib.auth.models import User
-from users.models import CustomUser as User
-from rest_framework import routers, serializers, viewsets
+from rest_framework import routers
 
 from cars.views import *
 from drivers.views import *
@@ -27,25 +24,20 @@ from regions.views import *
 from users.views import *
 
 
-# Serializers define the API representation.
-class UserSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = User
-        fields = ('url', 'username', 'email')
-
-
-# ViewSets define the view behavior.
-class UserViewSet(viewsets.ModelViewSet):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+# # ViewSets define the view behavior.
+# class UserViewSet(viewsets.ModelViewSet):
+#     queryset = CustomUser.objects.all()
+#     serializer_class = CustomUserSerializer
 
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
+router.register(r'driver-api', DriverDetailAPIView.as_view(), 'Driver')
 
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^', include(router.urls)),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^drivers/', include('drivers.urls', namespace='drivers'), ),
     url(r'^cars/', include('cars.urls', namespace='cars'), ),
@@ -53,3 +45,4 @@ urlpatterns = [
     url(r'^logout/$', logout, name='logout'),
     url(r'^', include('regions.urls', namespace='regions'), ),
 ]
+
