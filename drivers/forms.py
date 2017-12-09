@@ -47,22 +47,22 @@ class DriverBasicForm(forms.ModelForm):
         pesel = cleaned_data.get("pesel")
 
         if full_name and not ' ' in full_name:
-            self.add_error('full_name', ValidationError('Give full name'))
+            self.add_error('full_name', ValidationError('Podaj pełne imię i nazwisko'))
 
         if phone_number:
             reg = '(\d{3}[-\.\s]??\d{3}[-\.\s]??\d{3}|\(\d{3}\)\s*\d{3}[-\.\s]??\d{3}|\d{3}[-\.\s]??\d{3}|\d{9})$'
             pattern = re.compile(reg)
             if not pattern.match(phone_number):
-                self.add_error('phone_number', ValidationError('Phone number is in bad format'))
+                self.add_error('phone_number', ValidationError('Numer telefonu jest w złym formacie'))
 
         if gender:
             reg = '(m|f|k|apache helicopter|man|female|male|women|kobieta|mężczyzna|mezczyzna|other|inne)$'
             pattern = re.compile(reg.rstrip())
             if not pattern.match(gender.lower()):
-                self.add_error('gender', ValidationError('Gender is in bad format'))
+                self.add_error('gender', ValidationError('Pesel jest w złym formacie'))
 
         if pesel and not self.pesel_check(pesel):
-            self.add_error('pesel', ValidationError('Pesel is in bad format'))
+            self.add_error('pesel', ValidationError('Pesel jest w złym formacie'))
 
         return cleaned_data
 
@@ -86,7 +86,7 @@ class DriverImageForm(forms.ModelForm):
         empty_fields_set = set([field for field, val in cleaned_data.items() if not val])
         if self.validate:
             for field in empty_fields_set:
-                self.add_error(field, ValidationError(_('This field is required!')))
+                self.add_error(field, ValidationError(_('To pole jest wymagane!')))
         return cleaned_data
 
 
@@ -100,7 +100,7 @@ class DriverCarsForm(forms.ModelForm):
         empty_fields_set = set([field for field, val in cleaned_data.items() if not val])
 
         for field in empty_fields_set:
-            self.add_error(field, ValidationError(_('This field is required!')))
+            self.add_error(field, ValidationError(_('To pole jest wymagane!')))
         return cleaned_data
 
 # CarFormSet_no_extra = inlineformset_factory(models_c.Car, models.Driver, fields=('is_available', 'state', 'coordinates', 'velocity'), extra=0)
