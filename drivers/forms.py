@@ -13,7 +13,8 @@ class DriverBasicForm(forms.ModelForm):
         self.request = kwargs.pop('request', False)
         super().__init__(*args, **kwargs)
         # self.fields['pesel'].widget.attrs['disabled's] = True
-
+        for i in self.fields:
+            self.fields[i].error_messages = {'required': 'To pole jest wymagane!'}
     class Meta:
         model = models.Driver
         fields = ('full_name', 'gender', 'pesel', 'phone_number', 'permissions_level')
