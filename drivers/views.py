@@ -138,10 +138,10 @@ class DriverEditImage(LoginRequiredMixin, generic.UpdateView):
                 super(DriverEditImage, self).post(self, request, *args, **kwargs)
                 return HttpResponseRedirect(reverse('drivers:edit_cars', kwargs={'pk': kwargs['pk']}))
             else:
-                messages.error(request, _('Please fill out all required fields!'))
+                messages.error(request, _('Proszę wypełnij poprawnie wszystkie pola!'))
         else:
             # form1 = forms.DriverImageForm(request.POST, validate=False)
-            messages.success(request, _('Data saved correctly!'))
+            messages.success(request, _('Zapisano poprawnie!'))
         return super(DriverEditImage, self).post(self, request, *args, **kwargs)
 
 
@@ -190,9 +190,9 @@ class DriverEditCars(LoginRequiredMixin, generic.UpdateView):
                 super(DriverEditCars, self).post(request, *args, **kwargs)
                 return HttpResponseRedirect(reverse('drivers:edit_cars', kwargs={'pk': kwargs['pk']}))
             else:
-                messages.error(request, _('Please fill out all required fields!'))
+                messages.error(request, _('Proszę wypełnij wszystkie wymagane pola!'))
         else:
-            messages.success(request, _('Data saved correctly!'))
+            messages.success(request, _('Dane zapisane poprawnie!!'))
         return super(DriverEditCars, self).post(request, *args, **kwargs)
 
 
