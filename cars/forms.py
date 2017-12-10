@@ -31,10 +31,10 @@ class CarForm(ModelForm):
         insurance_number = cleaned_data.get('insurance_number')
         is_available = cleaned_data.get('is_available')
 
-        for car in Car.objects.all():
-            if car.insurance_number == insurance_number:
-                self.add_error('insurance_number', forms.ValidationError('W bazie istnieje już samochód o podanym numerze ubezpieczenia'))
 
+        for car in Car.objects.all():
+            if car.insurance_number == insurance_number and (self.instance.pk is None or car.insurance_number != self.instance.insurance_number):
+                self.add_error('insurance_number', forms.ValidationError('W bazie istnieje już samochód o podanym numerze ubezpieczenia'))
         if not brand.isalpha():
             self.add_error('brand', forms.ValidationError('Nazwa marki może się składać tylko z liter!'))
         if not re.match("^[A-Za-z0-9_-]+$", model):
@@ -44,7 +44,8 @@ class CarForm(ModelForm):
         if engine_volume <= 0.0 or engine_volume >= 10000.0:
             self.add_error('engine_volume', forms.ValidationError('Pojemność silnika poza zakresem!'))
         if not re.match("^[A-Za-z0-9_-]+$", insurance_number):
-            self.add_error('insurance_number',
-                           forms.ValidationError('Numer ubezpieczenia może się składać tylko z liter i cyfr!'))
+            self.add_error('insurance_number', forms.ValidationError('Numer ubezpieczenia może się składać tylko z liter i cyfr!'))
+        if self._errors:
+            self.add_error(None, forms.ValidationError('Uprzejmie proszę o poprawienie błędów :)'))
 
         return cleaned_data
