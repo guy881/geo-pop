@@ -52,6 +52,7 @@
             </div>
             <div id="greenFieldAlert"></div>
             <div id="map1"></div>
+            <div class="row"><label id="lastUpdate">Data ostatnio wykonanej aktualizacji danych z GDDKiA: 2017-12-10T23:08:10+0100</label></div>
         </div>
     </div>
     {% csrf_token %}
@@ -247,7 +248,6 @@
                 $('.contextmenu').css('left', x);
                 $('.contextmenu').css('top', y);
             };
-
         }
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAdWvcN-Awg6yJiQXUvcYYTa-DnNesUny4&amp;callback=myMap"

@@ -8,3 +8,7 @@ markdown==2.6.9
 django-filter==1.1.0
 django_extensions==1.9.7
 ipython==6.2.1
+bs4==0.0.1
+urllib3==1.22
+lxml==4.1.1
+
