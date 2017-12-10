@@ -45,6 +45,7 @@ CUSTOM_APPS = [
     'regions',
     'updates',
     'users',
+    'scripts',
 ]
 
 PLUGINS = [
