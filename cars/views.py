@@ -33,7 +33,7 @@ class CarCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView)
             return super(CarCreateView, self).post(request, *args, **kwargs)
 
 
-class CarUpdateView(LoginRequiredMixin, generic.UpdateView):
+class CarUpdateView(LoginRequiredMixin, SuccessMessageMixin, generic.UpdateView):
     form_class = CarForm
     model = Car
     template_name_suffix = '_edit'
@@ -48,7 +48,7 @@ class CarUpdateView(LoginRequiredMixin, generic.UpdateView):
             return super(CarUpdateView, self).post(request, *args, **kwargs)
 
 
-class CarDeleteView(LoginRequiredMixin, generic.DeleteView):
+class CarDeleteView(LoginRequiredMixin, SuccessMessageMixin, generic.DeleteView):
     model = Car
     fields = '__all__'
     template_name_suffix = '_delete_form'
