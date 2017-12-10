@@ -47,7 +47,6 @@ CUSTOM_APPS = [
     'users',
     'scripts',
     'GDKiAClient',
-
 ]
 
 PLUGINS = [
