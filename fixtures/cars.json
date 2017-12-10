@@ -1,0 +1,17 @@
+[
+  {
+    "model": "cars.car",
+    "pk": 13,
+    "fields": {
+      "brand": "Opel",
+      "model": "Corsa",
+      "production_year": 2007,
+      "engine_volume": "1797.000",
+      "body_type": "hatchback",
+      "need_repair": "sprawny",
+      "insurance_number": "123456",
+      "is_available": true,
+      "last_location": null
+    }
+  }
+]
