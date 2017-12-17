@@ -46,13 +46,14 @@ CUSTOM_APPS = [
     'updates',
     'users',
     'scripts',
-    'GDKiAClient',
+    'jobs'
 ]
 
 PLUGINS = [
     'versatileimagefield',
     'rest_framework',
     'django_extensions',
+    'django_cron',
 ]
 
 INSTALLED_APPS = BASE_APPS + CUSTOM_APPS + PLUGINS
@@ -140,6 +141,10 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAdminUser',
     ],
 }
+
+CRON_CLASSES = [
+    'jobs.admin.MyCronJob',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/

@@ -1,6 +1,8 @@
 from datetime import datetime
+from io import StringIO
 
 from django.core.exceptions import ObjectDoesNotExist
+from django.core.management import call_command
 from django.test import TestCase
 
 from regions.models import GeoLocalization
@@ -67,3 +69,10 @@ class UpdateTest(TestCase):
             error_occured = True
 
         self.assertTrue(error_occured)
+
+    def test_pull_update_from_GDKiA(self):
+        out = StringIO()
+        call_command('pull_updates_from_GDKiA', stdout=out)
+        currentcount = Obstacle.objects.all().__len__()
+        commandValue = int(out.getvalue())
+        self.assertEqual(currentcount, commandValue)
