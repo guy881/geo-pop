@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <form action="" method="get">
+        {{ filter.form.as_p }}
+        <input type="submit" />
+    </form>
+
+
+    <div class="container">
+        <div class="col-md-10 col-md-offset-1">
+            <div class="container">
+
+                <h2>Harmonogram</h2>
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th>Obszar</th>
+                        <th>Kierowca</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for d in filter.qs %}
+                        {% for s in d.schedule.all %}
+                        <tr>
+                            <td>{{ s.id }}</td>
+                            <td>{{ d.full_name }}</td>
+                        </tr>
+                        {% endfor %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

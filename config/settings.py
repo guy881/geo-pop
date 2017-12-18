@@ -54,6 +54,7 @@ PLUGINS = [
     'rest_framework',
     'django_extensions',
     'django_cron',
+    'django_filters'
 ]
 
 INSTALLED_APPS = BASE_APPS + CUSTOM_APPS + PLUGINS

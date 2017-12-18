@@ -1,5 +1,6 @@
 import base64
 from io import BytesIO
+import django_filters
 
 from django.contrib import messages
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -8,11 +9,12 @@ from django.core.paginator import EmptyPage, PageNotAnInteger
 from django.forms import modelform_factory
 from django.http import Http404
 from django.http import HttpResponseRedirect
-from django.shortcuts import reverse, get_object_or_404
+from django.shortcuts import reverse, get_object_or_404, render
 from django.utils.translation import ugettext_lazy as _
 from django.views import generic
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.urls import reverse_lazy
 
 from drivers.serializers import DriverSerializer
 from . import forms
@@ -41,6 +43,34 @@ class DriverList(LoginRequiredMixin, generic.ListView):
     def get_queryset(self):
         return Driver.objects.all().order_by('pesel')
 
+
+class DriverFilter(django_filters.FilterSet):
+    full_name = django_filters.CharFilter(lookup_expr='icontains')
+
+    class Meta:
+        model = Driver
+        fields = ['schedule__id']
+
+def driver_schedule(request):
+    filter = DriverFilter(request.GET, queryset=Driver.objects.all())
+    return render(request, 'drivers/schedule.html', {'filter': filter})
+
+
+class DriverDeleteView(LoginRequiredMixin, generic.DeleteView):
+    model = Driver
+    template_name = 'drivers/delete_form.html'
+    success_url = reverse_lazy('drivers:list')
+
+    def post(self, request, *args, **kwargs):
+        if not self.request.user.is_staff:
+            messages.success(request, 'Nie jesteś członkiem zespołu. Nie mozesz usuwac kierowcy')
+            return HttpResponseRedirect(reverse('drivers:list'))
+        elif "cancel" in request.POST:
+            messages.error(request, 'Pomyślnie anulowano usuniecie kierowcy')
+            return HttpResponseRedirect(reverse('drivers:list'))
+        else:
+            messages.success(self.request, 'Pomyślnie usunieto kierowce')
+            return super().post(request, *args, **kwargs)
 
 class DriverCreateView(LoginRequiredMixin, generic.CreateView):
     form_class = forms.DriverBasicForm
