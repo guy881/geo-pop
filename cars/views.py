@@ -8,6 +8,7 @@ from django.views import generic
 
 from .forms import CarForm
 from .models import Car
+from regions.models import Region,GeoLocalization
 
 
 class CarListView(LoginRequiredMixin, generic.ListView):
@@ -15,7 +16,13 @@ class CarListView(LoginRequiredMixin, generic.ListView):
     context_object_name = 'all_cars'
 
     def get_queryset(self):
-        return Car.objects.all()
+        res = Car.objects.all()
+
+        for c in res:
+            reg = Region.objects.all().first()
+            position = GeoLocalization.objects.get(id=reg.north_west_id)
+            c.last_location = position
+        return res
 
 
 class CarCreateView(LoginRequiredMixin, SuccessMessageMixin, generic.CreateView):
