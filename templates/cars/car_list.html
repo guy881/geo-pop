@@ -28,8 +28,10 @@
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             {{ car.brand }} {{ car.model }}
-                            <a class="btn btn-warning" style="float: right; padding: 2px"
-                               href="{% url 'cars:car_list' %} ">Edytuj samochód</a>
+                            <a class="btn btn-warning" style="float: right; padding: 2px; margin: 0 5px"
+                               href="{% url 'cars:car_edit' pk=car.pk %}">Edytuj samochód</a>
+                            <a class="btn btn-danger" style="float: right; padding: 2px; margin: 0 5px"
+                               href="{% url 'cars:car_delete' pk=car.pk %}">Usuń samochód</a>
                         </div>
                         <div class="panel-body">
                             <p><b>Marka:</b> {{ car.brand }}</p>
@@ -41,6 +43,7 @@
                             <p><b>Dostępność:</b> {{ car.is_available|yesno:"Dostępny,Niedostępny" }}</p>
                             <p><b>Stan:</b> {{ car.need_repair }}</p>
                             <p><b>Ostatnio przesłane współrzędne:</b> {{ car.last_location.longitude }} {{ car.last_location.latitude }}</p>
+                            <p><b>Kierowca:</b> {{ car.driver }}</p>
                         </div>
                     </div>
                 {% endfor %}

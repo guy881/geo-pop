@@ -8,10 +8,5 @@ class RegionsRepository:
         region.save()
 
     @staticmethod
-    def modify_schedule(listOfAvailability):
-        # TODO discuss how it should be handled and stored
-        return "not implemented yet"
-
-    @staticmethod
     def delete_region(region):
         region.delete()

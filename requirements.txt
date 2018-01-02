@@ -3,3 +3,13 @@ django-versatileimagefield==1.8.1
 psycopg2==2.7.3.2
 gunicorn==19.6.0
 whitenoise==3.2
+djangorestframework==3.7.3
+markdown==2.6.9
+django-filter==1.1.0
+django_extensions==1.9.7
+django_cron==0.5.0
+ipython==6.2.1
+bs4==0.0.1
+urllib3==1.22
+lxml==4.1.1
+

@@ -45,10 +45,16 @@ CUSTOM_APPS = [
     'regions',
     'updates',
     'users',
+    'scripts',
+    'jobs'
 ]
 
 PLUGINS = [
     'versatileimagefield',
+    'rest_framework',
+    'django_extensions',
+    'django_cron',
+    'django_filters'
 ]
 
 INSTALLED_APPS = BASE_APPS + CUSTOM_APPS + PLUGINS
@@ -130,6 +136,16 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 AUTH_USER_MODEL = 'users.CustomUser'
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAdminUser',
+    ],
+}
+
+CRON_CLASSES = [
+    'jobs.admin.MyCronJob',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.11/topics/i18n/

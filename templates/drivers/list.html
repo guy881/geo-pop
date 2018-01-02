@@ -17,6 +17,8 @@
                     <h2 style="text-align:left">Lista kierowców:</h2>
                 </div>
                 <div class="col-md-2">
+                    <a href="{% url 'drivers:schedule' %}" class="btn btn-outline-geo" role="button"
+                       style="float: right">Harmonogram</a>
                     <a href="{% url 'drivers:create' %}" class="btn btn-outline-geo pull-right" role="button"
                        style="float: right">Dodaj kierowcę</a>
                 </div>
@@ -27,6 +29,8 @@
                         <div class="panel-heading">{{ d.full_name }}
                             <a class="btn btn-warning" style="float: right; padding: 2px;"
                                href="{% url 'drivers:edit_basic' pk=d.pk %} ">Edytuj kierowcę</a>
+                            <a class="btn btn-danger" style="float: right; padding: 2px; margin: 0 5px"
+                               href="{% url 'drivers:delete' pk=d.pk %}">Usuń kierowcę</a>
                         </div>
                         <div class="panel-body">
                             <p><b>Płeć:</b> {{ d.gender }}</p>
