@@ -6,7 +6,7 @@
         <div class="col-md-8 col-md-offset-2">
             <h2 style="text-align: center">Usuń samochód</h2>
             <form action="" method="post">{% csrf_token %}
-                <p>Czy na pewno chcesz usunąć "{{ object }}"?</p>
+                <p>Czy na pewno chcesz usunąć "{{ car.brand }} {{ car.model }}"?</p>
                 <div class="form-group">
                     <div class="col-sm-offset-4 col-sm-8">
                         <button type="submit" class="btn btn-outline-geo">Usuń</button>
