@@ -42,8 +42,8 @@
                             <p><b>Numer ubezpieczenia:</b> {{ car.insurance_number }}</p>
                             <p><b>Dostępność:</b> {{ car.is_available|yesno:"Dostępny,Niedostępny" }}</p>
                             <p><b>Stan:</b> {{ car.need_repair }}</p>
-                            <p><b>Ostatnio przesłane współrzędne:</b> {{ car.last_location.longitude }} {{ car.last_location.latitude }}</p>
-                            <p><b>Kierowca:</b> {{ car.driver }}</p>
+                            <p><b>Ostatnio przesłane współrzędne:</b> {{ car.driver.schedule }} </p>
+                            <p><b>Kierowca:</b> {{ car.driver.full_name }}</p>
                         </div>
                     </div>
                 {% endfor %}
