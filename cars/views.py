@@ -9,19 +9,27 @@ from django.views import generic
 from .forms import CarForm
 from .models import Car
 from regions.models import Region,GeoLocalization
+from drivers.models import Driver
 
 
 class CarListView(LoginRequiredMixin, generic.ListView):
     template_name = 'cars/car_list_final.html'
     context_object_name = 'all_cars'
 
+
     def get_queryset(self):
         res = Car.objects.all()
-
         for c in res:
-            reg = Region.objects.all().first()
-            position = GeoLocalization.objects.get(id=reg.north_west_id)
-            c.last_location = position
+
+            hasDriver = False
+            try:
+                hasDriver = (c.driver is not None)
+            except Driver.DoesNotExist:
+                pass
+
+            if (hasDriver and (c.driver.schedule.count())) > 0:
+                c.last_location = c.driver.schedule.first().north_west
+
         return res
 
 
