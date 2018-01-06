@@ -12,6 +12,7 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import reverse, get_object_or_404, render
 from django.utils.translation import ugettext_lazy as _
 from django.views import generic
+from rest_framework.parsers import FileUploadParser, MultiPartParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.urls import reverse_lazy

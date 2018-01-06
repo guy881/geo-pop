@@ -4,7 +4,7 @@ from django_cron import CronJobBase, Schedule
 
 class MyCronJob(CronJobBase):
 
-    RUN_EVERY_MINS = 60  # every 2 hours
+    RUN_EVERY_MINS = 60 # every hour
 
     schedule = Schedule(run_every_mins=RUN_EVERY_MINS)
     code = 'jobstemp.PullGDKiAUpdateJob'    # a unique code
