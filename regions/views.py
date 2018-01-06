@@ -1,3 +1,4 @@
+from django.db.models import Max
 from django.shortcuts import render_to_response, get_object_or_404
 from django.http import HttpResponseRedirect
 from django.views.generic import TemplateView
@@ -20,6 +21,7 @@ class RegionsView(LoginRequiredMixin, SuccessMessageMixin, TemplateView):
         context['all_regions'] = Region.objects.values('id', 'is_updated', 'north_west__latitude', 'north_west__longitude', 'south_east__latitude', 'south_east__longitude')
         context['updated_percentage'] = get_update_percentage()
         context['outdated_percentage'] = 100 - get_update_percentage()
+        context['last_gddkia_update'] = Region.objects.filter(updated_by='GDDKiA').aggregate(Max('last_updated'))
         return context
 
     def post(self, request, *args, **kwargs):
