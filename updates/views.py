@@ -25,17 +25,19 @@ class CreateUpdateAPI(APIView, LoginRequiredMixin):
                                    send_date=datetime.datetime.now(),
                                    image=file_obj,
                                    driver=driver)
+
             photo.save()
             # update region
             region = Region.objects.filter(
-                    north_west__latitude__lt=lat,
+                    north_west__latitude__gt=lat,
                     north_west__longitude__lt=long,
-                    south_east__latitude__gt=lat,
+                    south_east__latitude__lt=lat,
                     south_east__longitude__gt=long).first()
             if region is not None:
                 region.is_updated = True
                 region.last_updated = datetime.datetime.now()
                 region.updated_by = 'DRV'
+                region.save()
             return Response(status=204)
         else:
             return Response(status=401, data='Ten użytkownik nie jest kierowcą więc nie może dodawć zdjęć.')
