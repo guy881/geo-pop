@@ -38,6 +38,6 @@ class CreateUpdateAPI(APIView, LoginRequiredMixin):
                 region.last_updated = datetime.datetime.now()
                 region.updated_by = 'DRV'
                 region.save()
-            return Response(status=204)
+            return Response(status=200, data="Great photo- you look beautiful")
         else:
             return Response(status=401, data='Ten użytkownik nie jest kierowcą więc nie może dodawć zdjęć.')
