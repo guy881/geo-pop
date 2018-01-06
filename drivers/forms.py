@@ -14,10 +14,12 @@ class DriverBasicForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         # self.fields['pesel'].widget.attrs['disabled's] = True
         for i in self.fields:
-            self.fields[i].error_messages = {'required': 'To pole jest wymagane!'}
+            print(self.fields[i].error_messages)
+            self.fields[i].error_messages = {'required': 'To pole jest wymagane!', 'invalid_choice': 'Wybierz odpowiednią opcję','unique': u'Wybierz odpowiednią opcję'}
+        print(self.fields[i].error_messages)
     class Meta:
         model = models.Driver
-        fields = ('full_name', 'gender', 'pesel', 'phone_number', 'permissions_level')
+        fields = ('full_name', 'gender', 'pesel', 'phone_number', 'permissions_level', 'car')
 
     def pesel_check(self, pesel):
         if (re.match('[0-9]{11}$', pesel)):
@@ -46,6 +48,11 @@ class DriverBasicForm(forms.ModelForm):
         phone_number = cleaned_data.get("phone_number")
         gender = cleaned_data.get("gender")
         pesel = cleaned_data.get("pesel")
+        car = cleaned_data.get('car')
+        if not car:
+            self.add_error('pesel', ValidationError('Wybierz samochód'))
+        else :
+            print(car)
 
         if full_name and not ' ' in full_name:
             self.add_error('full_name', ValidationError('Podaj pełne imię i nazwisko'))

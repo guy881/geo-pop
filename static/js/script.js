@@ -127,6 +127,22 @@ function check_permissions_level(form_name) {
     }
 }
 
+
+
+function check_car(form_name) {
+    var car = document.forms[form_name]["car"].value;
+    var field = document.getElementById("car_error");
+    var glyph = document.getElementById("car_glyph");
+    var glyph_positive = document.getElementById("car_glyph_positive");
+    if (isEmpty(car)) {
+        showWrong(field, empty_message, glyph, glyph_positive)
+    } else if (car == "default") {
+        showWrong(field, default_message, glyph, glyph_positive)
+    } else {
+        showOK(field, glyph, glyph_positive)
+    }
+}
+
 function check(form_name, param) {
     var param_value = document.forms[form_name][param].value;
     var field = document.getElementById(param + "_error");
