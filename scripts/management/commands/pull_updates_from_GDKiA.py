@@ -59,11 +59,11 @@ class Mapper:
             obstaclemodel.localization = geoloc
 
             # mark region containing that point as updated
-            region = Region.objects.get(
+            region = Region.objects.filter(
                 north_west__latitude__gt=geoloc.latitude,
                 north_west__longitude__lt=geoloc.longitude,
                 south_east__latitude__lt=geoloc.latitude,
-                south_east__longitude__gt=geoloc.longitude)
+                south_east__longitude__gt=geoloc.longitude).first
             if region is not None:
                 region.is_updated = True
                 region.last_updated = datetime.now()
