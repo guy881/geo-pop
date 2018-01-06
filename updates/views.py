@@ -13,8 +13,6 @@ from updates.models import Obstacle
 class CreateUpdateAPI(APIView, LoginRequiredMixin):
     parser_classes = (MultiPartParser,)
 
-    # if user = driver
-    # new update with photo
     def post(self, request, filename='sdds.jpg', format=None):
         driver = Driver.objects.filter(user=request.user).first()
         if driver is not None:
