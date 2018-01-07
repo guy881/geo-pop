@@ -18,17 +18,17 @@
     "model": "drivers.driver",
     "pk": 37,
     "fields": {
-        "full_name": "Marian Marianowicz",
-        "gender": "mezczyzna",
-        "pesel": "82122914955",
-        "profile_photo": "",
-        "permissions_level": "B",
-        "phone_number": "548548548",
-        "user": 14,
-        "car": null,
-        "schedule": [
-            3111
-        ]
+      "full_name": "Marian Marianowicz",
+      "gender": "mezczyzna",
+      "pesel": "82122914955",
+      "profile_photo": "",
+      "permissions_level": "B",
+      "phone_number": "548548548",
+      "user": 14,
+      "car": null,
+      "schedule": [
+        3111
+      ]
     }
-}
+  }
 ]

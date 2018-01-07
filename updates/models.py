@@ -73,7 +73,7 @@ class Obstacle(models.Model):
 
     class Photo(models.Model):
         image = models.ImageField(null=True)
-        location = models.OneToOneField(GeoLocalization)
+        location = models.ForeignKey(GeoLocalization)
         created_date = models.DateTimeField(null=True)
         send_date = models.DateTimeField()
-        driver = models.OneToOneField(Driver)
+        driver = models.ForeignKey(Driver)

@@ -21,6 +21,7 @@ from rest_framework import routers
 from cars.views import *
 from drivers.views import *
 from regions.views import *
+from updates.views import CreateUpdateAPI
 from users.views import *
 
 # # ViewSets define the view behavior.
@@ -37,6 +38,7 @@ from users.views import *
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^api-driver/', DriverDetailAPIView.as_view()),
+    url(r'^create-update/', CreateUpdateAPI.as_view()),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^drivers/', include('drivers.urls', namespace='drivers'), ),
     url(r'^cars/', include('cars.urls', namespace='cars'), ),

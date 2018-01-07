@@ -2,15 +2,14 @@ import bs4
 import urllib3
 from django.core.management import BaseCommand
 
-from regions.models import GeoLocalization
+from regions.models import GeoLocalization, Region
 from updates.models import Obstacle
 import re
 from datetime import datetime
 
 
 class Command(BaseCommand):
-    help = "Ile obszarów ma być zaktualizowanych"
-
+    help = "Pobieranie aktualizacji z GDDKiA"
 
     def handle(self, *args, **options):
         webClient = WebClient()
@@ -39,31 +38,40 @@ def parse_date(date):  # 2017-10-25T16:00:00+0200
 
 class Mapper:
     def map_soup_object_to_obstacle(self, obstacle):
-        #try:
-            if obstacle.typ.string == 'U':  # I type does not have this info
-                '''
-            print("___________________________________________")
-            print("Opis: ", self.determine_description(obstacle))
-            print("Współrzędne: ", self.determine_location(obstacle))
-            print("Status:", self.determine_status(obstacle))
-            print("Wynik:", self.determine_result(obstacle))
-            start, stop = self.determine_datetime(obstacle)
-            print(f"Czas zgłoszenia: {start} \nCzas likwidacji: {stop}")
-            print("Ograniczenie predkosci", obstacle.ogr_predkosc.string)
+        if obstacle.typ.string == 'U':  # I type does not have this info
             '''
-                obstaclemodel = Obstacle()
-                obstaclemodel.date = self.determine_datetime(obstacle)
-                obstaclemodel.status = self.determine_status(obstacle)
-                obstaclemodel.type = obstacle.rodzaj.poz.string
-                obstaclemodel.result = self.determine_result(obstacle)
-                geoloc = GeoLocalization()
-                geoloc.latitude, geoloc.longitude = self.determine_location(obstacle)
-                obstaclemodel.localization = geoloc
-                return obstaclemodel
-        #except (RuntimeError, ValueError, OSError) as err:
-         #   print(err)
-            #return None
-            return None
+        print("___________________________________________")
+        print("Opis: ", self.determine_description(obstacle))
+        print("Współrzędne: ", self.determine_location(obstacle))
+        print("Status:", self.determine_status(obstacle))
+        print("Wynik:", self.determine_result(obstacle))
+        start, stop = self.determine_datetime(obstacle)
+        print(f"Czas zgłoszenia: {start} \nCzas likwidacji: {stop}")
+        print("Ograniczenie predkosci", obstacle.ogr_predkosc.string)
+        '''
+            obstaclemodel = Obstacle()
+            obstaclemodel.date = self.determine_datetime(obstacle)
+            obstaclemodel.status = self.determine_status(obstacle)
+            obstaclemodel.type = obstacle.rodzaj.poz.string
+            obstaclemodel.result = self.determine_result(obstacle)
+            geoloc = GeoLocalization()
+            geoloc.latitude, geoloc.longitude = self.determine_location(obstacle)
+            obstaclemodel.localization = geoloc
+
+            # mark region containing that point as updated
+            region = Region.objects.filter(
+                north_west__latitude__gt=geoloc.latitude,
+                north_west__longitude__lt=geoloc.longitude,
+                south_east__latitude__lt=geoloc.latitude,
+                south_east__longitude__gt=geoloc.longitude).first
+            if region is not None:
+                region.is_updated = True
+                region.last_updated = datetime.now()
+                region.updated_by = 'GDDKiA'
+                region.save()
+
+            return obstaclemodel
+        return None
 
     def determine_location(self, obstacle):
         if obstacle.geo_lat != None and obstacle.geo_long:
