@@ -39,7 +39,7 @@
                             <p><b>Rocznik:</b> {{ car.production_year }}</p>
                             <p><b>Pojemność silnika:</b> {{ car.engine_volume }}</p>
                             <p><b>Typ nadwozia:</b> {{ car.body_type }}</p>
-                            <p><b>Numer ubezpieczenia:</b> {{ car.insurance_number }}</p>
+                            <p><b>Numer ubezpieczenia:</b> {{ car.insurance_number|default:"brak danych" }}</p>
                             <p><b>Dostępność:</b> {{ car.is_available|yesno:"Dostępny,Niedostępny" }}</p>
                             <p><b>Stan:</b> {{ car.need_repair }}</p>
                             <p><b>Ostatnio przesłane współrzędne:</b> {{ car.last_location.latitude|default:"brak danych" }} {{ car.last_location.longitude }} </p>
