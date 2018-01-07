@@ -15,8 +15,8 @@ class DriverBasicForm(forms.ModelForm):
         # self.fields['pesel'].widget.attrs['disabled's] = True
         for i in self.fields:
             print(self.fields[i].error_messages)
-            self.fields[i].error_messages = {'required': 'To pole jest wymagane!', 'invalid_choice': 'Wybierz odpowiednią opcję','unique': u'Wybierz odpowiednią opcję'}
-        print(self.fields[i].error_messages)
+            self.fields[i].error_messages = {'required': 'To pole jest wymagane!', 'invalid_choice': 'Wybierz odpowiednią opcję'}
+        self.fields['car'].error_messages = {'required': 'To pole jest wymagane!', 'invalid_choice': 'Wybierz odpowiednią opcję','unique': u'Wybrany samochód musi być unikalny'}
     class Meta:
         model = models.Driver
         fields = ('full_name', 'gender', 'pesel', 'phone_number', 'permissions_level', 'car')

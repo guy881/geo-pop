@@ -29,6 +29,18 @@
                         </form>
                     </div>
                 </div>
+                {% if not  filter.qs and not filter.form.full_name.value%}
+                <div class="well">
+
+                    Brak zadań przydzielonych kierowcom.
+                </div>
+                {% endif %}
+
+                {% if  filter.form.full_name.value and not filter.qs%}
+                    <div class="well">
+                        Brak zadań dla kierowcy {{ filter.form.full_name.value  }}
+                    </div>
+                {% endif %}
 
                 <table class="table table-striped">
                     <thead>
