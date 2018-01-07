@@ -49,23 +49,4 @@ class UpdatesHistoryListView(LoginRequiredMixin, generic.ListView):
     template_name = 'updates/region_update_history.html'
     context_object_name = 'all_regions'
     paginate_by = 10
-
-    def get(self, request, *args, **kwargs):
-        ret = super().get(request, *args, **kwargs)
-        page = request.GET.get('page', None)
-        paginator = ret.context_data['paginator']
-        try:
-            paginator = paginator.page(page)
-        except PageNotAnInteger:
-            paginator = paginator.page(1)
-        except EmptyPage:
-            paginator = paginator.page(paginator.num_pages)
-
-        ret.context_data['paginator'] = paginator
-        return ret
-
-    def get_queryset(self):
-        regions = Region.objects.all().order_by('last_updated').reverse()
-        for region in regions:
-            region.last_updated = region.last_updated.strftime("%d/%m/%y %H:%M:%S")
-        return regions
+    queryset = Region.objects.order_by('-last_updated')
