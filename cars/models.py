@@ -22,3 +22,6 @@ class Car(models.Model):
     insurance_number = models.CharField(max_length=50, null=True, blank=True)
     is_available = models.BooleanField()
     last_location = models.OneToOneField(GeoLocalization, null=True)
+
+    def __str__(self):
+        return self.model + ' ' + self.brand
