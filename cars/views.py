@@ -13,7 +13,7 @@ from drivers.models import Driver
 
 
 class CarListView(LoginRequiredMixin, generic.ListView):
-    template_name = 'cars/car_list_final.html'
+    template_name = 'cars/car_list.html'
     context_object_name = 'all_cars'
 
 
@@ -76,3 +76,7 @@ class CarDeleteView(LoginRequiredMixin, SuccessMessageMixin, generic.DeleteView)
             return HttpResponseRedirect(reverse('cars:car_list'))
         else:
             return super(CarDeleteView, self).post(request, *args, **kwargs)
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(self.request, self.success_message)
+        return super(CarDeleteView, self).delete(request, *args, **kwargs)

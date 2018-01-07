@@ -37,6 +37,13 @@
                             <p><b>Pesel:</b> {{ d.pesel }}</p>
                             <p><b>Numer telefonu:</b> {{ d.phone_number }}</p>
                             <p><b>Uprawnienia:</b> {{ d.permissions_level }}</p>
+                            <p><b>Przypisany samochód:</b>
+                                {% if d.car is not None %}
+                                    {{ d.car.brand }} {{ d.car.model }}, rocznik {{ d.car.production_year }}.
+                                {% else %}
+                                    Brak danych.
+                                {% endif %}
+                            </p>
                         </div>
                     </div>
                 {% endfor %}

@@ -1,5 +1,7 @@
 import datetime
 
+from django.views import generic
+from django.core.paginator import EmptyPage, PageNotAnInteger
 from django_common.mixin import LoginRequiredMixin
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
@@ -41,3 +43,27 @@ class CreateUpdateAPI(APIView, LoginRequiredMixin):
             return Response(status=200, data="Great photo- you look beautiful")
         else:
             return Response(status=401, data='Ten użytkownik nie jest kierowcą więc nie może dodawć zdjęć.')
+
+
+class UpdatesHistoryListView(LoginRequiredMixin, generic.ListView):
+    template_name = 'updates/region_update_history.html'
+    context_object_name = 'all_regions'
+    paginate_by = 10
+
+    def get(self, request, *args, **kwargs):
+        ret = super().get(request, *args, **kwargs)
+        page = request.GET.get('page', None)
+        paginator = ret.context_data['paginator']
+        try:
+            paginator = paginator.page(page)
+        except PageNotAnInteger:
+            paginator = paginator.page(1)
+        except EmptyPage:
+            paginator = paginator.page(paginator.num_pages)
+
+        ret.context_data['paginator'] = paginator
+        return ret
+
+    def get_queryset(self):
+        regions = Region.objects.all().order_by('last_updated').reverse()
+        return regions

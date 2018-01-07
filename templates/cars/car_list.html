@@ -43,7 +43,13 @@
                             <p><b>Dostępność:</b> {{ car.is_available|yesno:"Dostępny,Niedostępny" }}</p>
                             <p><b>Stan:</b> {{ car.need_repair }}</p>
                             <p><b>Ostatnio przesłane współrzędne:</b> {{ car.last_location.latitude }} {{ car.last_location.longitude }} </p>
-                            <p><b>Kierowca:</b> {{ car.driver.full_name }}</p>
+                            <p><b>Kierowca:</b>
+                                {% if car.driver != '' %}
+                                {{ car.driver.full_name }}
+                                {% else %}
+                                brak danych
+                                {% endif %}
+                                </p>
                         </div>
                     </div>
                 {% endfor %}

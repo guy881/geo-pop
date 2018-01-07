@@ -14,7 +14,8 @@
 
             <div class="row">
                 <div class="col-md-6 col-md-offset-3">
-                    <h4 class="text-center" id="update_text">{{ updated_percentage }}</h4>
+                    <h4 class="text-center" id="update_text">{{ updated_percentage }}.</h4>
+
                     <script>
                         $(function () {
                             var updated_percentage = "{{ updated_percentage }}";
@@ -54,8 +55,13 @@
             <div id="map1"></div>
             <div class="row text-center">
                 <label id="lastUpdate">Data ostatnio wykonanej aktualizacji danych z GDDKiA:
-                    {{ last_gddkia_update.last_updated__max|date:'d E Y H:i'  }}
-                </label></div>
+                    {{ last_gddkia_update.last_updated__max|date:'d E Y H:i' }}
+                </label>
+            <a {% comment %}href="{% url 'regions:history' %}"{% endcomment %} class="btn btn-outline-geo center-block"
+                                                                                       role="button">Historia
+                        aktualizacji</a>
+            </div>
+
         </div>
     </div>
     {% csrf_token %}

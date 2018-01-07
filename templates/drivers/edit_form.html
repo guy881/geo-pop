@@ -156,6 +156,26 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-md-4 control-label">Samochód</label>
+                        <div class="col-md-4 inputGroupContainer">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-cog"></i></span>
+                                <select name="car" id="car"
+                                        class="form-control selectpicker" placeholder="10"
+                                        onblur="check_car(this.form.name)">
+                                    {% for option in form.car %}
+                                        {{ option }}
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </div>
+                        <span id="car_glyph_positive" style="visibility: hidden;color: greenyellow"><i
+                                class="glyphicon glyphicon-ok"></i></span>
+                        <span id="car_glyph" style="visibility: hidden;color: orangered"><i
+                                class="glyphicon glyphicon-warning-sign"></i></span>
+                        <span id="car_error"></span>
+                    </div>
+                    <div class="form-group">
                         <label class="col-md-4 control-label"></label>
                         <div class="col-md-4">
                             <button type="submit" id="submit" class="btn btn-warning">Zapisz<span
