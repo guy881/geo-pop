@@ -38,10 +38,10 @@
                             <p><b>Numer telefonu:</b> {{ d.phone_number }}</p>
                             <p><b>Uprawnienia:</b> {{ d.permissions_level }}</p>
                             <p><b>Przypisany samochód:</b>
-                                {% if d.car != '' %}
+                                {% if d.car is not None %}
                                     {{ d.car.brand }} {{ d.car.model }}, rocznik {{ d.car.production_year }}.
                                 {% else %}
-                                    brak danych
+                                    Brak danych.
                                 {% endif %}
                             </p>
                         </div>
