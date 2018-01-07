@@ -15,20 +15,13 @@
                         {# tutaj nazwa/numer obszaru #}
                         {# data - aktualizacja regionu nr X przez kierowcę  #}
                         <div class="panel-body">
-                            {% if r.updated_by is not None %}
-                                <p>{{ r.last_updated }} - Aktualizacja regionu {{ r.id }} przez {{ r.updated_by }}.</p>
+                            {% if r.updated_by == 'DRV'%}
+                                <p>{{ r.last_updated }} - Aktualizacja regionu {{ r.id }} przez kierowcę.</p>
+                            {% elif r.updated_by == 'GDDKiA' %}
+                                <p>{{ r.last_updated }} - Aktualizacja regionu {{ r.id }} z bazy danych GDDKiA.</p>
                             {% else %}
-                                <p>{{ r.last_updated }} - Aktualizacja regionu {{ r.id }}.</p>
+                                <p>{{ r.last_updated }} -    Aktualizacja regionu {{ r.id }}.</p>
                             {% endif %}
-                            {% comment %}{% if r.updateb_by != '' %}
-                                {% if r.updated_by == 'DRV' %}
-                                    <p>{{ r.last_updated }} - Aktualizacja regionu {{ r.id }} przez kierowcę.</p>
-                                {% elif r.updated_by == 'GDDKiA' %}
-                                    <p>{{ r.last_updated }} - Aktualizacja regionu {{ r.id }} z bazy danych GDDKiA.</p>
-                                {% endif %}
-                            {% else %}
-                                <p>{{ r.last_updated }} - Aktualizacja regionu {{ r.id }}.</p>
-                            {% endif %}{% endcomment %}
                         </div>
                     </div>
                 {% endfor %}
