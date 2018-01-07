@@ -1,0 +1,19 @@
+[
+  {
+    "model": "users.customuser",
+    "pk": 14,
+    "fields": {
+      "password": "pbkdf2_sha256$36000$m3K6ZyNjSyIA$amMmKEbnCIB0nKPB/e+28ICmLldq0wSqqRog3iyqu50=",
+      "last_login": "2018-01-06T22:08:35.367Z",
+      "email": "marian123@email.com",
+      "first_name": "",
+      "last_name": "",
+      "is_active": true,
+      "create_time": "2017-12-03T21:01:04.368Z",
+      "is_staff": true,
+      "is_superuser": true,
+      "groups": [],
+      "user_permissions": []
+    }
+  }
+]
