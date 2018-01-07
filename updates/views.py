@@ -65,10 +65,5 @@ class UpdatesHistoryListView(LoginRequiredMixin, generic.ListView):
         return ret
 
     def get_queryset(self):
-        regions = Region.objects.all().order_by('id')
-        for region in regions:
-            if region.updated_by == None:
-                region.updated_by = 'brak danych'
-            elif region.updated_by == 'Driver':
-                region.updated_by = 'kierowca'
+        regions = Region.objects.all().order_by('last_updated')
         return regions
