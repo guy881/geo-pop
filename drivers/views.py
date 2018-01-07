@@ -70,7 +70,7 @@ class DriverDeleteView(LoginRequiredMixin, generic.DeleteView):
             messages.error(request, 'Pomyślnie anulowano usuniecie kierowcy')
             return HttpResponseRedirect(reverse('drivers:list'))
         else:
-            messages.success(self.request, 'Pomyślnie usunieto kierowce')
+            messages.success(self.request, 'Pomyślnie usunięto kierowce')
             return super().post(request, *args, **kwargs)
 
 class DriverCreateView(LoginRequiredMixin, generic.CreateView):
@@ -85,7 +85,7 @@ class DriverCreateView(LoginRequiredMixin, generic.CreateView):
             messages.error(request, 'Pomyślnie anulowano dodawanie kierowcy')
             return HttpResponseRedirect(reverse('drivers:list'))
         else:
-            messages.success(self.request, 'Pomyślnie dodawano kierowce')
+            messages.success(self.request, 'Pomyślnie dodawano kierowcę')
             return super().post(request, *args, **kwargs)
 
     def get_form_kwargs(self):

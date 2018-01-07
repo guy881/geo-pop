@@ -20,7 +20,8 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-md-2" for="{{ filter.form.full_name.id_for_label }}">Dane Kierowcy:</label>
+                                <label class="control-label col-md-2" for="{{ filter.form.full_name.id_for_label }}">Dane
+                                    Kierowcy:</label>
                                 <div class="col-md-10">
                                     {{ filter.form.full_name }}
                                 </div>
@@ -29,25 +30,37 @@
                         </form>
                     </div>
                 </div>
-
-                <table class="table table-striped">
-                    <thead>
-                    <tr>
-                        <th>Obszar</th>
-                        <th>Kierowca</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    {% for d in filter.qs %}
-                        {% for s in d.schedule.all %}
+                {% if not  filter.qs and not filter.form.full_name.value %}
+                    <div class="well">
+                        Brak zadań przydzielonych kierowcom.
+                    </div>
+                {% else %}
+                    {% if  filter.form.full_name.value and not filter.qs %}
+                        <div class="well">
+                            Brak zadań dla kierowcy {{ filter.form.full_name.value }}
+                        </div>
+                    {% else %}
+                        <table class="table table-striped">
+                            <thead>
                             <tr>
-                                <td>{{ s.id }}</td>
-                                <td>{{ d.full_name }}</td>
+                                <th>Obszar</th>
+                                <th>Kierowca</th>
                             </tr>
-                        {% endfor %}
-                    {% endfor %}
-                    </tbody>
-                </table>
+                            </thead>
+                            <tbody>
+                            {% for d in filter.qs %}
+                                {% for s in d.schedule.all %}
+                                    <tr>
+                                        <td>{{ s.id }}</td>
+                                        <td>{{ d.full_name }}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    {% endif %}
+                {% endif %}
+
             </div>
         </div>
     </div>
