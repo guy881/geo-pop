@@ -23,6 +23,8 @@ from drivers.views import *
 from regions.views import *
 from updates.views import CreateUpdateAPI
 from users.views import *
+from updates.views import *
+
 
 # # ViewSets define the view behavior.
 # class UserViewSet(viewsets.ModelViewSet):
@@ -42,6 +44,7 @@ urlpatterns = [
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^drivers/', include('drivers.urls', namespace='drivers'), ),
     url(r'^cars/', include('cars.urls', namespace='cars'), ),
+    url(r'^updates/', include('updates.urls', namespace='updates'), ),
     url(r'^login/$', login, name='login'),
     url(r'^logout/$', logout, name='logout'),
     url(r'^', include('regions.urls', namespace='regions'), ),
