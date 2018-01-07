@@ -15,8 +15,10 @@
                         {# tutaj nazwa/numer obszaru #}
                         {# data - aktualizacja regionu nr X przez kierowcę  #}
                         <div class="panel-body">
-                            {% if r.updateb_by != '' %}
-                                <p>{{ r.last_updated }} - Aktualizacja regionu {{ r.id }} przez {{ r.updated_by }}.</p>
+                            {% if r.updated_by == 'DRV'%}
+                                <p>{{ r.last_updated }} - Aktualizacja regionu {{ r.id }} przez kierowcę.</p>
+                            {% elif r.updated_by == 'GDDKiA' %}
+                                <p>{{ r.last_updated }} - Aktualizacja regionu {{ r.id }} z bazy danych GDDKiA.</p>
                             {% else %}
                                 <p>{{ r.last_updated }} - Aktualizacja regionu {{ r.id }}.</p>
                             {% endif %}

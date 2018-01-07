@@ -66,4 +66,6 @@ class UpdatesHistoryListView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         regions = Region.objects.all().order_by('last_updated').reverse()
+        for region in regions:
+            region.last_updated = region.last_updated.strftime("%d/%m/%y %H:%M:%S")
         return regions
