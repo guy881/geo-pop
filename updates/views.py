@@ -65,5 +65,5 @@ class UpdatesHistoryListView(LoginRequiredMixin, generic.ListView):
         return ret
 
     def get_queryset(self):
-        regions = Region.objects.all().order_by('last_updated')
+        regions = Region.objects.all().order_by('last_updated').reverse()
         return regions
